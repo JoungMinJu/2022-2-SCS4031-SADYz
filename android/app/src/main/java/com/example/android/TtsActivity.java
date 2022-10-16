@@ -29,7 +29,7 @@ public class TtsActivity extends AppCompatActivity {
             @Override
             public void onInit(int status) {
                 if (status == TextToSpeech.SUCCESS) {
-                    int result = tts.setLanguage(Locale.ENGLISH);
+                    int result = tts.setLanguage(Locale.KOREA);
 
                     if (result == TextToSpeech.LANG_NOT_SUPPORTED || result == TextToSpeech.LANG_MISSING_DATA) {
                         Log.e("TTS", "Language not supported.");
