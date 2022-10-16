@@ -37,6 +37,7 @@
                 android:value="" />
         </activity>
         <activity android:name=".SttActivity"/>
+        <activity android:name=".TtsActivity"/>
     </application>
 
     <!-- 인터넷, 오디오 사용 권한 추가 -->
