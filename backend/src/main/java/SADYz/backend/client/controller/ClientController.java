@@ -3,10 +3,14 @@ package SADYz.backend.client.controller;
 import SADYz.backend.client.domain.Client;
 import SADYz.backend.client.domain.LastMovedTime;
 import SADYz.backend.client.dto.ClientDto;
+import SADYz.backend.client.dto.LastMovedTimeDto;
+import SADYz.backend.client.repository.LastMovedTimeRepository;
 import SADYz.backend.client.service.ClientService;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -46,9 +50,16 @@ public class ClientController {
     return clientService.updateClient(id, clientDto);
   }
 
-  @PutMapping("{loginId}/time")
-  public Client updateLastMovedTime(@PathVariable String loginId,@RequestBody LastMovedTime lastMovedTime){
-    return clientService.updateLastMovedTime(loginId,lastMovedTime);
+  @PostMapping("time/{id}")
+  public LastMovedTime addLastMovedTime(@PathVariable Long id, @RequestBody
+  LastMovedTimeDto lastMovedTimeDto){
+    return clientService.addLastMovedTime(id,lastMovedTimeDto);
+  }
+
+  @PutMapping("time/{id}")
+  public LastMovedTime updateLastMovedTime(@PathVariable Long id, @RequestBody
+      LastMovedTimeDto lastMovedTimeDto){
+    return clientService.updateLastMovedTime(id,lastMovedTimeDto);
   }
 
   @DeleteMapping("{id}")
