@@ -3,6 +3,7 @@ package SADYz.backend.client.domain;
 import SADYz.backend.client.dto.ClientDto;
 import SADYz.backend.conversation.domain.Conversation;
 import SADYz.backend.emergency.domain.Emergency;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -15,6 +16,7 @@ import javax.persistence.OneToOne;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @NoArgsConstructor
@@ -39,7 +41,7 @@ public class Client {
   @OneToMany
   private List<Emergency> emergency;
 
-  @OneToOne
+  @OneToOne(mappedBy = "client")
   private LastMovedTime lastMovedTime;
 
   private String imageUrl;
@@ -94,13 +96,6 @@ public class Client {
         .imageUrl(client.imageUrl)
         .build();
     return clientDto;
-  }
-
-  public Client updateLastMovedTime(Client client, LastMovedTime lastMovedTime){
-    client.builder()
-        .lastMovedTime(lastMovedTime)
-        .build();
-    return client;
   }
 
   public Client updateImageUrl(Client client, String imageUrl){
