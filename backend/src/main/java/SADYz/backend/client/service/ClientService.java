@@ -3,9 +3,12 @@ package SADYz.backend.client.service;
 import SADYz.backend.client.domain.Client;
 import SADYz.backend.client.domain.LastMovedTime;
 import SADYz.backend.client.dto.ClientDto;
+import SADYz.backend.client.dto.LastMovedTimeDto;
 import SADYz.backend.client.repository.ClientRepository;
+import SADYz.backend.client.repository.LastMovedTimeRepository;
 import SADYz.backend.global.S3.s3Uploader.s3Uploader;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class ClientService {
 
   private final ClientRepository clientRepository;
+  private final LastMovedTimeRepository lastMovedTimeRepository;
 
   @Autowired
   private s3Uploader s3Uploader;
@@ -35,9 +39,31 @@ public class ClientService {
     return clientRepository.save(client);
   }
 
-  public Client updateLastMovedTime(String loginid, LastMovedTime lastMovedTime){
-    Client client = clientRepository.findByLoginId(loginid);
-    return client.updateLastMovedTime(client,lastMovedTime);
+  public LastMovedTime addLastMovedTime(Long id, LastMovedTimeDto lastMovedTimeDto){
+    Client client = clientRepository.findById(id).orElseThrow(()->new IllegalArgumentException("해당 id가 없습니다"));
+    LastMovedTime lastMovedTime = LastMovedTime.builder()
+        .lastMovedTime(lastMovedTimeDto.getLastMovedTime())
+        .client(client)
+        .build();
+    ClientDto clientDto = Client.EntitytoDto(client);
+    clientDto.builder()
+        .lastMovedTime(lastMovedTime)
+        .build();
+    client.update(clientDto);
+    clientRepository.save(client);
+    return lastMovedTimeRepository.save(lastMovedTime);
+  }
+  public LastMovedTime updateLastMovedTime(Long id, LastMovedTimeDto lastMovedTimeDto){
+    Client client = clientRepository.findById(id).orElseThrow(()->new IllegalArgumentException("해당 id가 없습니다"));
+    LastMovedTime lastMovedTime = lastMovedTimeRepository.findByClient(client);
+    lastMovedTime.updateLastMovedTime(client,lastMovedTimeDto);
+    ClientDto clientDto = Client.EntitytoDto(client);
+    clientDto.builder()
+        .lastMovedTime(lastMovedTime)
+        .build();
+    client.update(clientDto);
+    clientRepository.save(client);
+    return lastMovedTimeRepository.save(lastMovedTime);
   }
 
   public ClientDto readClient(Long id){
