@@ -1,10 +1,13 @@
 package SADYz.backend.client.service;
 
 import SADYz.backend.client.domain.Client;
+import SADYz.backend.client.domain.DoorClosedTime;
 import SADYz.backend.client.domain.LastMovedTime;
 import SADYz.backend.client.dto.ClientDto;
+import SADYz.backend.client.dto.DoorClosedTimeDto;
 import SADYz.backend.client.dto.LastMovedTimeDto;
 import SADYz.backend.client.repository.ClientRepository;
+import SADYz.backend.client.repository.DoorClosedTimeRepository;
 import SADYz.backend.client.repository.LastMovedTimeRepository;
 import SADYz.backend.global.S3.s3Uploader.s3Uploader;
 import java.io.IOException;
@@ -22,20 +25,13 @@ public class ClientService {
 
   private final ClientRepository clientRepository;
   private final LastMovedTimeRepository lastMovedTimeRepository;
+  private final DoorClosedTimeRepository doorClosedTimeRepository;
 
   @Autowired
   private s3Uploader s3Uploader;
 
   public Client addClient(ClientDto clientDto){
     Client client = clientDto.toEntity();
-    return clientRepository.save(client);
-  }
-
-  public Client updateClient(Long id,ClientDto clientDto){
-    Client client = clientRepository.findById(id).orElseThrow(
-        ()->new IllegalArgumentException("해당 id가 없습니다")
-    );
-    client.update(clientDto);
     return clientRepository.save(client);
   }
 
@@ -53,6 +49,29 @@ public class ClientService {
     clientRepository.save(client);
     return lastMovedTimeRepository.save(lastMovedTime);
   }
+
+  public DoorClosedTime addDoorClosedTime(Long id, DoorClosedTimeDto doorClosedTimeDto){
+    Client client = clientRepository.findById(id).orElseThrow(()->new IllegalArgumentException("해당 id가 없습니다"));
+    DoorClosedTime doorClosedTime = DoorClosedTime.builder()
+        .doorClosedTime(doorClosedTimeDto.getDoorClosedTime())
+        .client(client)
+        .build();
+    ClientDto clientDto = Client.EntitytoDto(client);
+    clientDto.builder()
+        .doorClosedTime(clientDto.getDoorClosedTime())
+        .build();
+    client.update(clientDto);
+    clientRepository.save(client);
+    return doorClosedTimeRepository.save(doorClosedTime);
+  }
+
+  public Client updateClient(Long id,ClientDto clientDto){
+    Client client = clientRepository.findById(id).orElseThrow(
+        ()->new IllegalArgumentException("해당 id가 없습니다")
+    );
+    client.update(clientDto);
+    return clientRepository.save(client);
+  }
   public LastMovedTime updateLastMovedTime(Long id, LastMovedTimeDto lastMovedTimeDto){
     Client client = clientRepository.findById(id).orElseThrow(()->new IllegalArgumentException("해당 id가 없습니다"));
     LastMovedTime lastMovedTime = lastMovedTimeRepository.findByClient(client);
@@ -64,6 +83,19 @@ public class ClientService {
     client.update(clientDto);
     clientRepository.save(client);
     return lastMovedTimeRepository.save(lastMovedTime);
+  }
+
+  public DoorClosedTime updateDoorClosedTime(Long id, DoorClosedTimeDto doorClosedTimeDto){
+    Client client = clientRepository.findById(id).orElseThrow(()->new IllegalArgumentException("해당 id가 없습니다"));
+    DoorClosedTime doorClosedTime = doorClosedTimeRepository.findByClient(client);
+    doorClosedTime.updateDoorClosedTime(client,doorClosedTimeDto);
+    ClientDto clientDto = Client.EntitytoDto(client);
+    clientDto.builder()
+        .doorClosedTime(doorClosedTime)
+        .build();
+    client.update(clientDto);
+    clientRepository.save(client);
+    return doorClosedTimeRepository.save(doorClosedTime);
   }
 
   public ClientDto readClient(Long id){
