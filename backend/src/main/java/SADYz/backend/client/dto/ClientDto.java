@@ -1,6 +1,7 @@
 package SADYz.backend.client.dto;
 
 import SADYz.backend.client.domain.Client;
+import SADYz.backend.client.domain.DoorClosedTime;
 import SADYz.backend.client.domain.Status;
 import SADYz.backend.conversation.domain.Conversation;
 import SADYz.backend.emergency.domain.Emergency;
@@ -33,6 +34,8 @@ public class ClientDto {
 
   private LastMovedTime lastMovedTime;
 
+  private DoorClosedTime doorClosedTime;
+
   private String imageUrl;
 
   public Client toEntity(){
@@ -48,6 +51,7 @@ public class ClientDto {
         .conversations(conversations)
         .emergency(emergency)
         .lastMovedTime(lastMovedTime)
+        .doorClosedTime(doorClosedTime)
         .imageUrl(imageUrl)
         .build();
     return build;
