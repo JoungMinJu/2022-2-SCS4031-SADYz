@@ -1,8 +1,10 @@
 package SADYz.backend.client.controller;
 
 import SADYz.backend.client.domain.Client;
+import SADYz.backend.client.domain.DoorClosedTime;
 import SADYz.backend.client.domain.LastMovedTime;
 import SADYz.backend.client.dto.ClientDto;
+import SADYz.backend.client.dto.DoorClosedTimeDto;
 import SADYz.backend.client.dto.LastMovedTimeDto;
 import SADYz.backend.client.repository.LastMovedTimeRepository;
 import SADYz.backend.client.service.ClientService;
@@ -45,21 +47,33 @@ public class ClientController {
     return clientService.addClient(clientDto);
   }
 
-  @PutMapping("{id}")
-  public Client updateClient(@PathVariable Long id, @RequestBody ClientDto clientDto){
-    return clientService.updateClient(id, clientDto);
-  }
-
   @PostMapping("time/{id}")
   public LastMovedTime addLastMovedTime(@PathVariable Long id, @RequestBody
   LastMovedTimeDto lastMovedTimeDto){
     return clientService.addLastMovedTime(id,lastMovedTimeDto);
   }
 
+  @PostMapping("door/{id}")
+  public DoorClosedTime addDoorClosedTime(@PathVariable Long id, @RequestBody
+  DoorClosedTimeDto doorClosedTimeDto){
+    return clientService.addDoorClosedTime(id, doorClosedTimeDto);
+  }
+
+  @PutMapping("{id}")
+  public Client updateClient(@PathVariable Long id, @RequestBody ClientDto clientDto){
+    return clientService.updateClient(id, clientDto);
+  }
+
   @PutMapping("time/{id}")
   public LastMovedTime updateLastMovedTime(@PathVariable Long id, @RequestBody
       LastMovedTimeDto lastMovedTimeDto){
     return clientService.updateLastMovedTime(id,lastMovedTimeDto);
+  }
+
+  @PutMapping("door/{id}")
+  public DoorClosedTime updateDoorClosedTime(@PathVariable Long id, @RequestBody
+  DoorClosedTimeDto doorClosedTimeDto){
+    return clientService.updateDoorClosedTime(id,doorClosedTimeDto);
   }
 
   @DeleteMapping("{id}")
