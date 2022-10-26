@@ -44,12 +44,15 @@ public class Client {
   @OneToOne(mappedBy = "client")
   private LastMovedTime lastMovedTime;
 
+  @OneToOne(mappedBy = "client")
+  private DoorClosedTime doorClosedTime;
+
   private String imageUrl;
 
   @Builder
   public Client(String loginId, String name, String address, String birth, String phonenumber,
       boolean response, boolean stay, Status status, List<Conversation> conversations,
-      List<Emergency> emergency, LastMovedTime lastMovedTime,String imageUrl) {
+      List<Emergency> emergency, LastMovedTime lastMovedTime,DoorClosedTime doorClosedTime,String imageUrl) {
     this.loginId = loginId;
     this.name = name;
     this.address = address;
@@ -61,6 +64,7 @@ public class Client {
     this.conversations = conversations;
     this.emergency = emergency;
     this.lastMovedTime = lastMovedTime;
+    this.doorClosedTime = doorClosedTime;
     this.imageUrl = imageUrl;
   }
 
@@ -76,6 +80,7 @@ public class Client {
     this.conversations = clientDto.getConversations();
     this.emergency = clientDto.getEmergency();
     this.lastMovedTime = clientDto.getLastMovedTime();
+    this.doorClosedTime = clientDto.getDoorClosedTime();
     this.imageUrl = clientDto.getImageUrl();
   }
 
@@ -93,6 +98,7 @@ public class Client {
         .conversations(client.conversations)
         .emergency(client.emergency)
         .lastMovedTime(client.lastMovedTime)
+        .doorClosedTime(client.doorClosedTime)
         .imageUrl(client.imageUrl)
         .build();
     return clientDto;
