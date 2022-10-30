@@ -5,9 +5,13 @@
 #include <ArduinoJson.h>
 #include <HTTPClient.h>
  
-const char* ssid = "**********";
-const char* password = "**********";
+const char* ssid = process.env.wifi_id
+const char* password = process.env.wifi_pw;
 WiFiClient client;
+
+//thingspeak
+const char* server = "api.thingspeak.com";
+String apiKey = process.env.api_key;
 
 //날짜 시간
 WiFiUDP ntpUDP;
@@ -46,6 +50,9 @@ void loop() {
     door_close_previous = true;//문이 닫힌상태임을 기록.
     Serial.println(make_json());
     send_server(make_json());
+    if(client.connect(server, 80)){
+        thingspeak(1);
+      }
     Serial.println(door_close_current);
   }
 
@@ -123,3 +130,23 @@ void send_server(String data){
 
   http.end();
 }
+
+void thingspeak(int door_closed){
+  String postStr = apiKey;
+  postStr +="&field2=";
+  postStr += String(door_closed);
+  
+  client.print("POST /update HTTP/1.1\n");
+  client.print("Host: api.thingspeak.com\n");
+  client.print("Connection: close\n");
+  client.print("X-THINGSPEAKAPIKEY: " + apiKey + "\n");
+  client.print("Content-Type: application/x-www-form-urlencoded\n");
+  client.print("Content-Length: ");
+  client.print(postStr.length());
+  client.print("\n\n");
+  client.print(postStr);
+  
+  Serial.println("Thingspeak "+String(door_closed)+"전송");
+
+}
+ 
