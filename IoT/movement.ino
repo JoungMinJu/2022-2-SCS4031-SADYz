@@ -3,20 +3,21 @@
 #include <ESP8266HTTPClient.h>
 #include <ArduinoJson.h>
 #include <ESP8266WiFi.h>
-const char* ssid = "**********"; //와이파이 아이디
-const char* password = "**********"; //와이파이 비밀번호
+
+const char* ssid = process.env.wifi_id
+const char* password = process.env.wifi_pw;
 
 //초음파 센서 
 const int trigPin = 12; //D5
 const int echoPin = 14; //D6
-
+const int ledPin = 16; // D0
 //PIR 센서
 const int pir = 13; //D7
 WiFiClient client;
 
 //thinkspeak
 const char* server = "api.thingspeak.com";
-String apiKey = "**********";
+String apiKey = process.env.api_key;
 
 //날짜 시간
 WiFiUDP ntpUDP;
@@ -35,6 +36,10 @@ void setup() {
 
   //pir센서
   pinMode(pir,INPUT);
+
+  //led
+  pinMode(ledPin, OUTPUT);
+  //시간
   timeClient.begin();
 }
 
@@ -84,7 +89,8 @@ void check_movement(){
   //초음파 센서 값을 기준(거리 몇 cm 이하면 사람)으로 계산하여
   //참일 경우, json으로 현재 날짜 저장
   if (state == 1){
-    if (distance<20){
+    if (distance<30){
+      digitalWrite(ledPin,HIGH);
       Serial.println("Activiated");
       //현재 날짜
       
@@ -126,21 +132,28 @@ void check_movement(){
 
       //thinkspeak으로 보내기
       if(client.connect(server,80)){
-        thinkspeak(distance);
+        thinkspeak(1);
         send_server(jsondata);
       }
       client.stop();
+
       Serial.println("Waiting..."); 
     }
+    else{
+      digitalWrite(ledPin,LOW);
+    }
+    
+    
+     
     
   }
   
 }
 
-void thinkspeak(int distance){
+void thinkspeak(int movement){
   String postStr = apiKey;
       postStr +="&field1=";
-      postStr += String(distance);
+      postStr += String(movement);
     client.print("POST /update HTTP/1.1\n"); 
     client.print("Host: api.thingspeak.com\n"); 
     client.print("Connection: close\n"); 
@@ -150,8 +163,8 @@ void thinkspeak(int distance){
     client.print(postStr.length()); 
     client.print("\n\n"); 
     client.print(postStr);
-    Serial.print("Distance: ");
-    Serial.print(distance);
+    Serial.print("CurrentMovement: ");
+    Serial.print(movement);
     Serial.println("send to Thingspeak");
     Serial.println();
 }
@@ -165,6 +178,12 @@ void send_server(String data){
   http.addHeader("Content-Type", "application/json");
   Serial.println(data);
   int httpResponseCode = http.PUT(data);
+
+  if(httpResponseCode == 500){
+     http.addHeader("Content-Type", "application/json");
+     httpResponseCode = http.POST(data);
+    
+  }
   Serial.print("HTTP Response code: ");
   Serial.println(httpResponseCode);
 
