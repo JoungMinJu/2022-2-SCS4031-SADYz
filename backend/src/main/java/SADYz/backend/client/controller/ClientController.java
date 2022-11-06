@@ -82,5 +82,26 @@ public class ClientController {
     return "IMAGE DELETED";
   }
 
+  @PostMapping("door/{id}")
+  public DoorClosedTime addDoorClosedTime(@PathVariable Long id, @RequestBody
+  DoorClosedTimeDto doorClosedTimeDto){
+    return clientService.addDoorClosedTime(id, doorClosedTimeDto);
+  }
+
+  @PutMapping("door/{id}")
+  public DoorClosedTime updateDoorClosedTime(@PathVariable Long id, @RequestBody
+  DoorClosedTimeDto doorClosedTimeDto){
+    return clientService.updateDoorClosedTime(id,doorClosedTimeDto);
+  }
+
+  @GetMapping("door/{loginId}")
+  public DoorClosedTimeDto readDoorClosedTime(@PathVariable String loginId){
+    return clientService.readDoorClosedTime(loginId);
+  }
+
+  @PutMapping("door")
+  public DoorClosedTime verify(DoorClosedTimeDto doorClosedTimeDto){
+    return clientService.verify("user1234", doorClosedTimeDto);
+  }
 
 }
