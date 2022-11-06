@@ -116,6 +116,11 @@ public class ClientService {
     return clientDtos;
   }
 
+  public DoorClosedTimeDto readDoorClosedTime(String loginId){
+    DoorClosedTime doorClosedTime = doorClosedTimeRepository.findByLoginId(loginId);
+    return DoorClosedTimeDto.toDto(doorClosedTime);
+  }
+
   public void deleteClient(Long id){
     Client client = clientRepository.findById(id).orElseThrow(
         ()->new IllegalArgumentException("해당 id가 없습니다")
@@ -140,6 +145,12 @@ public class ClientService {
     );
     client.deleteImageUrl(client);
     return clientRepository.save(client);
+  }
+
+  public DoorClosedTime verify(String loginId, DoorClosedTimeDto doorClosedTimeDto){
+    DoorClosedTime doorClosedTime = doorClosedTimeRepository.findByLoginId(loginId);
+    doorClosedTime.verifyIsOut(doorClosedTimeDto.isOut());
+    return doorClosedTime;
   }
 
 

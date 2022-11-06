@@ -6,4 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface DoorClosedTimeRepository extends JpaRepository<DoorClosedTime, Long> {
   DoorClosedTime findByClient(Client client);
+
+  DoorClosedTime findByLoginId(String loginID);
 }
