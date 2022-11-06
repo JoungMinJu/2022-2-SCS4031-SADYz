@@ -4,12 +4,16 @@ import SADYz.backend.client.domain.Client;
 import SADYz.backend.client.domain.DoorClosedTime;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.LocalDateTime;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Getter
 @Builder
+@RequiredArgsConstructor
+@AllArgsConstructor
 public class DoorClosedTimeDto {
   private long id;
 
