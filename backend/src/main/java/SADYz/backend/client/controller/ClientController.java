@@ -53,12 +53,6 @@ public class ClientController {
     return clientService.addLastMovedTime(id,lastMovedTimeDto);
   }
 
-  @PostMapping("door/{id}")
-  public DoorClosedTime addDoorClosedTime(@PathVariable Long id, @RequestBody
-  DoorClosedTimeDto doorClosedTimeDto){
-    return clientService.addDoorClosedTime(id, doorClosedTimeDto);
-  }
-
   @PutMapping("{id}")
   public Client updateClient(@PathVariable Long id, @RequestBody ClientDto clientDto){
     return clientService.updateClient(id, clientDto);
@@ -68,12 +62,6 @@ public class ClientController {
   public LastMovedTime updateLastMovedTime(@PathVariable Long id, @RequestBody
       LastMovedTimeDto lastMovedTimeDto){
     return clientService.updateLastMovedTime(id,lastMovedTimeDto);
-  }
-
-  @PutMapping("door/{id}")
-  public DoorClosedTime updateDoorClosedTime(@PathVariable Long id, @RequestBody
-  DoorClosedTimeDto doorClosedTimeDto){
-    return clientService.updateDoorClosedTime(id,doorClosedTimeDto);
   }
 
   @DeleteMapping("{id}")
