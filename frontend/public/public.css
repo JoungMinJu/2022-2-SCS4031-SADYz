@@ -1,0 +1,49 @@
+@font-face {
+  font-family: 'poppins_b';
+  src: url('./fonts/Poppins-Bold.ttf');
+  unicode-range: U+26;
+}
+
+@font-face {
+  font-family: 'poppins_m';
+  src: url('./fonts/Poppins-Medium.ttf');
+  unicode-range: U+26;
+}
+
+@font-face {
+  font-family: 'poppins_r';
+  src: url('./fonts/Poppins-Regular.ttf');
+  unicode-range: U+26;
+}
+
+@font-face {
+  font-family: 'poppins_l';
+  src: url('./fonts/Poppins-Light.ttf');
+  unicode-range: U+26;
+}
+
+@font-face {
+  font-family: 'nanum_l';
+  src: url('./fonts/NANUMBARUNGOTHICLIGHT.OTF');
+  unicode-range: U+AC00-D7A3;
+}
+
+@font-face {
+  font-family: 'nanum_b';
+  src: url('./fonts/NANUMBARUNGOTHICBOLD.OTF');
+  unicode-range: U+AC00-D7A3;
+}
+
+html,
+body {
+  font-family: 'poppins_4';
+  text-decoration: none;
+  margin: 0;
+  background: #f8f8f8;
+  height: 100%;
+  font-family: 'DMSans', sans-serif;
+}
+
+#root {
+  height: 100%;
+}
