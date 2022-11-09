@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-pascal-case */
 import React from 'react';
 import styled from 'styled-components';
 import Navbar from '../component/Navbar';
@@ -5,6 +6,9 @@ function Register(props) {
   return (
     <div>
       <Navbar />
+      <style>{`#register {
+                    filter: invert(11%) sepia(51%) saturate(890%) hue-rotate(333deg) brightness(100%) contrast(98%);`}</style>
+
       <div className="container">
         <Register_Title>노인 가구 등록하기</Register_Title>
         <Register_Container>
