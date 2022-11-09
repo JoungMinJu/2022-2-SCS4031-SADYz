@@ -4,6 +4,7 @@ function Mainpage(props) {
   return (
     <div>
       <Navbar />
+      <div className="container">OO구 노인 가구 명단</div>
     </div>
   );
 }
