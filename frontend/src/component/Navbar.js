@@ -2,9 +2,8 @@
 /* eslint-disable react/jsx-pascal-case */
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { useState, useEffect } from 'react';
 import styled from 'styled-components';
-function Navbar(props) {
+function Navbar() {
   return (
     <>
       <Navbar_style>
@@ -13,11 +12,11 @@ function Navbar(props) {
           <img src="images/mainpage.png" style={image_style}></img>
           Mainpage
         </NavLink>
-        <NavLink to="/" style={Menu}>
+        <NavLink to="/Emergency" style={Menu}>
           <img src="images/emergency.png" style={image_style}></img>
           응급콜
         </NavLink>
-        <NavLink to="/Postlist" style={Menu}>
+        <NavLink to="/Register" style={Menu}>
           <img src="images/register.png" style={image_style}></img>
           노인가구 등록
         </NavLink>
