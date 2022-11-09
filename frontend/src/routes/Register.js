@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-pascal-case */
 import React from 'react';
 import styled from 'styled-components';
 import Navbar from '../component/Navbar';
@@ -5,6 +6,9 @@ function Register(props) {
   return (
     <div>
       <Navbar />
+      <style>{`#register {
+                    filter: invert(11%) sepia(51%) saturate(890%) hue-rotate(333deg) brightness(100%) contrast(98%);`}</style>
+
       <div className="container">
         <Register_Title>노인 가구 등록하기</Register_Title>
         <Register_Container>
@@ -40,6 +44,7 @@ const Register_Title = styled.section`
 `;
 
 const Register_Container = styled.div`
+  position: relative;
   box-sizing: border-box;
   padding: 10vmin;
   background-color: white;
@@ -62,7 +67,7 @@ const Label_style = styled.label`
 const Input_Style = styled.input`
   height: 5vmin;
   margin-bottom: 3vmin;
-  width: 90%;
+
   border: 1.3px solid rgba(196, 196, 196, 0.5);
   border-radius: 1vmin;
 `;
@@ -79,4 +84,7 @@ const Button = styled.button`
   font-size: 0.8vmax;
   font-family: 'nanum_l';
   cursor: pointer;
+  position: absolute;
+  right: 10vmin;
+  bottom: 5vmin;
 `;

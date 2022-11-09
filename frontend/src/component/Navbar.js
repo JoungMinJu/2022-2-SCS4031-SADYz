@@ -8,15 +8,15 @@ function Navbar() {
     <>
       <Navbar_style>
         <section style={{ ...Menu, color: '#034b5e' }}>Menu</section>
-        <NavLink to="/" style={Menu}>
+        <NavLink to="/" style={Menu} id="mainpage">
           <img src="images/mainpage.png" style={image_style}></img>
           Mainpage
         </NavLink>
-        <NavLink to="/Emergency" style={Menu}>
+        <NavLink to="/Emergency" style={Menu} id="emergency">
           <img src="images/emergency.png" style={image_style}></img>
           응급콜
         </NavLink>
-        <NavLink to="/Register" style={Menu}>
+        <NavLink to="/Register" style={Menu} id="register">
           <img src="images/register.png" style={image_style}></img>
           노인가구 등록
         </NavLink>
