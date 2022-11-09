@@ -47,3 +47,12 @@ body {
 #root {
   height: 100%;
 }
+
+.container {
+  display: grid;
+  box-sizing: border-box;
+  height: 100%;
+  margin-left: 12%;
+  padding: 3% 5%;
+  gap: 25px;
+}
