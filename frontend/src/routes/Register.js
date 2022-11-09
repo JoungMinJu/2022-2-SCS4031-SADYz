@@ -12,20 +12,20 @@ function Register(props) {
       <div className="container">
         <Register_Title>노인 가구 등록하기</Register_Title>
         <Register_Container>
-          <Label_style>이름</Label_style>
-          <Input_Style type="text"></Input_Style>
+          <Label>이름</Label>
+          <Input type="text"></Input>
 
-          <Label_style>나이</Label_style>
-          <Input_Style type="number"></Input_Style>
+          <Label>나이</Label>
+          <Input type="number"></Input>
 
-          <Label_style>생년월일</Label_style>
-          <Input_Style type="date"></Input_Style>
+          <Label>생년월일</Label>
+          <Input type="date"></Input>
 
-          <Label_style>핸드폰 번호</Label_style>
-          <Input_Style type="tel" maxlength="13" />
+          <Label>핸드폰 번호</Label>
+          <Input type="tel" maxlength="13" />
 
-          <Label_style>주소</Label_style>
-          <Input_Style type="text" />
+          <Label>주소</Label>
+          <Input type="text" />
 
           <Button>등록하기</Button>
         </Register_Container>
@@ -58,13 +58,13 @@ const Register_Container = styled.div`
   justify-content: center;
 `;
 
-const Label_style = styled.label`
+const Label = styled.label`
   font-family: 'nanum_l';
   margin-bottom: 1vmin;
   font-weight: 600;
 `;
 
-const Input_Style = styled.input`
+const Input = styled.input`
   height: 5vmin;
   margin-bottom: 3vmin;
 
