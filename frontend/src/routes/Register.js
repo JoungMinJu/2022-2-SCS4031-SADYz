@@ -1,8 +1,29 @@
 /* eslint-disable react/jsx-pascal-case */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Navbar from '../component/Navbar';
 function Register(props) {
+  const [inputs, setInputs] = useState({
+    name: '',
+    age: '',
+    birth: '',
+    phone: '',
+    address: '',
+  });
+
+  useEffect(() => {
+    console.log(inputs);
+  }, [inputs]);
+
+  const { name, age, birth, phone, address } = inputs;
+
+  const onChangeInput = e => {
+    const { name, value } = e.target;
+    setInputs({
+      ...inputs,
+      [name]: value,
+    });
+  };
   return (
     <div>
       <Navbar />
@@ -13,19 +34,45 @@ function Register(props) {
         <Register_Title>노인 가구 등록하기</Register_Title>
         <Register_Container>
           <Label>이름</Label>
-          <Input type="text"></Input>
+          <Input
+            type="text"
+            name="name"
+            value={name}
+            onChange={onChangeInput}
+          ></Input>
 
           <Label>나이</Label>
-          <Input type="number"></Input>
+          <Input
+            type="number"
+            name="age"
+            value={age}
+            onChange={onChangeInput}
+          ></Input>
 
           <Label>생년월일</Label>
-          <Input type="date"></Input>
+          <Input
+            type="date"
+            name="birth"
+            value={birth}
+            onChange={onChangeInput}
+          ></Input>
 
           <Label>핸드폰 번호</Label>
-          <Input type="tel" maxlength="13" />
+          <Input
+            type="tel"
+            maxlength="13"
+            name="phone"
+            value={phone}
+            onChange={onChangeInput}
+          />
 
           <Label>주소</Label>
-          <Input type="text" />
+          <Input
+            type="text"
+            name="address"
+            value={address}
+            onChange={onChangeInput}
+          />
 
           <Button>등록하기</Button>
         </Register_Container>
