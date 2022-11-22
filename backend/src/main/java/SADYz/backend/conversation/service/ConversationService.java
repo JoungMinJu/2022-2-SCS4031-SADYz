@@ -19,20 +19,18 @@ public class ConversationService {
   private final ConversationRepository conversationRepository;
   private final ClientRepository clientRepository;
 
-  public Conversation addConversation(Long ClientId,ConversationDto conversationDto){
-    Client client = clientRepository.findById(ClientId).orElseThrow(()->new IllegalArgumentException("해당 id가 없습니다"));
-    log.info(client.getName());
-    log.info(conversationDto.getFullText());
+  public Conversation addConversation(String phoneNumber,ConversationDto conversationDto){
+    Client client = clientRepository.findByPhonenumber(phoneNumber);
     ConversationDto newConversationDto = ConversationDto.builder()
         .fullText(conversationDto.getFullText())
-        .summary(conversationDto.getSummary())
         .client(client)
         .build();
     return conversationRepository.save(newConversationDto.toEntity());
   }
 
-  public List<ConversationDto> readConversation(Long Clientid){
-    List<Conversation> conversations = conversationRepository.findConversationsByClient(Clientid);
+  public List<ConversationDto> readConversation(String phoneNumber){
+    Client client = clientRepository.findByPhonenumber(phoneNumber);
+    List<Conversation> conversations = conversationRepository.findConversationsByClient(client);
     List<ConversationDto> conversationDtos = conversations.stream()
         .map(it -> ConversationDto.toDto(it))
         .collect(Collectors.toList());

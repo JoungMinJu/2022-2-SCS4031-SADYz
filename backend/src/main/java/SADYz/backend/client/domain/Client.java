@@ -37,7 +37,8 @@ public class Client {
   private boolean stay;
   @Enumerated(EnumType.STRING)
   private Status status;
-  @OneToMany
+  @OneToMany(mappedBy = "client")
+  @JsonIgnore
   private List<Conversation> conversations;
 
   @OneToMany
