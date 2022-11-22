@@ -20,14 +20,14 @@ public class ConversationController {
 
   private final ConversationService conversationService;
 
-  @GetMapping(value = "{ClientId}/conversation")
-  public List<ConversationDto> readConversations(Long ClientId){
-    return conversationService.readConversation(ClientId);
+  @GetMapping(value = "{phoneNumber}/conversation")
+  public List<ConversationDto> readConversations(String phoneNumber){
+    return conversationService.readConversation(phoneNumber);
   }
 
-  @PostMapping(value = "{ClientId}/conversation")
-  public Conversation addConversation(@PathVariable Long ClientId, @RequestBody ConversationDto conversationDto){
-    return conversationService.addConversation(ClientId,conversationDto);
+  @PostMapping(value = "{phoneNumber}/conversation")
+  public Conversation addConversation(@PathVariable String phoneNumber, @RequestBody ConversationDto conversationDto){
+    return conversationService.addConversation(phoneNumber,conversationDto);
   }
 
   @DeleteMapping(value = "{ClientId}/conversation/{ConversationId}")
