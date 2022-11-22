@@ -17,7 +17,7 @@ function Register(props) {
 
   const { name, age, birth, phone, address } = inputs;
 
-  const onChangeInput = e => {
+  const onChangeInput = (e) => {
     const { name, value } = e.target;
     setInputs({
       ...inputs,
@@ -31,7 +31,10 @@ function Register(props) {
                     filter: invert(11%) sepia(51%) saturate(890%) hue-rotate(333deg) brightness(100%) contrast(98%);`}</style>
 
       <div className="container">
+        <br />
+
         <Register_Title>노인 가구 등록하기</Register_Title>
+        <br />
         <Register_Container>
           <Label>이름</Label>
           <Input
@@ -106,7 +109,6 @@ const Register_Container = styled.div`
 `;
 
 const Label = styled.label`
-  font-family: 'nanum_l';
   margin-bottom: 1vmin;
   font-weight: 600;
 `;
@@ -127,9 +129,8 @@ const Button = styled.button`
   color: white;
   border: none;
   border-radius: 0.5vmin;
-  font-weight: 600;
   font-size: 0.8vmax;
-  font-family: 'nanum_l';
+  font-family: 'nanum';
   cursor: pointer;
   position: absolute;
   right: 10vmin;
