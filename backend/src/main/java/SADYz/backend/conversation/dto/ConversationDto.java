@@ -15,13 +15,11 @@ public class ConversationDto {
 
   private Long id;
   private String fullText;
-  private String summary;
   private Client client;
 
   public Conversation toEntity(){
     return Conversation.builder()
         .fullText(fullText)
-        .summary(summary)
         .client(client)
         .build();
   }
@@ -30,7 +28,6 @@ public class ConversationDto {
     ConversationDto conversationDto = ConversationDto.builder()
         .id(conversation.getId())
         .fullText(conversation.getFullText())
-        .summary(conversation.getSummary())
         .client(conversation.getClient())
         .build();
     return conversationDto;
