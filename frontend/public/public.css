@@ -23,8 +23,8 @@
 }
 
 @font-face {
-  font-family: 'nanum_l';
-  src: url('./fonts/NANUMBARUNGOTHICLIGHT.OTF');
+  font-family: 'nanum';
+  src: url('./fonts/NANUMBARUNGOTHIC.OTF');
   unicode-range: U+AC00-D7A3;
 }
 
@@ -41,7 +41,7 @@ body {
   margin: 0;
   background: #f8f8f8;
   height: 100%;
-  font-family: 'DMSans', sans-serif;
+  font-family: 'nanum', sans-serif;
 }
 
 #root {
@@ -51,6 +51,12 @@ body {
 .container {
   box-sizing: border-box;
   height: 100vh;
+  max-height: 100vh;
   margin-left: 12%;
-  padding: 3% 5%;
+  padding: 2% 5%;
+}
+
+h2 {
+  font-family: 'nanum_b';
+  color: #298097;
 }
