@@ -6,8 +6,10 @@ import Chatbot from '../component/Detail/Chatbot';
 import DetailEmergency from '../component/Detail/Detail_Emergency';
 import Navbar from '../component/Navbar';
 import '../css/grid.css';
+import { useParams } from 'react-router-dom';
 
 function Detail(props) {
+  const { id } = useParams();
   return (
     <>
       <Navbar />
