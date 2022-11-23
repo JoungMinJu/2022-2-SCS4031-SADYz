@@ -16,8 +16,8 @@ function Chatbot(props) {
           value={value}
           format={(locale, date) => date.toLocaleString('en')}
           formatMonthYear={(locale, date) =>
-            date.toLocaleString('kr', {
-              month: 'numeric',
+            date.toLocaleString('en', {
+              month: 'long',
               year: 'numeric',
             })
           }
@@ -30,6 +30,7 @@ function Chatbot(props) {
           prev2Label={null}
           showNeighboringMonth={false}
         />
+        {/* {console.log(moment(value).format('YYYY-MM-DD'))} */}
       </Calendar_part>
     </>
   );
