@@ -1,6 +1,7 @@
 package SADYz.backend.client.dto;
 
 import SADYz.backend.client.domain.Client;
+import SADYz.backend.client.domain.LastMovedTime;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
@@ -22,5 +23,12 @@ public class LastMovedTimeDto {
   private LocalDateTime lastMovedTime;
 
   private Client client;
+
+  public LastMovedTime toEntity(){
+    return LastMovedTime.builder()
+        .lastMovedTime(lastMovedTime)
+        .client(client)
+        .build();
+  }
 
 }
