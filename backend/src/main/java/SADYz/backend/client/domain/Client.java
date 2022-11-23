@@ -44,8 +44,9 @@ public class Client {
   @OneToMany
   private List<Emergency> emergency;
 
-  @OneToOne(mappedBy = "client")
-  private LastMovedTime lastMovedTime;
+  @OneToMany(mappedBy = "client")
+  @JsonIgnore
+  private List<LastMovedTime> lastMovedTime;
 
   @OneToOne(mappedBy = "client")
   private DoorClosedTime doorClosedTime;
@@ -55,7 +56,7 @@ public class Client {
   @Builder
   public Client(String loginId, String name, String address, String birth, String phonenumber,
       boolean response, boolean stay, Status status, List<Conversation> conversations,
-      List<Emergency> emergency, LastMovedTime lastMovedTime,DoorClosedTime doorClosedTime,String imageUrl) {
+      List<Emergency> emergency, List<LastMovedTime> lastMovedTime,DoorClosedTime doorClosedTime,String imageUrl) {
     this.loginId = loginId;
     this.name = name;
     this.address = address;
