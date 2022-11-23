@@ -12,13 +12,15 @@ import axios from 'axios';
 function Detail(props) {
   const { id } = useParams();
   const [client, setClient] = useState([]);
+  const [lastMovedTime, setLastMovedTime] = useState([]);
   const get_client_detail = async () => {
     try {
       await axios
         .get(`http://localhost:8080/api/dashboard/clients/${id}`)
         .then((res) => {
-          console.log(res);
+          console.log(res.data);
           setClient(res.data);
+          setLastMovedTime(res.data.lastMovedTime);
         });
     } catch (err) {
       console.log(err);
@@ -40,7 +42,16 @@ function Detail(props) {
         <Container className="detail_container">
           <div className="item title">기본 인적사항</div>
           <div className="item">
-            <BasicInfo />
+            <BasicInfo
+              id={client.id}
+              name={client.name}
+              birth={client.birth}
+              phonenumber={client.phonenumber}
+              address={client.address}
+              lastMovedTime={
+                lastMovedTime === null ? null : lastMovedTime.lastMovedTime
+              }
+            />
           </div>
           <div className="item title">챗봇</div>
           <div className="item">

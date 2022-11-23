@@ -1,6 +1,21 @@
 import React from 'react';
 import Navbar from '../component/Navbar';
+import axios from 'axios';
+import { useEffect } from 'react';
 function Mainpage(props) {
+  const get_clients = async () => {
+    try {
+      await axios
+        .get('http://localhost:8080/api/dashboard/clients')
+        .then((res) => console.log(res));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    get_clients();
+  }, []);
   return (
     <div>
       <Navbar />
