@@ -32,7 +32,7 @@ public class ClientDto {
 
   private List<Emergency> emergency;
 
-  private LastMovedTime lastMovedTime;
+  private List<LastMovedTime> lastMovedTime;
 
   private DoorClosedTime doorClosedTime;
 
