@@ -15,9 +15,11 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
+@Getter
 @Entity
 @NoArgsConstructor
 @EqualsAndHashCode
@@ -35,7 +37,8 @@ public class Client {
   private boolean stay;
   @Enumerated(EnumType.STRING)
   private Status status;
-  @OneToMany
+  @OneToMany(mappedBy = "client")
+  @JsonIgnore
   private List<Conversation> conversations;
 
   @OneToMany
