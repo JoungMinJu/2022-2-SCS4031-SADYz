@@ -25,13 +25,11 @@
 @font-face {
   font-family: 'nanum';
   src: url('./fonts/NANUMBARUNGOTHIC.OTF');
-  unicode-range: U+AC00-D7A3;
 }
 
 @font-face {
   font-family: 'nanum_b';
   src: url('./fonts/NANUMBARUNGOTHICBOLD.OTF');
-  unicode-range: U+AC00-D7A3;
 }
 
 html,

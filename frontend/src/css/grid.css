@@ -6,7 +6,7 @@
   display: grid;
   gap: 25px;
   grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-template-rows: 3vmin 1fr 3vmin 1fr;
+  grid-template-rows: 2vmin 1fr 2vmin 1fr;
 }
 
 .item {

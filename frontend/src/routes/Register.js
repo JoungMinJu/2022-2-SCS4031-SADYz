@@ -2,20 +2,33 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Navbar from '../component/Navbar';
+import axios from 'axios';
+
 function Register(props) {
   const [inputs, setInputs] = useState({
     name: '',
-    age: '',
     birth: '',
-    phone: '',
+    phonenumber: '',
     address: '',
   });
+
+  const post_client = async () => {
+    try {
+      await axios
+        .post('http://localhost:8080/api/dashboard/clients', inputs)
+        .then((res) => {
+          console.log(res);
+        });
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   useEffect(() => {
     console.log(inputs);
   }, [inputs]);
 
-  const { name, age, birth, phone, address } = inputs;
+  const { name, birth, phonenumber, address } = inputs;
 
   const onChangeInput = (e) => {
     const { name, value } = e.target;
@@ -32,7 +45,6 @@ function Register(props) {
 
       <div className="container">
         <br />
-
         <Register_Title>노인 가구 등록하기</Register_Title>
         <br />
         <Register_Container>
@@ -41,14 +53,6 @@ function Register(props) {
             type="text"
             name="name"
             value={name}
-            onChange={onChangeInput}
-          ></Input>
-
-          <Label>나이</Label>
-          <Input
-            type="number"
-            name="age"
-            value={age}
             onChange={onChangeInput}
           ></Input>
 
@@ -64,8 +68,8 @@ function Register(props) {
           <Input
             type="tel"
             maxlength="13"
-            name="phone"
-            value={phone}
+            name="phonenumber"
+            value={phonenumber}
             onChange={onChangeInput}
           />
 
@@ -77,7 +81,7 @@ function Register(props) {
             onChange={onChangeInput}
           />
 
-          <Button>등록하기</Button>
+          <Button onClick={() => post_client()}>등록하기</Button>
         </Register_Container>
       </div>
     </div>
