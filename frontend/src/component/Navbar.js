@@ -39,7 +39,7 @@ const Navbar_style = styled.div`
 `;
 
 const Menu = {
-  fontFamily: ['poppins_m', 'nanum_l'],
+  fontFamily: ['poppins_m', 'nanum'],
   display: 'flex',
   flexDirection: 'row',
   justifyContent: 'middle',
