@@ -3,21 +3,24 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
+const emergency_img = `${process.env.PUBLIC_URL + '/images/emergency.png'}`;
+const mainpage_img = `${process.env.PUBLIC_URL + '/images/mainpage.png'}`;
+const register_img = `${process.env.PUBLIC_URL + '/images/register.png'}`;
 function Navbar() {
   return (
     <>
       <Navbar_style>
         <section style={{ ...Menu, color: '#034b5e' }}>Menu</section>
         <NavLink to="/" style={Menu} id="mainpage">
-          <img src="images/mainpage.png" style={image_style}></img>
+          <img src={mainpage_img} style={image_style}></img>
           Mainpage
         </NavLink>
         <NavLink to="/Emergency" style={Menu} id="emergency">
-          <img src="images/emergency.png" style={image_style}></img>
+          <img src={emergency_img} style={image_style}></img>
           응급콜
         </NavLink>
         <NavLink to="/Register" style={Menu} id="register">
-          <img src="images/register.png" style={image_style}></img>
+          <img src={register_img} style={image_style}></img>
           노인가구 등록
         </NavLink>
       </Navbar_style>

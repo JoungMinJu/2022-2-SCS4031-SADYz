@@ -32,7 +32,7 @@
 .react-calendar__navigation {
   display: flex;
   height: 23px;
-  margin-bottom: 1em;
+  margin-bottom: 2em;
 }
 .react-calendar__navigation__label > span {
   font-family: 'nanum';
@@ -46,10 +46,7 @@
 .react-calendar__navigation button:disabled {
   background-color: #f0f0f0;
 }
-.react-calendar__navigation button:enabled:hover,
-.react-calendar__navigation button:enabled:focus {
-  background-color: #e6e6e6;
-}
+
 /* 월화수목금 */
 .react-calendar__month-view__weekdays {
   text-align: center;
@@ -81,14 +78,14 @@ abbr[title] {
 
 /* 날짜들  */
 .react-calendar__tile {
-  max-width: 100%;
-  padding: 1.5vmin 6.6667px;
+  padding: 1.5vmin;
   background: none;
   text-align: center;
   line-height: 1em;
   border-radius: 50%;
-  font-size: 0.7vmax;
+  font-size: 0.75vmax;
   font-family: 'nanum';
+  color: #0f2552;
 }
 /* .react-calendar__tile:disabled {
       background-color: #f0f0f0;

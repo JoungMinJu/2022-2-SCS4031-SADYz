@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import Activity from '../component/Detail/Activity';
 import BasicInfo from '../component/Detail/BasicInfo';
@@ -6,8 +6,28 @@ import Chatbot from '../component/Detail/Chatbot';
 import DetailEmergency from '../component/Detail/Detail_Emergency';
 import Navbar from '../component/Navbar';
 import '../css/grid.css';
-
+import { useParams } from 'react-router-dom';
+import { useState } from 'react';
+import axios from 'axios';
 function Detail(props) {
+  const { id } = useParams();
+  const [client, setClient] = useState([]);
+  const get_client_detail = async () => {
+    try {
+      await axios
+        .get(`http://localhost:8080/api/dashboard/clients/${id}`)
+        .then((res) => {
+          console.log(res);
+          setClient(res.data);
+        });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  useEffect(() => {
+    get_client_detail();
+  }, []);
+
   return (
     <>
       <Navbar />
