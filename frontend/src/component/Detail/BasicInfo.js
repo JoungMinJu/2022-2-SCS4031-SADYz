@@ -30,7 +30,6 @@ function elapsedTime(date) {
 }
 function BasicInfo({ id, name, birth, phonenumber, address, lastMovedTime }) {
   const today = new Date();
-  const movedTime = new Date(lastMovedTime);
 
   const seconds = 1;
   const minute = seconds * 60;
@@ -40,7 +39,7 @@ function BasicInfo({ id, name, birth, phonenumber, address, lastMovedTime }) {
   //   const elapsedTime = Math.trunc(
   //     (today.getTime() - movedTime.getTime()) / 1000,
   //   );
-  console.group(elapsedTime(movedTime));
+  console.log(elapsedTime('2022-11-23T05:36:11'));
 
   return (
     <>

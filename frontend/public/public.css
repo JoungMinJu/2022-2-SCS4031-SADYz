@@ -32,6 +32,11 @@
   src: url('./fonts/NANUMBARUNGOTHICBOLD.OTF');
 }
 
+@font-face {
+  font-family: 'nanum_l';
+  src: url('./fonts/NANUMBARUNGOTHICLIGHT.OTF');
+}
+
 html,
 body {
   font-family: 'poppins_4';
