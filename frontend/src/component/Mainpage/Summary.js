@@ -3,7 +3,7 @@ import styled from 'styled-components';
 const senior_img = `${process.env.PUBLIC_URL + '/images/senior.png'}`;
 const list_img = `${process.env.PUBLIC_URL + '/images/list.png'}`;
 
-function Summary(props) {
+function Summary({ clients }) {
   return (
     <SummaryContainer>
       <Category>
@@ -95,6 +95,8 @@ const Image = styled.img`
 `;
 const Title = styled.div`
   float: right;
+  margin-top: auto;
+  margin-bottom: auto;
 `;
 
 const CategoryTitle = styled.section`
@@ -103,6 +105,6 @@ const CategoryTitle = styled.section`
 
 const Number = styled.section`
   font-family: 'nanum_b';
-  font-size: 3vmin;
+  font-size: 2.5vmin;
   margin-top: 1vmin;
 `;

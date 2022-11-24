@@ -1,9 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
 import elapsedTime from '../ElapsedTime';
-function Row({ id, name, address, birth, response, stay, lastMovedTime }) {
-  const ElapsedTime = elapsedTime(lastMovedTime);
-  const status = ElapsedTime[0];
+function Row({
+  id,
+  name,
+  address,
+  birth,
+  response,
+  stay,
+  lastMovedTime,
+  ElapsedTime,
+  status,
+}) {
   let backColor;
   let fontColor;
   // eslint-disable-next-line no-unused-expressions
@@ -18,24 +26,34 @@ function Row({ id, name, address, birth, response, stay, lastMovedTime }) {
   return (
     <>
       <Border>
-        <td style={{ width: '5%' }}></td>
+        <td style={{ width: '5%' }}>{id + 1}</td>
         <td style={{ width: '5%' }}>{name}</td>
         <td style={{ width: '10%' }}>{birth}</td>
         <td style={{ width: '30%' }}>{address}</td>
         <td style={{ width: '10%' }}>{response === false ? 'X' : 'O'}</td>
         <td style={{ width: '7%' }}>{stay === false ? 'X' : 'O'}</td>
-        <td style={{ width: '13%' }}>{lastMovedTime.split('T').join(' ')}</td>
-        <td style={{ width: '13%' }}>{ElapsedTime[1]}</td>
+        <td style={{ width: '13%' }}>
+          {lastMovedTime === undefined
+            ? '기록없음'
+            : lastMovedTime.split('T').join(' ')}
+        </td>
+        <td style={{ width: '13%' }}>
+          {lastMovedTime === undefined ? '기록없음' : ElapsedTime[1]}
+        </td>
         <td>
-          <Status
-            style={{
-              backgroundColor: `${backColor}`,
-              borderColor: `${fontColor}`,
-              color: `${fontColor}`,
-            }}
-          >
-            {lastMovedTime === undefined ? null : status}
-          </Status>
+          {lastMovedTime === undefined ? (
+            '기록없음'
+          ) : (
+            <Status
+              style={{
+                backgroundColor: `${backColor}`,
+                borderColor: `${fontColor}`,
+                color: `${fontColor}`,
+              }}
+            >
+              {lastMovedTime === undefined ? '기록없음' : status}
+            </Status>
+          )}
         </td>
       </Border>
     </>

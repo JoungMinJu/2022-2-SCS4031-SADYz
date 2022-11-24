@@ -34,7 +34,7 @@ function Mainpage(props) {
       </style>
       <div className="container">
         <h2>노인 가구 명단</h2>
-        <Summary />
+        <Summary key="summary" clients={clients} />
         <Main key={clients} clients={clients} />
       </div>
     </div>

@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { useState } from 'react';
 import Row from './Row';
+import elapsedTime from '../ElapsedTime';
 function Main({ clients }) {
   const selectList = ['전체', '정상', '주의', '경보', '위험'];
   const [Selected, setSelected] = useState('전체');
@@ -45,30 +46,51 @@ function Main({ clients }) {
           </tr>
         </Thead>
         <Tbody>
-          {clients.map((client) => {
-            const lastMovedTimeArray = client.lastMovedTime;
-            const length = lastMovedTimeArray.length;
-            let LastMovedTime = [];
-            // eslint-disable-next-line no-unused-expressions
-            length === 0
-              ? null
-              : (LastMovedTime = lastMovedTimeArray[length - 1]);
+          {Selected === '전체'
+            ? clients.map((client, index) => {
+                const [lastMovedTime, ElapsedTime, status] = filtermap(client);
 
-            return (
-              <Row
-                key={client.id}
-                id={client.id}
-                name={client.name}
-                address={client.address}
-                birth={client.birth}
-                response={client.response}
-                stay={client.stay}
-                lastMovedTime={
-                  LastMovedTime === null ? null : LastMovedTime.lastMovedTime
-                }
-              />
-            );
-          })}
+                return (
+                  <Row
+                    key={client.id}
+                    id={index}
+                    name={client.name}
+                    address={client.address}
+                    birth={client.birth}
+                    response={client.response}
+                    stay={client.stay}
+                    lastMovedTime={lastMovedTime}
+                    ElapsedTime={ElapsedTime}
+                    status={status}
+                  />
+                );
+              })
+            : clients
+                .filter((client) => {
+                  const [lastMovedTime, ElapsedTime, status] =
+                    filtermap(client);
+
+                  return status === Selected;
+                })
+                .map((client, index) => {
+                  const [lastMovedTime, ElapsedTime, status] =
+                    filtermap(client);
+
+                  return (
+                    <Row
+                      key={client.id}
+                      id={index}
+                      name={client.name}
+                      address={client.address}
+                      birth={client.birth}
+                      response={client.response}
+                      stay={client.stay}
+                      lastMovedTime={lastMovedTime}
+                      ElapsedTime={ElapsedTime}
+                      status={status}
+                    />
+                  );
+                })}
         </Tbody>
       </Table>
     </div>
@@ -121,3 +143,18 @@ const Tbody = styled.tbody`
   font-size: 1.5vmin;
   text-align: center;
 `;
+
+const filtermap = (client) => {
+  const lastMovedTimeArray = client.lastMovedTime;
+  const length = lastMovedTimeArray.length;
+  let LastMovedTime = [];
+  // eslint-disable-next-line no-unused-expressions
+  length === 0 ? null : (LastMovedTime = lastMovedTimeArray[length - 1]);
+
+  const lastMovedTime =
+    LastMovedTime === null ? null : LastMovedTime.lastMovedTime;
+
+  const ElapsedTime = elapsedTime(lastMovedTime);
+  const status = ElapsedTime[0];
+  return [lastMovedTime, ElapsedTime, status];
+};
