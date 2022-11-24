@@ -2,8 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 import elapsedTime from '../Common/ElapsedTime';
 import StatusStyle from '../Common/StatusStyle';
+import { useNavigate } from 'react-router-dom';
 function Row({
   id,
+  index,
   name,
   address,
   birth,
@@ -14,12 +16,16 @@ function Row({
   status,
 }) {
   const [backColor, fontColor] = StatusStyle(status);
-
+  const navigate = useNavigate();
   return (
     <>
-      <Border>
-        <td style={{ width: '5%' }}>{id + 1}</td>
-        <td style={{ width: '5%' }}>{name}</td>
+      <Border
+        onClick={() => {
+          navigate(`/Detail/${id}`);
+        }}
+      >
+        <td style={{ width: '5%', cursor: 'pointer' }}>{index + 1}</td>
+        <td style={{ width: '5%', cursor: 'pointer' }}>{name}</td>
         <td style={{ width: '10%' }}>{birth}</td>
         <td style={{ width: '30%' }}>{address}</td>
         <td style={{ width: '10%' }}>{response === false ? 'X' : 'O'}</td>
