@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
-import elapsedTime from '../ElapsedTime';
-import StatusStyle from '../StatusStyle';
+import elapsedTime from '../Common/ElapsedTime';
+import StatusStyle from '../Common/StatusStyle';
 const no_profile_img = `${process.env.PUBLIC_URL + '/images/no_profile.png'}`;
 
 function BasicInfo({ id, name, birth, phonenumber, address, lastMovedTime }) {

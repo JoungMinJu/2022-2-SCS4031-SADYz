@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import elapsedTime from '../ElapsedTime';
-import StatusStyle from '../StatusStyle';
+import elapsedTime from '../Common/ElapsedTime';
+import StatusStyle from '../Common/StatusStyle';
 function Row({
   id,
   name,

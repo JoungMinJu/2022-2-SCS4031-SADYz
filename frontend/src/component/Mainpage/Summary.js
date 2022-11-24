@@ -1,9 +1,28 @@
 import React from 'react';
 import styled from 'styled-components';
+import filtermap from '../Common/FilterMap';
 const senior_img = `${process.env.PUBLIC_URL + '/images/senior.png'}`;
 const list_img = `${process.env.PUBLIC_URL + '/images/list.png'}`;
 
 function Summary({ clients }) {
+  const normal = clients.filter((client) => {
+    const [lastMovedTime, ElapsedTime, status] = filtermap(client);
+    return status === '정상';
+  });
+
+  const warn = clients.filter((client) => {
+    const [lastMovedTime, ElapsedTime, status] = filtermap(client);
+    return status === '주의';
+  });
+
+  const alarm = clients.filter((client) => {
+    const [lastMovedTime, ElapsedTime, status] = filtermap(client);
+    return status === '경보';
+  });
+  const danger = clients.filter((client) => {
+    const [lastMovedTime, ElapsedTime, status] = filtermap(client);
+    return status === '위험';
+  });
   return (
     <SummaryContainer>
       <Category>
@@ -12,7 +31,7 @@ function Summary({ clients }) {
         </ImageDiv>
         <Title>
           <CategoryTitle>노인 가구 수</CategoryTitle>
-          <Number>400</Number>
+          <Number>{clients.length}</Number>
         </Title>
       </Category>
       <Category>
@@ -21,7 +40,7 @@ function Summary({ clients }) {
         </ImageDiv>
         <Title>
           <CategoryTitle>정상 가구 수</CategoryTitle>
-          <Number>250</Number>
+          <Number>{normal.length}</Number>
         </Title>
       </Category>
       <Category>
@@ -30,7 +49,7 @@ function Summary({ clients }) {
         </ImageDiv>
         <Title>
           <CategoryTitle>주의 가구 수</CategoryTitle>
-          <Number>80</Number>
+          <Number>{warn.length}</Number>
         </Title>
       </Category>
       <Category>
@@ -39,7 +58,7 @@ function Summary({ clients }) {
         </ImageDiv>
         <Title>
           <CategoryTitle>경보 가구 수</CategoryTitle>
-          <Number>50</Number>
+          <Number>{alarm.length}</Number>
         </Title>
       </Category>
       <Category>
@@ -48,7 +67,7 @@ function Summary({ clients }) {
         </ImageDiv>
         <Title>
           <CategoryTitle>위험 가구 수</CategoryTitle>
-          <Number>20</Number>
+          <Number>{danger.length}</Number>
         </Title>
       </Category>
     </SummaryContainer>
