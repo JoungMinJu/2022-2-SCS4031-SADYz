@@ -2,7 +2,8 @@ import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { useState } from 'react';
 import Row from './Row';
-import elapsedTime from '../ElapsedTime';
+import elapsedTime from '../Common/ElapsedTime';
+import filtermap from '../Common/FilterMap';
 function Main({ clients }) {
   const selectList = ['전체', '정상', '주의', '경보', '위험'];
   const [Selected, setSelected] = useState('전체');
@@ -143,18 +144,3 @@ const Tbody = styled.tbody`
   font-size: 1.5vmin;
   text-align: center;
 `;
-
-const filtermap = (client) => {
-  const lastMovedTimeArray = client.lastMovedTime;
-  const length = lastMovedTimeArray.length;
-  let LastMovedTime = [];
-  // eslint-disable-next-line no-unused-expressions
-  length === 0 ? null : (LastMovedTime = lastMovedTimeArray[length - 1]);
-
-  const lastMovedTime =
-    LastMovedTime === null ? null : LastMovedTime.lastMovedTime;
-
-  const ElapsedTime = elapsedTime(lastMovedTime);
-  const status = ElapsedTime[0];
-  return [lastMovedTime, ElapsedTime, status];
-};
