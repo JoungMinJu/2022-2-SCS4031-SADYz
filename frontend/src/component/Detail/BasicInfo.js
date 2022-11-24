@@ -1,21 +1,13 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import elapsedTime from '../ElapsedTime';
+import StatusStyle from '../StatusStyle';
 const no_profile_img = `${process.env.PUBLIC_URL + '/images/no_profile.png'}`;
 
 function BasicInfo({ id, name, birth, phonenumber, address, lastMovedTime }) {
   const ElapsedTime = elapsedTime(lastMovedTime);
   const status = ElapsedTime[0];
-  let backColor;
-  let fontColor;
-  // eslint-disable-next-line no-unused-expressions
-  status === '정상'
-    ? ((backColor = '#DBF7E6'), (fontColor = '#007D50'))
-    : status === '주의'
-    ? ((backColor = '#FFE600'), (fontColor = '#FFAE00'))
-    : status === '경보'
-    ? ((backColor = '#FFE092'), (fontColor = '#FF6F06'))
-    : ((backColor = '#F9B6B6'), (fontColor = '#E13737'));
+  const [backColor, fontColor] = StatusStyle(status);
 
   return (
     <>
