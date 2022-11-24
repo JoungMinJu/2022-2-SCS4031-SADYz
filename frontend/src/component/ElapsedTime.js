@@ -10,7 +10,8 @@ function elapsedTime(date) {
   const level_category = ['정상', '주의', '경보', '위험'];
   let client_level;
   let message = '';
-  if (diffDay >= 1) {
+  if (date === undefined) client_level = null;
+  else if (diffDay >= 1) {
     client_level = level_category[3];
     message = `${diffDay}일 ${diffHour}시간 ${diffMin}분 전`;
   } else if (diffHour >= 12) {
