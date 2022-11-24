@@ -18,15 +18,9 @@ function Detail(props) {
       await axios
         .get(`http://localhost:8080/api/dashboard/clients/${id}`)
         .then((res) => {
-          // console.log(res.data);
+          console.log(res.data);
           setClient(res.data);
-          const length = res.data.lastMovedTime.length;
-          // eslint-disable-next-line no-unused-expressions
-          length === 0
-            ? null
-            : setLastMovedTime(
-                res.data.lastMovedTime[res.data.lastMovedTime.length - 1],
-              );
+          setLastMovedTime(res.data.lastMovedTime);
         });
     } catch (err) {
       console.log(err);
@@ -34,7 +28,7 @@ function Detail(props) {
   };
   useEffect(() => {
     get_client_detail();
-  }, [client]);
+  }, []);
 
   return (
     <>
