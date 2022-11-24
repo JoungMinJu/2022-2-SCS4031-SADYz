@@ -1,45 +1,47 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 const no_profile_img = `${process.env.PUBLIC_URL + '/images/no_profile.png'}`;
 function elapsedTime(date) {
   const start = new Date(date);
   const end = new Date(); // 현재 날짜
-
   const diff = end - start; // 경과 시간
-
-  const times = [
-    { time: '분', milliSeconds: 1000 * 60 },
-    { time: '시간', milliSeconds: 1000 * 60 * 60 },
-    { time: '일', milliSeconds: 1000 * 60 * 60 * 24 },
-    { time: '개월', milliSeconds: 1000 * 60 * 60 * 24 * 30 },
-    { time: '년', milliSeconds: 1000 * 60 * 60 * 24 * 365 },
-  ].reverse();
-
-  // 년 단위부터 알맞는 단위 찾기
-  for (const value of times) {
-    const betweenTime = Math.floor(diff / value.milliSeconds);
-
-    // 큰 단위는 0보다 작은 소수 단위 나옴
-    if (betweenTime > 0) {
-      return `${betweenTime}${value.time} 전`;
-    }
+  const diffDay = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const diffHour = Math.floor((diff / (1000 * 60 * 60)) % 24);
+  const diffMin = Math.floor((diff / (1000 * 60)) % 60);
+  const diffSec = Math.floor((diff / 1000) % 60);
+  // console.log(diffDay, diffHour, diffMin, diffSec);
+  const level_category = ['정상', '주의', '경보', '위험'];
+  let client_level;
+  let message = '';
+  if (diffDay >= 1) {
+    client_level = level_category[3];
+    message = `${diffDay}일 ${diffHour}시간 ${diffMin}분 전`;
+  } else if (diffHour >= 12) {
+    client_level = level_category[2];
+    message = `${diffHour}시간 ${diffMin}분 전`;
+  } else if (diffHour >= 8) {
+    client_level = level_category[1];
+    message = `${diffHour}시간 ${diffMin}분 전`;
+  } else {
+    client_level = level_category[0];
+    if (diffHour === 0) message = `${diffMin}분 전`;
+    else if (diffMin === 0) message = `${diffSec}초 전`;
   }
-
-  // 모든 단위가 맞지 않을 시
-  return '방금 전';
+  return [client_level, message];
 }
 function BasicInfo({ id, name, birth, phonenumber, address, lastMovedTime }) {
-  const today = new Date();
-
-  const seconds = 1;
-  const minute = seconds * 60;
-  const hour = minute * 60;
-  const day = hour * 24;
-
-  //   const elapsedTime = Math.trunc(
-  //     (today.getTime() - movedTime.getTime()) / 1000,
-  //   );
-  console.log(elapsedTime('2022-11-23T05:36:11'));
+  const ElapsedTime = elapsedTime(lastMovedTime);
+  const status = ElapsedTime[0];
+  let backColor;
+  let fontColor;
+  // eslint-disable-next-line no-unused-expressions
+  status === '정상'
+    ? ((backColor = '#DBF7E6'), (fontColor = '#007D50'))
+    : status === '주의'
+    ? ((backColor = '#FFE600'), (fontColor = '#FFAE00'))
+    : status === '경보'
+    ? ((backColor = '#FFE092'), (fontColor = '#FF6F06'))
+    : ((backColor = '#F9B6B6'), (fontColor = '#E13737'));
 
   return (
     <>
@@ -56,12 +58,12 @@ function BasicInfo({ id, name, birth, phonenumber, address, lastMovedTime }) {
         <Category>상태</Category>
         <Status
           style={{
-            backgroundColor: '#F9B6B6',
-            borderColor: '#E13737',
-            color: '#E13737',
+            backgroundColor: `${backColor}`,
+            borderColor: `${fontColor}`,
+            color: `${fontColor}`,
           }}
         >
-          {lastMovedTime}
+          {lastMovedTime === undefined ? null : status}
         </Status>
       </BasicInfoContainer>
     </>
