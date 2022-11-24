@@ -54,7 +54,8 @@ function Main({ clients }) {
                 return (
                   <Row
                     key={client.id}
-                    id={index}
+                    id={client.id}
+                    index={index}
                     name={client.name}
                     address={client.address}
                     birth={client.birth}
@@ -80,7 +81,8 @@ function Main({ clients }) {
                   return (
                     <Row
                       key={client.id}
-                      id={index}
+                      id={client.id}
+                      index={index}
                       name={client.name}
                       address={client.address}
                       birth={client.birth}
