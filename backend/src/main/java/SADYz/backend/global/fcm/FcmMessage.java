@@ -26,8 +26,8 @@ public class FcmMessage {
     @AllArgsConstructor
     @Getter
     public static class Notification {
-        private String doorClosedTime;
-        private boolean isOut;
+        private String title;
+        private String body;
+        private String image;
     }
-
 }

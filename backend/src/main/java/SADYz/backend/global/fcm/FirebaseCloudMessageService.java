@@ -19,11 +19,12 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class FirebaseCloudMessageService {
+
     private final String API_URL = "https://fcm.googleapis.com/v1/projects/sadyz-45bb2/messages:send";
     private final ObjectMapper objectMapper;
 
-    public void sendMessageTo(String targetToken,String doorClosedTime, boolean isOut) throws IOException {
-        String message = makeMessage(targetToken, doorClosedTime,isOut);
+    public void sendMessageTo(String targetToken, String title, String body) throws IOException {
+        String message = makeMessage(targetToken, title, body);
 
         OkHttpClient client = new OkHttpClient();
         RequestBody requestBody = RequestBody.create(message,
@@ -40,13 +41,14 @@ public class FirebaseCloudMessageService {
         System.out.println(response.body().string());
     }
 
-    private String makeMessage(String targetToken,String doorClosedTime, boolean isOut) throws JsonParseException, JsonProcessingException {
+    private String makeMessage(String targetToken, String title, String body) throws JsonParseException, JsonProcessingException {
         FcmMessage fcmMessage = FcmMessage.builder()
             .message(FcmMessage.Message.builder()
                 .token(targetToken)
                 .notification(FcmMessage.Notification.builder()
-                    .doorClosedTime(doorClosedTime)
-                    .isOut(isOut)
+                    .title(title)
+                    .body(body)
+                    .image(null)
                     .build()
                 ).build()).validateOnly(false).build();
 
@@ -54,7 +56,7 @@ public class FirebaseCloudMessageService {
     }
 
     private String getAccessToken() throws IOException {
-        String firebaseConfigPath = "firebase/firebase_service_key.json";
+        String firebaseConfigPath = "firebase/sadyz-45bb2-firebase-adminsdk-fi08q-f45770607f.json";
 
         GoogleCredentials googleCredentials = GoogleCredentials
             .fromStream(new ClassPathResource(firebaseConfigPath).getInputStream())
@@ -63,5 +65,4 @@ public class FirebaseCloudMessageService {
         googleCredentials.refreshIfExpired();
         return googleCredentials.getAccessToken().getTokenValue();
     }
-
 }
