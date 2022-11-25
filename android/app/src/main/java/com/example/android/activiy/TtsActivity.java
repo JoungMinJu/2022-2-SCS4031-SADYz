@@ -1,4 +1,4 @@
-package com.example.android;
+package com.example.android.activiy;
 
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
@@ -9,6 +9,8 @@ import android.widget.EditText;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.android.R;
 
 import org.w3c.dom.Text;
 
