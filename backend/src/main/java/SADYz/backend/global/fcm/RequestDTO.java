@@ -5,9 +5,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class FCMRequestDto {
+public class RequestDTO {
     private String targetToken;
-    private String doorClosedTime;
-    private boolean isOut;
-
+    private String title;
+    private String body;
 }
