@@ -8,7 +8,6 @@ import SADYz.backend.emergency.repository.EmergencyRepository;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.checkerframework.checker.units.qual.C;
 import org.springframework.stereotype.Service;
 
 @Service

@@ -39,6 +39,7 @@ public class ClientService {
     Client client = clientRepository.findByPhonenumber(phoneNumber);
     LastMovedTimeDto newLastMovedTimeDto = LastMovedTimeDto.builder()
         .lastMovedTime(lastMovedTimeDto.getLastMovedTime())
+        .location(lastMovedTimeDto.getLocation())
         .client(client)
         .build();
     return lastMovedTimeRepository.save(newLastMovedTimeDto.toEntity());
