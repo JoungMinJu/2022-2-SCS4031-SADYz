@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "485091596516",
+    "project_id": "sadyz-45bb2",
+    "storage_bucket": "sadyz-45bb2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:485091596516:android:64cb702caceaae8a4b74f1",
+        "android_client_info": {
+          "package_name": "com.example.android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "485091596516-t27n94lbtlhudgk0sufeicm1nsg7gng1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCzpI2YasocQqK9DGraBvzTVMd5ILhbmYw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "485091596516-t27n94lbtlhudgk0sufeicm1nsg7gng1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
