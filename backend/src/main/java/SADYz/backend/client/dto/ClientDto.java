@@ -30,7 +30,7 @@ public class ClientDto {
 
   private List<Conversation> conversations;
 
-  private List<Emergency> emergency;
+  private Emergency emergency;
 
   private List<LastMovedTime> lastMovedTime;
 
