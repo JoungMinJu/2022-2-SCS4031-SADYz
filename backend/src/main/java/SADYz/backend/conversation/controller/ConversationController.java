@@ -21,7 +21,7 @@ public class ConversationController {
   private final ConversationService conversationService;
 
   @GetMapping(value = "{phoneNumber}/conversation")
-  public List<ConversationDto> readConversations(String phoneNumber){
+  public List<ConversationDto> readConversations(@PathVariable String phoneNumber){
     return conversationService.readConversation(phoneNumber);
   }
 
