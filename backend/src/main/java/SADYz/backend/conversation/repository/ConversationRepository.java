@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ConversationRepository extends JpaRepository<Conversation,Long> {
 
-  List<Conversation> findConversationsByClient(Client client);
+  List<Conversation> findAllByClient(Client client);
 }

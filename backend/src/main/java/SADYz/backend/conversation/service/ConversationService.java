@@ -6,6 +6,7 @@ import SADYz.backend.client.repository.ClientRepository;
 import SADYz.backend.conversation.domain.Conversation;
 import SADYz.backend.conversation.dto.ConversationDto;
 import SADYz.backend.conversation.repository.ConversationRepository;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -30,10 +31,11 @@ public class ConversationService {
 
   public List<ConversationDto> readConversation(String phoneNumber){
     Client client = clientRepository.findByPhonenumber(phoneNumber);
-    List<Conversation> conversations = conversationRepository.findConversationsByClient(client);
-    List<ConversationDto> conversationDtos = conversations.stream()
-        .map(it -> ConversationDto.toDto(it))
-        .collect(Collectors.toList());
+    List<Conversation> conversations = conversationRepository.findAllByClient(client);
+    List<ConversationDto> conversationDtos = new ArrayList<>();
+    for (Conversation conversation : conversations){
+      conversationDtos.add(ConversationDto.toDto(conversation));
+    }
     return conversationDtos;
   }
   public void deleteConversation(Long id){
