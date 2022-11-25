@@ -33,5 +33,14 @@ public class LastMovedTimeDto {
         .client(client)
         .build();
   }
+  public static LastMovedTimeDto toDto(LastMovedTime lastMovedTime){
+    return LastMovedTimeDto
+        .builder()
+        .id(lastMovedTime.getId())
+        .lastMovedTime(lastMovedTime.getLastMovedTime())
+        .location(lastMovedTime.getLocation())
+        .client(lastMovedTime.getClient())
+        .build();
+  }
 
 }

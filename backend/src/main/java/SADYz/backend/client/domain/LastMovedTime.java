@@ -15,11 +15,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @NoArgsConstructor
+@Getter
 public class LastMovedTime {
 
   @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
