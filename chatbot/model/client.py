@@ -27,3 +27,13 @@ class LastMovedTime(db.Model):
         self.last_moved_time = last_moved_time
         self.client_id = client_id
         self.location = location
+
+class DoorClosedTime(db.Model):
+    __tablename__ = "door_closed_time"
+    __table_args__ = {'mysql_collate':'utf8_general_ci'}
+
+    id = db.Column(db.Integer, primary_key = True)
+    door_closed_time = db.Column(db.DateTime)
+    is_out = db.Column(db.Boolean)
+    phone_number = db.Column(db.String(50))
+    client_id = db.Column(db.Integer)
