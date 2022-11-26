@@ -15,9 +15,11 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
+@Getter
 @Entity
 @NoArgsConstructor
 @EqualsAndHashCode
@@ -35,14 +37,16 @@ public class Client {
   private boolean stay;
   @Enumerated(EnumType.STRING)
   private Status status;
-  @OneToMany
+  @OneToMany(mappedBy = "client")
+  @JsonIgnore
   private List<Conversation> conversations;
 
-  @OneToMany
-  private List<Emergency> emergency;
-
   @OneToOne(mappedBy = "client")
-  private LastMovedTime lastMovedTime;
+  private Emergency emergency;
+
+  @OneToMany(mappedBy = "client")
+  @JsonIgnore
+  private List<LastMovedTime> lastMovedTime;
 
   @OneToOne(mappedBy = "client")
   private DoorClosedTime doorClosedTime;
@@ -52,7 +56,7 @@ public class Client {
   @Builder
   public Client(String loginId, String name, String address, String birth, String phonenumber,
       boolean response, boolean stay, Status status, List<Conversation> conversations,
-      List<Emergency> emergency, LastMovedTime lastMovedTime,DoorClosedTime doorClosedTime,String imageUrl) {
+      Emergency emergency, List<LastMovedTime> lastMovedTime,DoorClosedTime doorClosedTime,String imageUrl) {
     this.loginId = loginId;
     this.name = name;
     this.address = address;

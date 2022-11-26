@@ -1,8 +1,42 @@
 /* eslint-disable react/jsx-pascal-case */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Navbar from '../component/Navbar';
+import axios from 'axios';
+
 function Register(props) {
+  const [inputs, setInputs] = useState({
+    name: '',
+    birth: '',
+    phonenumber: '',
+    address: '',
+  });
+
+  const post_client = async () => {
+    try {
+      await axios
+        .post('http://localhost:8080/api/dashboard/clients', inputs)
+        .then((res) => {
+          console.log(res);
+        });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    // console.log(inputs);
+  }, [inputs]);
+
+  const { name, birth, phonenumber, address } = inputs;
+
+  const onChangeInput = (e) => {
+    const { name, value } = e.target;
+    setInputs({
+      ...inputs,
+      [name]: value,
+    });
+  };
   return (
     <div>
       <Navbar />
@@ -10,24 +44,44 @@ function Register(props) {
                     filter: invert(11%) sepia(51%) saturate(890%) hue-rotate(333deg) brightness(100%) contrast(98%);`}</style>
 
       <div className="container">
+        <br />
         <Register_Title>노인 가구 등록하기</Register_Title>
+        <br />
         <Register_Container>
-          <Label_style>이름</Label_style>
-          <Input_Style type="text"></Input_Style>
+          <Label>이름</Label>
+          <Input
+            type="text"
+            name="name"
+            value={name}
+            onChange={onChangeInput}
+          ></Input>
 
-          <Label_style>나이</Label_style>
-          <Input_Style type="number"></Input_Style>
+          <Label>생년월일</Label>
+          <Input
+            type="date"
+            name="birth"
+            value={birth}
+            onChange={onChangeInput}
+          ></Input>
 
-          <Label_style>생년월일</Label_style>
-          <Input_Style type="date"></Input_Style>
+          <Label>핸드폰 번호</Label>
+          <Input
+            type="tel"
+            maxlength="13"
+            name="phonenumber"
+            value={phonenumber}
+            onChange={onChangeInput}
+          />
 
-          <Label_style>핸드폰 번호</Label_style>
-          <Input_Style type="tel" maxlength="13" />
+          <Label>주소</Label>
+          <Input
+            type="text"
+            name="address"
+            value={address}
+            onChange={onChangeInput}
+          />
 
-          <Label_style>주소</Label_style>
-          <Input_Style type="text" />
-
-          <Button>등록하기</Button>
+          <Button onClick={() => post_client()}>등록하기</Button>
         </Register_Container>
       </div>
     </div>
@@ -58,13 +112,12 @@ const Register_Container = styled.div`
   justify-content: center;
 `;
 
-const Label_style = styled.label`
-  font-family: 'nanum_l';
+const Label = styled.label`
   margin-bottom: 1vmin;
   font-weight: 600;
 `;
 
-const Input_Style = styled.input`
+const Input = styled.input`
   height: 5vmin;
   margin-bottom: 3vmin;
 
@@ -80,9 +133,8 @@ const Button = styled.button`
   color: white;
   border: none;
   border-radius: 0.5vmin;
-  font-weight: 600;
   font-size: 0.8vmax;
-  font-family: 'nanum_l';
+  font-family: 'nanum';
   cursor: pointer;
   position: absolute;
   right: 10vmin;

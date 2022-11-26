@@ -6,13 +6,10 @@ import SADYz.backend.client.domain.LastMovedTime;
 import SADYz.backend.client.dto.ClientDto;
 import SADYz.backend.client.dto.DoorClosedTimeDto;
 import SADYz.backend.client.dto.LastMovedTimeDto;
-import SADYz.backend.client.repository.LastMovedTimeRepository;
 import SADYz.backend.client.service.ClientService;
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,82 +23,82 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
-@RequiredArgsConstructor
 @RequestMapping(value = "api/dashboard/clients")
+@RequiredArgsConstructor
 public class ClientController {
 
-  private final ClientService clientService;
+    private final ClientService clientService;
 
-  @GetMapping("{id}")
-  public ClientDto readClient(@PathVariable Long id){
-    return  clientService.readClient(id);
-  }
+    @GetMapping("{id}")
+    public ClientDto readClient(@PathVariable Long id) {
+        return clientService.readClient(id);
+    }
 
-  @GetMapping
-  public List<ClientDto> readAllClient(){
-    return clientService.readAllClient();
-  }
+    @GetMapping
+    public List<ClientDto> readAllClient() {
+        return clientService.readAllClient();
+    }
 
-  @PostMapping
-  public Client addClient(@RequestBody ClientDto clientDto) {
-    return clientService.addClient(clientDto);
-  }
+    @PostMapping
+    public Client addClient(@RequestBody ClientDto clientDto) {
+        return clientService.addClient(clientDto);
+    }
 
-  @PostMapping("time/{id}")
-  public LastMovedTime addLastMovedTime(@PathVariable Long id, @RequestBody
-  LastMovedTimeDto lastMovedTimeDto){
-    return clientService.addLastMovedTime(id,lastMovedTimeDto);
-  }
+    @PutMapping("{id}")
+    public Client updateClient(@PathVariable Long id, @RequestBody ClientDto clientDto) {
+        return clientService.updateClient(id, clientDto);
+    }
 
-  @PutMapping("{id}")
-  public Client updateClient(@PathVariable Long id, @RequestBody ClientDto clientDto){
-    return clientService.updateClient(id, clientDto);
-  }
+    @DeleteMapping("{id}")
+    public String deleteClient(@PathVariable Long id) {
+        clientService.deleteClient(id);
+        return "DELETED";
+    }
 
-  @PutMapping("time/{id}")
-  public LastMovedTime updateLastMovedTime(@PathVariable Long id, @RequestBody
-      LastMovedTimeDto lastMovedTimeDto){
-    return clientService.updateLastMovedTime(id,lastMovedTimeDto);
-  }
 
-  @DeleteMapping("{id}")
-  public String  deleteClient(@PathVariable Long id){
-    clientService.deleteClient(id);
-    return "DELETED";
-  }
+    @PostMapping("time/{phoneNumber}")
+    public LastMovedTime addLastMovedTime(@PathVariable String phoneNumber, @RequestBody
+    LastMovedTimeDto lastMovedTimeDto) {
+        return clientService.addLastMovedTime(phoneNumber, lastMovedTimeDto);
+    }
 
-  @PostMapping(value = "s3/{clientId}",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-  public Client saves3Image(@PathVariable Long clientId,@RequestParam(value="image") MultipartFile image)
-      throws IOException {
-    return clientService.uploadS3Image(clientId,image);
-  }
+    @GetMapping("time")
+    public List<LastMovedTimeDto> readAllLastMovedTime(){
+        return clientService.readLastMovedTimeAll();
+    }
 
-  @DeleteMapping(value = "s3/{clientId}")
-  public String deleteS3Image(@PathVariable Long clientId){
-    clientService.deleteS3Image(clientId);
-    return "IMAGE DELETED";
-  }
+    @PutMapping("time/{phoneNumber}")
+    public LastMovedTime updateLastMovedTime(@PathVariable String phoneNumber, @RequestBody
+    LastMovedTimeDto lastMovedTimeDto) {
+        return clientService.updateLastMovedTime(phoneNumber, lastMovedTimeDto);
+    }
 
-  @PostMapping("door/{id}")
-  public DoorClosedTime addDoorClosedTime(@PathVariable Long id, @RequestBody
-  DoorClosedTimeDto doorClosedTimeDto){
-    return clientService.addDoorClosedTime(id, doorClosedTimeDto);
-  }
+    @PostMapping("door/{phoneNumber}")
+    public DoorClosedTime addDoorClosedTime(@PathVariable String phoneNumber, @RequestBody
+    DoorClosedTimeDto doorClosedTimeDto) {
+        return clientService.addDoorClosedTime(phoneNumber, doorClosedTimeDto);
+    }
 
-  @PutMapping("door/{id}")
-  public DoorClosedTime updateDoorClosedTime(@PathVariable Long id, @RequestBody
-  DoorClosedTimeDto doorClosedTimeDto){
-    return clientService.updateDoorClosedTime(id,doorClosedTimeDto);
-  }
+    @PutMapping("door/{phoneNumber}")
+    public DoorClosedTime updateDoorClosedTime(@PathVariable String phoneNumber, @RequestBody
+    DoorClosedTimeDto doorClosedTimeDto) {
+        return clientService.updateDoorClosedTime(phoneNumber, doorClosedTimeDto);
+    }
 
-  @GetMapping("door/{loginId}")
-  public DoorClosedTimeDto readDoorClosedTime(@PathVariable String loginId){
-    return clientService.readDoorClosedTime(loginId);
-  }
+    @GetMapping("door/{phoneNumber}")
+    public DoorClosedTimeDto readDoorClosedTime(@PathVariable String phoneNumber) {
+        return clientService.readDoorClosedTime(phoneNumber);
+    }
 
-  @PutMapping("door")
-  public DoorClosedTime verify(DoorClosedTimeDto doorClosedTimeDto){
-    return clientService.verify("user1234", doorClosedTimeDto);
-  }
+    @PostMapping(value = "s3/{clientId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public Client saves3Image(@PathVariable Long clientId, @RequestParam(value = "image") MultipartFile image)
+        throws IOException {
+        return clientService.uploadS3Image(clientId, image);
+    }
 
+    @DeleteMapping(value = "s3/{clientId}")
+    public String deleteS3Image(@PathVariable Long clientId) {
+        clientService.deleteS3Image(clientId);
+        return "IMAGE DELETED";
+    }
 }

@@ -1,27 +1,22 @@
-package com.example.android;
+package com.example.android.activiy;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 
-import android.Manifest;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.speech.RecognitionListener;
-import android.speech.RecognizerIntent;
-import android.speech.SpeechRecognizer;
-import android.util.Log;
-import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import java.util.ArrayList;
+import com.example.android.R;
+import com.example.android.firebase.MyFirebaseMessagingService;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 
 public class MainActivity extends AppCompatActivity {
     Button sttButton;
     Button ttsButton;
+    Button emergencyButton;
+    Button fcmButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +24,8 @@ public class MainActivity extends AppCompatActivity {
 
         sttButton = (Button) findViewById(R.id.sttbutton);
         ttsButton = (Button) findViewById(R.id.ttsbutton);
+        emergencyButton = (Button) findViewById(R.id.emergencybutton);
+        fcmButton = (Button) findViewById(R.id.fcmbutton);
 
         sttButton.setOnClickListener((v) ->{
             Intent sttIntent = new Intent(getApplicationContext(), SttActivity.class);
@@ -39,6 +36,18 @@ public class MainActivity extends AppCompatActivity {
             Intent ttsIntent = new Intent(getApplicationContext(), TtsActivity.class);
             startActivity(ttsIntent);
         });
+
+        emergencyButton.setOnClickListener((v) -> {
+            Intent emergencyIntent = new Intent(getApplicationContext(), EmergencyActivity.class);
+            startActivity(emergencyIntent);
+        });
+
+        fcmButton.setOnClickListener((v) -> {
+            Intent fcm = new Intent(getApplicationContext(),  MyFirebaseMessagingService.class);
+            startService(fcm);
+        });
     }
+
+
 
 }
