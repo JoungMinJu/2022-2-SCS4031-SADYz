@@ -1,9 +1,20 @@
 from flask import Flask
+import config
+from controller.dbController import db
+from controller.mealController import meal
+
 app = Flask(__name__)
 
-@app.route('/')
-def hello_world():
-    return 'Hello World!'
+
+def create_app(test_config = None):
+    if test_config is None:
+        app.config.from_object(config)
+    else:
+        app.config.update(test_config)
+
+    db.init_app(app)
 
 if __name__ == '__main__':
-    app.run()
+    create_app()
+    app.register_blueprint(meal)
+    app.run(debug=True)

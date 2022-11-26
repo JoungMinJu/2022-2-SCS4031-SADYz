@@ -6,7 +6,6 @@ import torch
 from torch.utils.data import Dataset
 from transformers import AutoTokenizer, AutoModel
 
-
 root_path = str(pathlib.Path(__file__).parent.absolute())
 
 # Setting parameters
@@ -16,13 +15,13 @@ warmup_ratio = 0.1
 num_epochs = 5
 max_grad_norm = 1
 log_interval = 200
-learning_rate =  5e-5
-
+learning_rate = 5e-5
 
 tokenizer = AutoTokenizer.from_pretrained("skt/kobert-base-v1")
 bertmodel = AutoModel.from_pretrained("skt/kobert-base-v1")
 vocab = nlp.vocab.BERTVocab.from_sentencepiece(tokenizer.vocab_file, padding_token='[PAD]')
 tok = tokenizer.tokenize
+
 
 class BERTClassifier(torch.nn.Module):
     def __init__(self,
@@ -58,18 +57,11 @@ class BERTClassifier(torch.nn.Module):
 ctx = "cuda" if torch.cuda.is_available() else "cpu"
 device = torch.device(ctx)
 
-
-#BERT 모델 불러오기
-model = BERTClassifier(bertmodel,  dr_rate=0.5).to(device)
-
-
+# BERT 모델 불러오기
+model = BERTClassifier(bertmodel, dr_rate=0.5).to(device)
 
 emotion_clsf_weights_file = f"{root_path}\checkpoint\emotion_p3.pth"
 model.load_state_dict(torch.load(emotion_clsf_weights_file, map_location=device))
-
-
-
-
 
 
 class BERTDataset(Dataset):
@@ -87,7 +79,6 @@ class BERTDataset(Dataset):
 
     def __len__(self):
         return (len(self.labels))
-
 
 
 def predict(predict_sentence):
@@ -130,11 +121,12 @@ def predict(predict_sentence):
 
         print(">> 입력하신 내용에서 " + test_eval[0] + " 느껴집니다.")
 
-#질문 무한반복하기! 0 입력시 종료
+
+# 질문 무한반복하기! 0 입력시 종료
 end = 1
-while end == 1 :
+while end == 1:
     sentence = input("하고싶은 말을 입력해주세요 : ")
-    if sentence == "0" :
+    if sentence == "0":
         break
     predict(sentence)
     print("\n")

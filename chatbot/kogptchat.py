@@ -30,7 +30,6 @@ parser.add_argument('--train',
                     default=False,
                     help='for training')
 
-
 U_TKN = '<usr>'
 S_TKN = '<sys>'
 BOS = '</s>'
@@ -90,7 +89,7 @@ class KoGPT2Chat(LightningModule):
                 pred = self(input_ids)
                 gen = tok.convert_ids_to_tokens(torch.argmax(pred, dim=-1).squeeze().numpy().tolist())[-1]
                 # print(gen) # <pad>
-                if gen == EOS or gen == PAD: # PAD 무한 루프 에러 방지
+                if gen == EOS or gen == PAD:  # PAD 무한 루프 에러 방지
                     break
                 a += gen.replace('▁', ' ')
             a = a.strip()
@@ -105,7 +104,7 @@ class KoGPT2Chat(LightningModule):
             a = a[:mark_pos + 1]
             if a == "":
                 return "(끄덕끄덕) 듣고 있어요. 더 말씀해주세요!"
-            return  a
+            return a
 
 
 parser = KoGPT2Chat.add_model_specific_args(parser)
@@ -118,6 +117,3 @@ model = model.load_from_checkpoint(args.model_params)
 
 def predict(sent):
     return model.chat(sent)
-
-print("\'특별한 이유가 없는데 그냥 불안하고 눈물이 나와\' 챗봇 응답: " + predict("특별한 이유가 없는데 그냥 불안하고 눈물이 나와"))
-
