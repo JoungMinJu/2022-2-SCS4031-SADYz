@@ -1,7 +1,7 @@
 from flask import Flask
 import config
 from controller.dbController import db
-from model.client import Client
+from controller.mealController import meal
 
 app = Flask(__name__)
 
@@ -16,4 +16,5 @@ def create_app(test_config = None):
 
 if __name__ == '__main__':
     create_app()
+    app.register_blueprint(meal)
     app.run(debug=True)

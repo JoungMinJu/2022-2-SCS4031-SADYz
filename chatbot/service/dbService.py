@@ -1,8 +1,10 @@
 from controller.dbController import db
 from datetime import datetime, timedelta
-from model.Client import Client, LastMovedTime, DoorClosedTime
+from pytz import timezone
+from model.client import Client, LastMovedTime, DoorClosedTime
 
-KST = datetime.timezone(timedelta(hours=9))
+
+KST = timezone('Asia/Seoul')
 
 
 def is_client_at_home(phone_number):
