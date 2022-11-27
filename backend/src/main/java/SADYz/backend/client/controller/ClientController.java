@@ -62,6 +62,11 @@ public class ClientController {
         return clientService.addLastMovedTime(phoneNumber, lastMovedTimeDto);
     }
 
+    @GetMapping("time")
+    public List<LastMovedTimeDto> readAllLastMovedTime(){
+        return clientService.readLastMovedTimeAll();
+    }
+
     @PutMapping("time/{phoneNumber}")
     public LastMovedTime updateLastMovedTime(@PathVariable String phoneNumber, @RequestBody
     LastMovedTimeDto lastMovedTimeDto) {

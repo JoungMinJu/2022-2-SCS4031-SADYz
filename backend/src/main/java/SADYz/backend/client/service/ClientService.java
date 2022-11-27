@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,6 +40,7 @@ public class ClientService {
     Client client = clientRepository.findByPhonenumber(phoneNumber);
     LastMovedTimeDto newLastMovedTimeDto = LastMovedTimeDto.builder()
         .lastMovedTime(lastMovedTimeDto.getLastMovedTime())
+        .location(lastMovedTimeDto.getLocation())
         .client(client)
         .build();
     return lastMovedTimeRepository.save(newLastMovedTimeDto.toEntity());
@@ -96,6 +98,14 @@ public class ClientService {
     Client client = clientRepository.findByPhonenumber(phoneNumber);
     DoorClosedTime doorClosedTime = doorClosedTimeRepository.findByClient(client);
     return DoorClosedTimeDto.toDto(doorClosedTime);
+  }
+
+  public List<LastMovedTimeDto> readLastMovedTimeAll(){
+    List<LastMovedTime> lastMovedTimeList = lastMovedTimeRepository.findAll();
+    List<LastMovedTimeDto> lastMovedTimeDtoList = lastMovedTimeList.stream()
+        .map(lastMovedTime -> LastMovedTimeDto.toDto(lastMovedTime))
+        .collect(Collectors.toList());
+    return lastMovedTimeDtoList;
   }
 
   public void deleteClient(Long id){

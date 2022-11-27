@@ -2,6 +2,7 @@ package SADYz.backend.emergency.dto;
 
 import SADYz.backend.client.domain.Client;
 import SADYz.backend.emergency.domain.Emergency;
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,6 +18,8 @@ public class EmergencyDto {
     private boolean emergencyNow;
     private Client client;
 
+    private LocalDateTime createdDateTime;
+
     public static Emergency toEntity(EmergencyDto emergencyDto){
         return Emergency.builder()
             .id(emergencyDto.id)
@@ -30,6 +33,7 @@ public class EmergencyDto {
             .id(emergency.getId())
             .emergencyNow(emergency.isEmergencyNow())
             .client(emergency.getClient())
+            .createdDateTime(emergency.getCreatedDateTime())
             .build();
     }
 
