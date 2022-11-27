@@ -9,8 +9,6 @@ meal = Blueprint("meal", __name__, url_prefix="/meal")
 @meal.post("/start")
 def start_emotion():
     phone_number = request.values.get("phone_number")
-    # 사람 찾기 -> 외출 여부 파악
-    client = dbService.get_client(phone_number)
     stay = dbService.is_client_at_home(phone_number)
 
     if not stay:

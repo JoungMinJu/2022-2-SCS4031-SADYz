@@ -11,8 +11,7 @@ from transformers import (
 )
 from model.koelectra import koElectraForSequenceClassification, koelectra_input
 
-root_path = str(pathlib.Path(__file__).parent.absolute())
-
+root_path = str(pathlib.Path(__file__).parent.parent.absolute())
 
 def load_wellness_answer():
     category_path = f"{root_path}/data/wellness_dialog_category.txt"
@@ -77,8 +76,7 @@ model.load_state_dict(checkpoint['model_state_dict'], strict=False)
 model.to(device)
 model.eval()
 
-while 1:
-    sent = input('\nQuestion: ')  # '요즘 기분이 우울한 느낌이에요'
+def get_result(sent):
     data = koelectra_input(tokenizer, sent, device, 512)
     # print(data)
 
@@ -95,7 +93,8 @@ while 1:
     answer_list = answer[tmp_category]
     answer_len = len(answer_list) - 1
     answer_index = random.randint(0, answer_len)
-    print(f'Answer: {answer_list[answer_index]}, index: {max_index}, value: {max_index_value}')
-    print(f'index: {category[max_index]}, value: {max_index_value}')
-    print('-' * 50)
+    return category[max_index]
+    # print(f'Answer: {answer_list[answer_index]}, index: {max_index}, value: {max_index_value}')
+    # print(f'index: {category[max_index]}, value: {max_index_value}')
+    # print('-' * 50)
 # print('argmin:',softmax_logit[torch.argmin(softmax_logit)])
