@@ -17,6 +17,7 @@ function Row({
 }) {
   const [backColor, fontColor] = StatusStyle(status);
   const navigate = useNavigate();
+
   return (
     <>
       <Border>

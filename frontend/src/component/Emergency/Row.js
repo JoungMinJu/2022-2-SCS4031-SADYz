@@ -2,11 +2,27 @@ import React from 'react';
 import styled from 'styled-components';
 import elapsedTime from '../Common/ElapsedTime';
 import { useNavigate } from 'react-router-dom';
-function Row({ id, index, name, address, birth, emergency }) {
+import axios from 'axios';
+function Row({ id, index, name, address, birth, emergency, phonenumber }) {
   const navigate = useNavigate();
   const emergency_time = emergency.createdDateTime;
   const emergencyNow = emergency.emergencyNow;
   const emergencyContent = '응급상황 내용';
+  const post_solveEmergency = async (status) => {
+    try {
+      const data = {
+        emergencyNow: status,
+      };
+      await axios
+        .put(
+          `http://localhost:8080/api/dashboard/emergency/${phonenumber}`,
+          data,
+        )
+        .then((res) => console.log(res));
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <>
       <Border>
@@ -39,7 +55,15 @@ function Row({ id, index, name, address, birth, emergency }) {
             : elapsedTime(emergency_time)[1]}
         </td>
         <td style={{ width: '20%' }}>{emergencyContent}</td>
-        <td>{String(emergencyNow)}</td>
+        <td>
+          <input
+            type="checkbox"
+            defaultChecked={!emergencyNow}
+            onClick={() => {
+              post_solveEmergency(!emergencyNow);
+            }}
+          />
+        </td>
       </Border>
     </>
   );
