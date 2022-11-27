@@ -29,9 +29,6 @@ void setup() {
   Serial.println();
   //와이파이 연결
   Wifi_connect();
-  
-
-
 
   //초음파센서
   pinMode(trigPin, OUTPUT); // Sets the trigPin as an Output
@@ -118,10 +115,8 @@ void check_movement(){
       Serial.println(currentDate);
       
       //현재 시간 
-      
       String formattedTime = timeClient.getFormattedTime();
       Serial.println(formattedTime);
-
 
       //현재 날짜 + 시간
       String CurrentDateTime = String(currentDate)+"T"+formattedTime;
@@ -133,45 +128,22 @@ void check_movement(){
       root["location"] = "kitchen" ; //or "bathroom"
       root.printTo(jsondata);
 
-      //thingspeak으로 보내기
+      //서버로 움직임 시간 전송
       if(client.connect(server, 80)){
-        send_server(jsondata);
-        thingspeak(1);
-        
+        send_server(jsondata);        
       }
-      
-      
 
       Serial.println("Waiting..."); 
+      delay(10);
+      digitalWrite(ledPin,LOW);
     }
       
   }
   else{
     digitalWrite(ledPin,LOW);
-
   }
   
 }
-
-void thingspeak(int movement){
-  String postStr = apiKey;
-  postStr +="&field1=";
-  postStr += String(movement);
-  
-  client.print("POST /update HTTP/1.1\n");
-  client.print("Host: api.thingspeak.com\n");
-  client.print("Connection: close\n");
-  client.print("X-THINGSPEAKAPIKEY: " + apiKey + "\n");
-  client.print("Content-Type: application/x-www-form-urlencoded\n");
-  client.print("Content-Length: ");
-  client.print(postStr.length());
-  client.print("\n\n");
-  client.print(postStr);
-  
-  Serial.println("Thingspeak "+String(movement)+"전송");
-
-}
- 
 
 
 void send_server(String data){
