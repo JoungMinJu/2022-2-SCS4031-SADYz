@@ -8,6 +8,9 @@ function Emergency(props) {
         {`#emergency {
                     filter: invert(11%) sepia(51%) saturate(890%) hue-rotate(333deg) brightness(100%) contrast(98%);`}
       </style>
+      <div className="container">
+        <h2>응급콜 명단</h2>
+      </div>
     </div>
   );
 }
