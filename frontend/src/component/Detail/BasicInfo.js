@@ -22,15 +22,19 @@ function BasicInfo({ id, name, birth, phonenumber, address, lastMovedTime }) {
         <Category>주소</Category>
         <Content>{address}</Content>
         <Category>상태</Category>
-        <Status
-          style={{
-            backgroundColor: `${backColor}`,
-            borderColor: `${fontColor}`,
-            color: `${fontColor}`,
-          }}
-        >
-          {lastMovedTime === undefined ? null : status}
-        </Status>
+        {lastMovedTime === undefined ? (
+          '기록없음'
+        ) : (
+          <Status
+            style={{
+              backgroundColor: `${backColor}`,
+              borderColor: `${fontColor}`,
+              color: `${fontColor}`,
+            }}
+          >
+            {lastMovedTime === undefined ? '기록없음' : status}
+          </Status>
+        )}
       </BasicInfoContainer>
     </>
   );
