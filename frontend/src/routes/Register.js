@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Navbar from '../component/Navbar';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function Register(props) {
   const [inputs, setInputs] = useState({
@@ -12,6 +13,7 @@ function Register(props) {
     address: '',
   });
 
+  const navigate = useNavigate();
   const post_client = async () => {
     try {
       await axios
@@ -81,7 +83,14 @@ function Register(props) {
             onChange={onChangeInput}
           />
 
-          <Button onClick={() => post_client()}>등록하기</Button>
+          <Button
+            onClick={() => {
+              post_client();
+              navigate('/');
+            }}
+          >
+            등록하기
+          </Button>
         </Register_Container>
       </div>
     </div>
