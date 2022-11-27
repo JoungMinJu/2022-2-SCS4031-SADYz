@@ -22,9 +22,7 @@ function Mainpage(props) {
   useEffect(() => {
     get_clients();
   }, [clients]);
-  useEffect(() => {
-    // console.log(clients);
-  }, [clients]);
+
   return (
     <div>
       <Navbar />

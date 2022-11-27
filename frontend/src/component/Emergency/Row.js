@@ -1,13 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import elapsedTime from '../Common/ElapsedTime';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { useState } from 'react';
 function Row({ id, index, name, address, birth, emergency, phonenumber }) {
   const navigate = useNavigate();
   const emergency_time = emergency.createdDateTime;
   const emergencyNow = emergency.emergencyNow;
   const emergencyContent = '응급상황 내용';
+  const elapsed_Time = elapsedTime(emergency_time)[1];
+
   const post_solveEmergency = async (status) => {
     try {
       const data = {
@@ -50,9 +53,7 @@ function Row({ id, index, name, address, birth, emergency, phonenumber }) {
             : emergency_time.split('T').join(' ').split('.')[0]}
         </td>
         <td style={{ width: '13%' }}>
-          {emergency_time === undefined
-            ? '기록없음'
-            : elapsedTime(emergency_time)[1]}
+          {emergency_time === undefined ? '기록없음' : elapsed_Time}
         </td>
         <td style={{ width: '20%' }}>{emergencyContent}</td>
         <td>
