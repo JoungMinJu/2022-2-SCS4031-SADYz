@@ -19,7 +19,7 @@ function Register(props) {
       await axios
         .post('http://localhost:8080/api/dashboard/clients', inputs)
         .then((res) => {
-          console.log(res);
+          // console.log(res);
         });
     } catch (err) {
       console.log(err);

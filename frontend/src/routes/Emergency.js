@@ -20,7 +20,7 @@ function Emergency(props) {
   }, []);
 
   useEffect(() => {
-    console.log(emergency);
+    // console.log(emergency);
   }, [emergency]);
   return (
     <div>
