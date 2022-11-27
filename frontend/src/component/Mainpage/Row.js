@@ -19,13 +19,23 @@ function Row({
   const navigate = useNavigate();
   return (
     <>
-      <Border
-        onClick={() => {
-          navigate(`/Detail/${id}`);
-        }}
-      >
-        <td style={{ width: '5%', cursor: 'pointer' }}>{index + 1}</td>
-        <td style={{ width: '5%', cursor: 'pointer' }}>{name}</td>
+      <Border>
+        <td
+          style={{ width: '5%', cursor: 'pointer' }}
+          onClick={() => {
+            navigate(`/Detail/${id}`);
+          }}
+        >
+          {index + 1}
+        </td>
+        <td
+          style={{ width: '5%', cursor: 'pointer' }}
+          onClick={() => {
+            navigate(`/Detail/${id}`);
+          }}
+        >
+          {name}
+        </td>
         <td style={{ width: '10%' }}>{birth}</td>
         <td style={{ width: '30%' }}>{address}</td>
         <td style={{ width: '10%' }}>{response === false ? 'X' : 'O'}</td>
