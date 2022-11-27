@@ -26,7 +26,7 @@ def emotion_chat():
     if status == "ERROR":
         return response.NOT_UNDERSTAND # 대화 종료
     if status == "NO":
-        return response.OFFER_MEAL # 대화 종료
+        return response.OFFER_MEAL # 대화 종료 -> 상태 값 추가
     if status == "YES":
         kitchen_moved_history = dbService.get_kitchen_moved_history(phone_number)
 
@@ -34,7 +34,7 @@ def emotion_chat():
             door_closed_history = dbService.get_door_closed_history(phone_number)
 
             if not door_closed_history:
-                return response.OFFER_MEAL_WHEN_NOT_MOVED # 대화 종료 -> 정보 전달
+                return response.OFFER_MEAL_WHEN_NOT_MOVED # 대화 종료 -> 정보 전달 -> 상태 값 추가
 
             return response.OFFER_MEAL_WHEN_MOVED # 대화 종료 -> 정보 전달
         return response.NORMAL_STATUS # 대화 종료

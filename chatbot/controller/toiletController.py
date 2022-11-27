@@ -16,9 +16,9 @@ def start_toilet():
     toilet_count = dbService.get_today_toilet_count(phone_number)
     print(toilet_count)
     if toilet_count < 4 :
-        return response.TOO_FEW_VISITS_TOILET
+        return response.TOO_FEW_VISITS_TOILET # 상태 값 추가
     if toilet_count > 8 :
-        return response.TOO_MUCH_VISITS_TOILET
+        return response.TOO_MUCH_VISITS_TOILET # 상태 값 추가
     return response.NO_TOILET_PROBLEM
 
 @toilet.post("/chat")
@@ -31,19 +31,19 @@ def toilet_chat():
         status = responseService.check_constipation_status(input_list)
 
         if status == "OK" :
-            return response.STATUS_IS_OK # 대화 종료 -> 증상 전달
+            return response.STATUS_IS_OK
         if status == "ERROR":
             return response.NOT_UNDERSTAND_CONSTIPATION
         if status == "NOT_OK":
-            return response.PROBLEM_IN_CONSTIPATION
+            return response.PROBLEM_IN_CONSTIPATION # 상태 값 추가
     elif dialog_type == 2 :
         status = responseService.check_health_status(input_list)
 
         if status == "OK" :
-            return response.STATUS_IS_OK # 대화 종료 -> 증상 전달
+            return response.STATUS_IS_OK
         if status == "ERROR":
             return response.NOT_UNDERSTAND_HEALTH
         if status == "NOT_OK":
-            return response.PROBLEM_IN_HEALTH
+            return response.PROBLEM_IN_HEALTH # 상태 값 추가
 
 
