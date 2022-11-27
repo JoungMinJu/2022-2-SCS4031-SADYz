@@ -1,5 +1,6 @@
 import React from 'react';
 import Navbar from '../component/Navbar';
+import Summary from '../component/Emergency/Summary';
 function Emergency(props) {
   return (
     <div>
@@ -10,6 +11,7 @@ function Emergency(props) {
       </style>
       <div className="container">
         <h2>응급콜 명단</h2>
+        <Summary key="summary" />
       </div>
     </div>
   );
