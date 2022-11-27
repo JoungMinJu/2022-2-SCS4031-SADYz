@@ -1,5 +1,4 @@
 #include <WiFi.h>
-
 #include <NTPClient.h>
 #include <WiFiUdp.h>
 #include <ArduinoJson.h>
@@ -9,9 +8,6 @@ const char* ssid = process.env.wifi_id
 const char* password = process.env.wifi_pw;
 WiFiClient client;
 
-//thingspeak
-const char* server = "api.thingspeak.com";
-String apiKey = process.env.api_key;
 
 //날짜 시간
 WiFiUDP ntpUDP;
@@ -43,23 +39,18 @@ void loop() {
   if(door_close_current == false && door_close_previous == true){//문이 열리면
     digitalWrite(ledPin,LOW);
     door_close_previous = false; //문이 열린상태임을 기록.
-    Serial.println(door_close_current); 
+    Serial.println("문 열림");
   }
   else if(door_close_current == true && door_close_previous == false){//문이 닫히면
     digitalWrite(ledPin,HIGH);
     door_close_previous = true;//문이 닫힌상태임을 기록.
-    Serial.println(make_json());
-    send_server(make_json());
+    Serial.println("문 닫힘");
     if(client.connect(server, 80)){
-        thingspeak(1);
-      }
-    Serial.println(door_close_current);
+        send_server(make_json());
+    }
+    
   }
-
-  
   delay(10);
-
- 
 }
 
 //와이파이 연결 함수
@@ -75,6 +66,7 @@ void Wifi_connect(){
     delay(500);
     Serial.print(".");
   }
+
   Serial.println();
   Serial.println("Wifi Connected Success!");
   Serial.print("NodeMCU IP Address : ");
@@ -84,9 +76,7 @@ void Wifi_connect(){
 //현재 날짜 & 시간 json으로 만들기
 
 String make_json(){
-  
-  //현재 날짜
-      
+  //현재 날짜 
   timeClient.update();
   unsigned long epochTime = timeClient.getEpochTime();
   time_t rawtime = epochTime;
@@ -95,11 +85,10 @@ String make_json(){
   int currentMonth = ptm->tm_mon+1;
   int currentYear = ptm->tm_year+1900;
   String currentDate = String(currentYear) + "-" + String(currentMonth) + "-" + String(monthDay);
-  Serial.print("Current date: ");
-  Serial.println(currentDate);
-  
+  Serial.print("Current date & time: ");
+  Serial.print(currentDate);
+  Serial.print(" ");
   //현재 시간 
-  
   String formattedTime = timeClient.getFormattedTime();
   Serial.println(formattedTime);
 
@@ -111,42 +100,38 @@ String make_json(){
   StaticJsonBuffer<200> jsonBuffer;
   JsonObject& root = jsonBuffer.createObject();
   root["doorClosedTime"] = CurrentDateTime;
-
+  root["isOut"] = false;
   root.printTo(jsondata);
   return jsondata;
-
 }
 
 void send_server(String data){
-  
   HTTPClient http;
   //POST url
-  http.begin(client,"http://192.168.0.36:8080/api/dashboard/clients/door/1/");
+  http.begin("http://172.30.17.229:8080/api/dashboard/clients/door/010-5530-8428");
   http.addHeader("Content-Type", "application/json");
   Serial.println(data);
   int httpResponseCode = http.PUT(data);
+  if(httpResponseCode>0){
+    String response = http.getString();  //Get the response to the request
+    Serial.println(httpResponseCode);   //Print return code
+    if (httpResponseCode == 200){
+      Serial.print("server response:");
+      Serial.println(response);           //Print request answer
+    }
+    else if(httpResponseCode == 500){
+      http.addHeader("Content-Type", "application/json");
+      httpResponseCode = http.POST(data);
+    }
+  }
+
+else{
+    Serial.print("Error on sending POST: ");
+    Serial.println(httpResponseCode);
+}
+ 
   Serial.print("HTTP Response code: ");
   Serial.println(httpResponseCode);
 
   http.end();
 }
-
-void thingspeak(int door_closed){
-  String postStr = apiKey;
-  postStr +="&field2=";
-  postStr += String(door_closed);
-  
-  client.print("POST /update HTTP/1.1\n");
-  client.print("Host: api.thingspeak.com\n");
-  client.print("Connection: close\n");
-  client.print("X-THINGSPEAKAPIKEY: " + apiKey + "\n");
-  client.print("Content-Type: application/x-www-form-urlencoded\n");
-  client.print("Content-Length: ");
-  client.print(postStr.length());
-  client.print("\n\n");
-  client.print(postStr);
-  
-  Serial.println("Thingspeak "+String(door_closed)+"전송");
-
-}
- 
