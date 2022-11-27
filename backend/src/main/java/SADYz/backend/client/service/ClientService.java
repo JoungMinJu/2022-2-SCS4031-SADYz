@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,34 +36,23 @@ public class ClientService {
     return clientRepository.save(client);
   }
 
-  public LastMovedTime addLastMovedTime(Long id, LastMovedTimeDto lastMovedTimeDto){
-    Client client = clientRepository.findById(id).orElseThrow(()->new IllegalArgumentException("해당 id가 없습니다"));
-    LastMovedTime lastMovedTime = LastMovedTime.builder()
+  public LastMovedTime addLastMovedTime(String phoneNumber, LastMovedTimeDto lastMovedTimeDto){
+    Client client = clientRepository.findByPhonenumber(phoneNumber);
+    LastMovedTimeDto newLastMovedTimeDto = LastMovedTimeDto.builder()
         .lastMovedTime(lastMovedTimeDto.getLastMovedTime())
+        .location(lastMovedTimeDto.getLocation())
         .client(client)
         .build();
-    ClientDto clientDto = Client.EntitytoDto(client);
-    clientDto.builder()
-        .lastMovedTime(lastMovedTime)
-        .build();
-    client.update(clientDto);
-    clientRepository.save(client);
-    return lastMovedTimeRepository.save(lastMovedTime);
+    return lastMovedTimeRepository.save(newLastMovedTimeDto.toEntity());
   }
 
-  public DoorClosedTime addDoorClosedTime(Long id, DoorClosedTimeDto doorClosedTimeDto){
-    Client client = clientRepository.findById(id).orElseThrow(()->new IllegalArgumentException("해당 id가 없습니다"));
-    DoorClosedTime doorClosedTime = DoorClosedTime.builder()
+  public DoorClosedTime addDoorClosedTime(String phoneNumber, DoorClosedTimeDto doorClosedTimeDto){
+    Client client = clientRepository.findByPhonenumber(phoneNumber);
+    DoorClosedTimeDto newDoorClosedTimeDto = DoorClosedTimeDto.builder()
         .doorClosedTime(doorClosedTimeDto.getDoorClosedTime())
         .client(client)
         .build();
-    ClientDto clientDto = Client.EntitytoDto(client);
-    clientDto.builder()
-        .doorClosedTime(clientDto.getDoorClosedTime())
-        .build();
-    client.update(clientDto);
-    clientRepository.save(client);
-    return doorClosedTimeRepository.save(doorClosedTime);
+    return doorClosedTimeRepository.save(newDoorClosedTimeDto.toEntity());
   }
 
   public Client updateClient(Long id,ClientDto clientDto){
@@ -72,29 +62,17 @@ public class ClientService {
     client.update(clientDto);
     return clientRepository.save(client);
   }
-  public LastMovedTime updateLastMovedTime(Long id, LastMovedTimeDto lastMovedTimeDto){
-    Client client = clientRepository.findById(id).orElseThrow(()->new IllegalArgumentException("해당 id가 없습니다"));
+  public LastMovedTime updateLastMovedTime(String phoneNumber, LastMovedTimeDto lastMovedTimeDto){
+    Client client = clientRepository.findByPhonenumber(phoneNumber);
     LastMovedTime lastMovedTime = lastMovedTimeRepository.findByClient(client);
     lastMovedTime.updateLastMovedTime(client,lastMovedTimeDto);
-    ClientDto clientDto = Client.EntitytoDto(client);
-    clientDto.builder()
-        .lastMovedTime(lastMovedTime)
-        .build();
-    client.update(clientDto);
-    clientRepository.save(client);
     return lastMovedTimeRepository.save(lastMovedTime);
   }
 
-  public DoorClosedTime updateDoorClosedTime(Long id, DoorClosedTimeDto doorClosedTimeDto){
-    Client client = clientRepository.findById(id).orElseThrow(()->new IllegalArgumentException("해당 id가 없습니다"));
+  public DoorClosedTime updateDoorClosedTime(String phoneNumber, DoorClosedTimeDto doorClosedTimeDto){
+    Client client = clientRepository.findByPhonenumber(phoneNumber);
     DoorClosedTime doorClosedTime = doorClosedTimeRepository.findByClient(client);
     doorClosedTime.updateDoorClosedTime(client,doorClosedTimeDto);
-    ClientDto clientDto = Client.EntitytoDto(client);
-    clientDto.builder()
-        .doorClosedTime(doorClosedTime)
-        .build();
-    client.update(clientDto);
-    clientRepository.save(client);
     return doorClosedTimeRepository.save(doorClosedTime);
   }
 
@@ -116,9 +94,18 @@ public class ClientService {
     return clientDtos;
   }
 
-  public DoorClosedTimeDto readDoorClosedTime(String loginId){
-    DoorClosedTime doorClosedTime = doorClosedTimeRepository.findByLoginId(loginId);
+  public DoorClosedTimeDto readDoorClosedTime(String phoneNumber){
+    Client client = clientRepository.findByPhonenumber(phoneNumber);
+    DoorClosedTime doorClosedTime = doorClosedTimeRepository.findByClient(client);
     return DoorClosedTimeDto.toDto(doorClosedTime);
+  }
+
+  public List<LastMovedTimeDto> readLastMovedTimeAll(){
+    List<LastMovedTime> lastMovedTimeList = lastMovedTimeRepository.findAll();
+    List<LastMovedTimeDto> lastMovedTimeDtoList = lastMovedTimeList.stream()
+        .map(lastMovedTime -> LastMovedTimeDto.toDto(lastMovedTime))
+        .collect(Collectors.toList());
+    return lastMovedTimeDtoList;
   }
 
   public void deleteClient(Long id){
@@ -146,13 +133,4 @@ public class ClientService {
     client.deleteImageUrl(client);
     return clientRepository.save(client);
   }
-
-  public DoorClosedTime verify(String loginId, DoorClosedTimeDto doorClosedTimeDto){
-    DoorClosedTime doorClosedTime = doorClosedTimeRepository.findByLoginId(loginId);
-    doorClosedTime.verifyIsOut(doorClosedTimeDto.isOut());
-    return doorClosedTime;
-  }
-
-
-
 }

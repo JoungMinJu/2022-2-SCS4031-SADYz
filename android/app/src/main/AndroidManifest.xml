@@ -14,6 +14,8 @@
         </intent>
     </queries>
     <application
+        android:usesCleartextTraffic="true"
+        android:debuggable="true"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -22,9 +24,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Android"
-        tools:targetApi="31">
+        tools:targetApi="31"
+        tools:ignore="HardcodedDebugMode">
         <activity
-            android:name=".MainActivity"
+            android:name=".activiy.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -36,10 +39,20 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-        <activity android:name=".SttActivity"/>
-        <activity android:name=".TtsActivity"/>
-    </application>
+        <activity android:name=".activiy.SttActivity"/>
+        <activity android:name=".activiy.TtsActivity"/>
+        <activity android:name=".activiy.EmergencyActivity"/>
+        <activity android:name=".activiy.OutingActivity" />
 
+        <service android:name=".firebase.MyFirebaseMessagingService"
+            android:stopWithTask="false"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+
+    </application>
     <!-- 인터넷, 오디오 사용 권한 추가 -->
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.RECORD_AUDIO"/>

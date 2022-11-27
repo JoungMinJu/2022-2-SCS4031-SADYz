@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -17,7 +18,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class DoorClosedTimeDto {
   private long id;
 
-  private String loginId;
+  private String phoneNumber;
 
   @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
@@ -29,10 +30,19 @@ public class DoorClosedTimeDto {
 
   public static DoorClosedTimeDto toDto(DoorClosedTime doorClosedTime){
     return DoorClosedTimeDto.builder()
-        .loginId(doorClosedTime.getLoginId())
+        .phoneNumber(doorClosedTime.getPhoneNumber())
         .doorClosedTime(doorClosedTime.getDoorClosedTime())
         .isOut(doorClosedTime.isOut())
         .client(doorClosedTime.getClient())
+        .build();
+  }
+
+  public DoorClosedTime toEntity(){
+    return DoorClosedTime.builder()
+        .phoneNumber(phoneNumber)
+        .doorClosedTime(doorClosedTime)
+        .isOut(isOut)
+        .client(client)
         .build();
   }
 
