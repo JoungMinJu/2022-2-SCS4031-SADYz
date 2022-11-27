@@ -130,7 +130,7 @@ void check_movement(){
 
       //서버로 움직임 시간 전송
       if(client.connect(server, 80)){
-        send_server(jsondata);
+        send_server(jsondata);        
       }
 
       Serial.println("Waiting..."); 
