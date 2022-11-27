@@ -14,7 +14,7 @@ function Main({ emergency }) {
     setSelected(e.target.value);
   };
   useEffect(() => {
-    console.log(Selected);
+    // console.log(Selected);
   }, [Selected]);
 
   return (
