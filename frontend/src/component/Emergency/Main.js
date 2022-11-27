@@ -61,6 +61,7 @@ function Main({ emergency }) {
                 address={client.address}
                 birth={client.birth}
                 emergency={emergency}
+                phonenumber={client.phonenumber}
               />
             );
           })}

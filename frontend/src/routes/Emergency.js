@@ -17,11 +17,8 @@ function Emergency(props) {
   };
   useEffect(() => {
     get_emergency();
-  }, []);
-
-  useEffect(() => {
-    // console.log(emergency);
   }, [emergency]);
+
   return (
     <div>
       <Navbar />
