@@ -3,6 +3,7 @@ import config
 from controller.dbController import db
 from controller.mealController import meal
 from controller.toiletController import toilet
+from controller.emotionController import  emotion
 
 app = Flask(__name__)
 
@@ -19,4 +20,5 @@ if __name__ == '__main__':
     create_app()
     app.register_blueprint(meal)
     app.register_blueprint(toilet)
+    app.register_blueprint(emotion)
     app.run(debug=True)
