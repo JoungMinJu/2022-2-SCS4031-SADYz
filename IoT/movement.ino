@@ -30,6 +30,9 @@ void setup() {
   //와이파이 연결
   Wifi_connect();
   
+
+
+
   //초음파센서
   pinMode(trigPin, OUTPUT); // Sets the trigPin as an Output
   pinMode(echoPin, INPUT); // Sets the echoPin as an Input
@@ -53,7 +56,7 @@ void loop() {
 void Wifi_connect(){
   Serial.print("Wifi Connecting to");
   Serial.println(ssid);
-
+ 
   WiFi.begin(ssid,password);
   Serial.println();
   Serial.print("Connecting");
@@ -66,6 +69,10 @@ void Wifi_connect(){
   Serial.println("Wifi Connected Success!");
   Serial.print("NodeMCU IP Address : ");
   Serial.println(WiFi.localIP());
+  Serial.print("NodeMCU 게이트웨이 : ");
+  Serial.println(WiFi.gatewayIP().toString());
+  Serial.print("NodeMCU 서브넷 : ");
+  Serial.println(WiFi.subnetMask().toString());
 }
 
 void check_movement(){
@@ -88,6 +95,7 @@ void check_movement(){
   //움직임 감지되면
   //초음파 센서 값을 기준(거리 몇 cm 이하면 사람)으로 계산하여
   //참일 경우, json으로 현재 날짜 저장
+
   if (state == 1){
     if (distance<30){
       digitalWrite(ledPin,HIGH);
@@ -99,14 +107,10 @@ void check_movement(){
       time_t rawtime = epochTime;
       struct tm *ptm = gmtime(&rawtime);
       int monthDay = ptm->tm_mday;
-//      Serial.print("Month day: ");
-//      Serial.println(monthDay);
+
       int currentMonth = ptm->tm_mon+1;
-//      Serial.print("Month: ");
-//      Serial.println(currentMonth);
+
       int currentYear = ptm->tm_year+1900;
-//      Serial.print("Year: ");
-//      Serial.println(currentYear);
 
 
       String currentDate = String(currentYear) + "-" + String(currentMonth) + "-" + String(monthDay);
@@ -126,58 +130,59 @@ void check_movement(){
       StaticJsonBuffer<200> jsonBuffer;
       JsonObject& root = jsonBuffer.createObject();
       root["lastMovedTime"] = CurrentDateTime;
-    
+      root["location"] = "kitchen" ; //or "bathroom"
       root.printTo(jsondata);
-      Serial.println(jsondata);
 
-      //thinkspeak으로 보내기
-      if(client.connect(server,80)){
-        thinkspeak(1);
+      //thingspeak으로 보내기
+      if(client.connect(server, 80)){
         send_server(jsondata);
+        thingspeak(1);
+        
       }
-      client.stop();
+      
+      
 
       Serial.println("Waiting..."); 
     }
-    else{
-      digitalWrite(ledPin,LOW);
-    }
-    
-    
-     
-    
+      
+  }
+  else{
+    digitalWrite(ledPin,LOW);
+
   }
   
 }
 
-void thinkspeak(int movement){
+void thingspeak(int movement){
   String postStr = apiKey;
-      postStr +="&field1=";
-      postStr += String(movement);
-    client.print("POST /update HTTP/1.1\n"); 
-    client.print("Host: api.thingspeak.com\n"); 
-    client.print("Connection: close\n"); 
-    client.print("X-THINGSPEAKAPIKEY: "+apiKey+"\n"); 
-    client.print("Content-Type: application/x-www-form-urlencoded\n"); 
-    client.print("Content-Length: "); 
-    client.print(postStr.length()); 
-    client.print("\n\n"); 
-    client.print(postStr);
-    Serial.print("CurrentMovement: ");
-    Serial.print(movement);
-    Serial.println("send to Thingspeak");
-    Serial.println();
+  postStr +="&field1=";
+  postStr += String(movement);
+  
+  client.print("POST /update HTTP/1.1\n");
+  client.print("Host: api.thingspeak.com\n");
+  client.print("Connection: close\n");
+  client.print("X-THINGSPEAKAPIKEY: " + apiKey + "\n");
+  client.print("Content-Type: application/x-www-form-urlencoded\n");
+  client.print("Content-Length: ");
+  client.print(postStr.length());
+  client.print("\n\n");
+  client.print(postStr);
+  
+  Serial.println("Thingspeak "+String(movement)+"전송");
+
 }
+ 
+
 
 void send_server(String data){
   
   HTTPClient http;
   //POST url
-  http.begin(client,"http://192.168.0.36:8080/api/dashboard/clients/time/1/");
+  http.begin(client,"http://172.30.17.229:8080/api/dashboard/clients/time/xxx-xxxx-xxxx");
 
   http.addHeader("Content-Type", "application/json");
   Serial.println(data);
-  int httpResponseCode = http.PUT(data);
+  int httpResponseCode = http.POST(data);
 
   if(httpResponseCode == 500){
      http.addHeader("Content-Type", "application/json");
