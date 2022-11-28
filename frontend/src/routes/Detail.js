@@ -9,6 +9,8 @@ import '../css/grid.css';
 import { useParams } from 'react-router-dom';
 import { useState } from 'react';
 import axios from 'axios';
+const modify_img = `${process.env.PUBLIC_URL + '/images/modify.png'}`;
+
 function Detail(props) {
   const { id } = useParams();
   const [client, setClient] = useState([]);
