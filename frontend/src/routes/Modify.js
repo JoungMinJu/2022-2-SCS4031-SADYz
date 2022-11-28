@@ -107,7 +107,7 @@ function Modify(props) {
           <Button
             onClick={() => {
               put_client();
-              navigate('/');
+              navigate(`/Detail/${id}`);
             }}
           >
             등록하기
