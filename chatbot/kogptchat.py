@@ -8,7 +8,7 @@ from transformers import PreTrainedTokenizerFast, GPT2LMHeadModel
 
 parser = argparse.ArgumentParser(description='Simsimi based on KoGPT-2')
 
-root_path = str(pathlib.Path(__file__).parent.parent.absolute())
+root_path = str(pathlib.Path(__file__).parent.absolute())
 
 parser.add_argument('--chat',
                     action='store_true',

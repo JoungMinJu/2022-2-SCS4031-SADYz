@@ -11,7 +11,7 @@ from transformers import (
 )
 from model.koelectra import koElectraForSequenceClassification, koelectra_input
 
-root_path = str(pathlib.Path(__file__).parent.parent.absolute())
+root_path = str(pathlib.Path(__file__).parent.absolute())
 
 def load_wellness_answer():
     category_path = f"{root_path}/data/wellness_dialog_category.txt"
@@ -98,26 +98,3 @@ def get_result(sent):
     # print(f'index: {category[max_index]}, value: {max_index_value}')
     # print('-' * 50)
 # print('argmin:',softmax_logit[torch.argmin(softmax_logit)])
-
-
-def get_answer(sent):
-    data = koelectra_input(tokenizer, sent, device, 512)
-    # print(data)
-
-    output = model(**data)
-
-    logit = output
-    softmax_logit = nn.Softmax(logit).dim
-    softmax_logit = softmax_logit[0].squeeze()
-
-    max_index = torch.argmax(softmax_logit).item()
-    max_index_value = softmax_logit[torch.argmax(softmax_logit)].item()
-
-    tmp_category = category[max_index]
-    answer_list = answer[tmp_category]
-    answer_len = len(answer_list) - 1
-    answer_index = random.randint(0, answer_len)
-    return answer_list[answer_index]
-    # print(f'Answer: {answer_list[answer_index]}, index: {max_index}, value: {max_index_value}')
-    # print(f'index: {category[max_index]}, value: {max_index_value}')
-    # print('-' * 50)
