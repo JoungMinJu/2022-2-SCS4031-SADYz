@@ -1,4 +1,4 @@
-package com.example.android.activiy;
+package com.example.android.activity;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.android.R;
 import com.example.android.dto.EmergencyDto;
 import com.example.android.retrofit.EmergencyRetrofit;
-import com.example.android.retrofit.Retrofit;
+import com.example.android.retrofit.SpringRetrofit;
 import com.google.gson.Gson;
 
 import retrofit2.Call;
@@ -29,8 +29,8 @@ public class EmergencyActivity extends AppCompatActivity {
 
         emergecyButton = (Button) findViewById(R.id.emergency);
 
-        Retrofit retrofit = Retrofit.getInstance();
-        EmergencyRetrofit emergencyRetrofit = Retrofit.getEmergencyRetrofit();
+        SpringRetrofit retrofit = SpringRetrofit.getInstance();
+        EmergencyRetrofit emergencyRetrofit = SpringRetrofit.getEmergencyRetrofit();
 
         emergecyButton.setOnClickListener(new View.OnClickListener() {
 
