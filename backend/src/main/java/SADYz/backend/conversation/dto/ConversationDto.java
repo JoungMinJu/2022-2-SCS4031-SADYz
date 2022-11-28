@@ -16,6 +16,7 @@ public class ConversationDto {
     private Long id;
     private String fullText;
     private String problem;
+    private String emotion;
     private Client client;
 
 
@@ -23,6 +24,7 @@ public class ConversationDto {
         return Conversation.builder()
                 .fullText(fullText)
                 .problem(problem)
+                .emotion(emotion)
                 .client(client)
                 .build();
     }
@@ -31,6 +33,7 @@ public class ConversationDto {
         return ConversationDto.builder()
                 .id(conversation.getId())
                 .problem(conversation.getProblem())
+                .emotion(conversation.getEmotion())
                 .fullText(conversation.getFullText())
                 .client(conversation.getClient())
                 .build();

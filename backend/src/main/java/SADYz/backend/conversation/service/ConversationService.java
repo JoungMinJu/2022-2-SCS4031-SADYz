@@ -27,6 +27,7 @@ public class ConversationService {
         ConversationDto newConversationDto = ConversationDto.builder()
                 .fullText(conversationDto.getFullText())
                 .client(client)
+                .emotion(conversationDto.getEmotion())
                 .problem(conversationDto.getProblem())
                 .build();
         return conversationRepository.save(newConversationDto.toEntity());

@@ -25,16 +25,19 @@ public class Conversation {
 
   private String problem;
 
+  private String emotion;
+
   @ManyToOne
   @JoinColumn(name = "client_id")
   @JsonIgnore
   private Client client;
 
   @Builder
-  public Conversation(long id, String fullText, String problem, Client client) {
+  public Conversation(long id, String fullText, String problem, String emotion, Client client) {
     this.id = id;
     this.fullText = fullText;
     this.problem = problem;
+    this.emotion = emotion;
     this.client = client;
   }
 }
