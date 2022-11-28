@@ -52,8 +52,8 @@ public class Client {
     @JsonIgnore
     private List<Conversation> conversations;
 
-    @OneToOne(mappedBy = "client")
-    private Emergency emergency;
+    @OneToMany(mappedBy = "client")
+    private List<Emergency> emergencies;
 
     @OneToMany(mappedBy = "client")
     @JsonIgnore
@@ -67,7 +67,7 @@ public class Client {
     @Builder
     public Client(String loginId, String name, String address, String birth, String phonenumber,
                   boolean response, boolean stay, Status status, List<Conversation> conversations,
-                  Emergency emergency, List<LastMovedTime> lastMovedTime, DoorClosedTime doorClosedTime, String imageUrl) {
+                  List<Emergency> emergencies, List<LastMovedTime> lastMovedTime, DoorClosedTime doorClosedTime, String imageUrl) {
         this.loginId = loginId;
         this.name = name;
         this.address = address;
@@ -77,7 +77,7 @@ public class Client {
         this.stay = stay;
         this.status = status;
         this.conversations = conversations;
-        this.emergency = emergency;
+        this.emergencies = emergencies;
         this.lastMovedTime = lastMovedTime;
         this.doorClosedTime = doorClosedTime;
         this.imageUrl = imageUrl;
@@ -93,7 +93,7 @@ public class Client {
         this.stay = clientDto.isStay();
         this.status = clientDto.getStatus();
         this.conversations = clientDto.getConversations();
-        this.emergency = clientDto.getEmergency();
+        this.emergencies = clientDto.getEmergencies();
         this.lastMovedTime = clientDto.getLastMovedTime();
         this.doorClosedTime = clientDto.getDoorClosedTime();
         this.imageUrl = clientDto.getImageUrl();
@@ -111,7 +111,7 @@ public class Client {
                 .stay(client.stay)
                 .status(client.status)
                 .conversations(client.conversations)
-                .emergency(client.emergency)
+                .emergencies(client.emergencies)
                 .lastMovedTime(client.lastMovedTime)
                 .doorClosedTime(client.doorClosedTime)
                 .imageUrl(client.imageUrl)

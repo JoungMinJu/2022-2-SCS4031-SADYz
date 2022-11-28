@@ -30,7 +30,7 @@ public class ClientDto {
 
   private List<Conversation> conversations;
 
-  private Emergency emergency;
+  private List<Emergency> emergencies;
 
   private List<LastMovedTime> lastMovedTime;
 
@@ -39,7 +39,7 @@ public class ClientDto {
   private String imageUrl;
 
   public Client toEntity(){
-    Client build = Client.builder()
+    return Client.builder()
         .loginId(loginId)
         .name(name)
         .address(address)
@@ -49,11 +49,10 @@ public class ClientDto {
         .stay(stay)
         .status(status)
         .conversations(conversations)
-        .emergency(emergency)
+        .emergencies(emergencies)
         .lastMovedTime(lastMovedTime)
         .doorClosedTime(doorClosedTime)
         .imageUrl(imageUrl)
         .build();
-    return build;
   }
 }

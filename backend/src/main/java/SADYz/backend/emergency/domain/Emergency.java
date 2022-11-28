@@ -5,15 +5,7 @@ import SADYz.backend.emergency.dto.EmergencyDto;
 import SADYz.backend.global.baseEntity.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -32,7 +24,7 @@ public class Emergency extends BaseEntity {
 
     private boolean emergencyNow;
 
-    @OneToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "client_id")
     @JsonIgnore
     private Client client;
