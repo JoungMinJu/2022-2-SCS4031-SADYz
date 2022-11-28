@@ -32,6 +32,7 @@ function Chatbot(props) {
         />
         {/* {console.log(moment(value).format('YYYY-MM-DD'))} */}
       </Calendar_part>
+      <Contents_part>d</Contents_part>
     </>
   );
 }
@@ -41,5 +42,9 @@ export default Chatbot;
 const Calendar_part = styled.div`
   float: left;
   width: 40%;
+  padding: 15px;
+`;
+
+const Contents_part = styled.div`
   padding: 15px;
 `;

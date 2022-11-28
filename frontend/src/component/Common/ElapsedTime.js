@@ -22,7 +22,7 @@ function elapsedTime(date) {
     message = `${diffHour}시간 ${diffMin}분 전`;
   } else {
     client_level = level_category[0];
-    if (diffHour === 0) message = `${diffMin}분 전`;
+    if (diffHour === 0 && diffMin > 0) message = `${diffMin}분 전`;
     else if (diffMin === 0) message = `${diffSec}초 전`;
     else message = `${diffHour}시간 ${diffMin}분 전`;
   }
