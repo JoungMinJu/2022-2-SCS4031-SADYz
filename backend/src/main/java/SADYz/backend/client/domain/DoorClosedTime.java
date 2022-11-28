@@ -28,7 +28,9 @@ public class DoorClosedTime {
   @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
   private LocalDateTime doorClosedTime;
+
   private boolean isOut;
+
   @OneToOne
   @JoinColumn(name = "client_id")
   @JsonIgnore
