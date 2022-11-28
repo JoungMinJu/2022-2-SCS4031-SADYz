@@ -2,7 +2,8 @@ from flask import Flask
 import config
 from controller.dbController import db
 from controller.mealController import meal
-from controller.toiletController import toilet
+from controller.bathroomController import bathroom
+from controller.emotionController import  emotion
 
 app = Flask(__name__)
 
@@ -18,5 +19,6 @@ def create_app(test_config = None):
 if __name__ == '__main__':
     create_app()
     app.register_blueprint(meal)
-    app.register_blueprint(toilet)
-    app.run(debug=True)
+    app.register_blueprint(bathroom)
+    app.register_blueprint(emotion)
+    app.run(host='0.0.0.0')

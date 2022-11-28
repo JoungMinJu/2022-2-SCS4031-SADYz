@@ -35,8 +35,8 @@ def get_client(phone_number):
     return db.session.query(Client).filter_by(phonenumber=phone_number).first()
 
 
-def get_today_toilet_count(phone_number):
+def get_today_bathroom_count(phone_number):
     client = get_client(phone_number)
     return len(db.session.query(LastMovedTime).filter_by(client_id=client.id).filter(
         func.date(LastMovedTime.last_moved_time) == date.today()
-    ).filter(LastMovedTime.location == "toilet").all())
+    ).filter(LastMovedTime.location == "bathroom").all())
