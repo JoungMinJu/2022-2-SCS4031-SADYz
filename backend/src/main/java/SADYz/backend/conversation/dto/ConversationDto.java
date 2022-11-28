@@ -13,23 +13,29 @@ import lombok.NoArgsConstructor;
 @Builder
 public class ConversationDto {
 
-  private Long id;
-  private String fullText;
-  private Client client;
+    private Long id;
+    private String fullText;
+    private String problem;
+    private String emotion;
+    private Client client;
 
-  public Conversation toEntity(){
-    return Conversation.builder()
-        .fullText(fullText)
-        .client(client)
-        .build();
-  }
 
-  public static ConversationDto toDto(Conversation conversation){
-    ConversationDto conversationDto = ConversationDto.builder()
-        .id(conversation.getId())
-        .fullText(conversation.getFullText())
-        .client(conversation.getClient())
-        .build();
-    return conversationDto;
-  }
+    public Conversation toEntity() {
+        return Conversation.builder()
+                .fullText(fullText)
+                .problem(problem)
+                .emotion(emotion)
+                .client(client)
+                .build();
+    }
+
+    public static ConversationDto toDto(Conversation conversation) {
+        return ConversationDto.builder()
+                .id(conversation.getId())
+                .problem(conversation.getProblem())
+                .emotion(conversation.getEmotion())
+                .fullText(conversation.getFullText())
+                .client(conversation.getClient())
+                .build();
+    }
 }
