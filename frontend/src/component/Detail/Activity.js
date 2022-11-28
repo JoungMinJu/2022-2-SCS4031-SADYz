@@ -14,15 +14,27 @@ function Activity({ lastMovedTime, doorClosedTime, out }) {
       <Door>
         <Title>마지막 출입 시간</Title>
         <Contents>
-          <section>{doorClosedTime}</section>
-          <section>({elapsedDoor})</section>
+          {doorClosedTime === undefined ? (
+            '기록없음'
+          ) : (
+            <>
+              <section>{doorClosedTime}</section>
+              <section>({elapsedDoor})</section>
+            </>
+          )}
         </Contents>
       </Door>
       <Movement>
         <Title>마지막 움직임 시간</Title>
         <Contents>
-          <section>{lastMovedTime}</section>
-          <section>({elapsedMove})</section>
+          {lastMovedTime === undefined ? (
+            '기록없음'
+          ) : (
+            <>
+              <section>{lastMovedTime}</section>
+              <section>({elapsedMove})</section>
+            </>
+          )}
         </Contents>
       </Movement>
     </>
