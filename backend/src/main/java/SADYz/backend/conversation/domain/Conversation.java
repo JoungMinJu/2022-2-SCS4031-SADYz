@@ -20,16 +20,21 @@ public class Conversation {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
+
   private String fullText;
+
+  private String problem;
+
   @ManyToOne
   @JoinColumn(name = "client_id")
   @JsonIgnore
   private Client client;
 
   @Builder
-  public Conversation(long id, String fullText, Client client) {
+  public Conversation(long id, String fullText, String problem, Client client) {
     this.id = id;
     this.fullText = fullText;
+    this.problem = problem;
     this.client = client;
   }
 }
