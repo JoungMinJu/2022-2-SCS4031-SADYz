@@ -9,10 +9,13 @@ import '../css/grid.css';
 import { useParams } from 'react-router-dom';
 import { useState } from 'react';
 import axios from 'axios';
+const modify_img = `${process.env.PUBLIC_URL + '/images/modify.png'}`;
+
 function Detail(props) {
   const { id } = useParams();
   const [client, setClient] = useState([]);
   const [lastMovedTime, setLastMovedTime] = useState([]);
+  const [doorClosedTime, setDoorClosedTIme] = useState([]);
   const get_client_detail = async () => {
     try {
       await axios
@@ -27,6 +30,9 @@ function Detail(props) {
             : setLastMovedTime(
                 res.data.lastMovedTime[res.data.lastMovedTime.length - 1],
               );
+          const door = res.data.doorClosedTime.length;
+          // eslint-disable-next-line no-unused-expressions
+          door === 0 ? null : setDoorClosedTIme(res.data.doorClosedTime);
         });
     } catch (err) {
       console.log(err);
@@ -69,7 +75,21 @@ function Detail(props) {
           </div>
           <div className="item title">활동정보</div>
           <div className="item">
-            <Activity />
+            <Activity
+              lastMovedTime={
+                lastMovedTime === null ? null : lastMovedTime.lastMovedTime
+              }
+              doorClosedTime={
+                doorClosedTime === null ? null : doorClosedTime.doorClosedTime
+              }
+              out={
+                doorClosedTime.length === 0
+                  ? '기록없음'
+                  : doorClosedTime.out === false
+                  ? 'x'
+                  : 'O'
+              }
+            />
           </div>
         </Container>
       </div>
