@@ -1,4 +1,4 @@
-package com.example.android.activiy;
+package com.example.android.activity;
 
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
@@ -11,8 +11,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.android.R;
-
-import org.w3c.dom.Text;
 
 import java.util.Locale;
 
