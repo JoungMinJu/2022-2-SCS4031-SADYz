@@ -45,7 +45,7 @@ def get_today_bathroom_count(phone_number):
     ).filter(LastMovedTime.location == "bathroom").all())
 
 def create_conversation(full_text, client_id):
-    conversation = Conversation("", full_text, "", client_id)
+    conversation = Conversation("", full_text, "", client_id, datetime.now(KST),datetime.now(KST))
     db.session.add(conversation)
     db.session.commit()
     return conversation.id
@@ -58,6 +58,7 @@ def update_conversation(conv_id, emotion, full_text, problem):
     conv.emotion = conv.emotion + "," + emotion
     conv.full_text = conv.full_text + "," + full_text
     conv.problem = problem
+    conv.modified_date_time = datetime.now(KST)
     db.session.commit()
 
 def update_conversation_emotion(conv_id):
@@ -65,6 +66,7 @@ def update_conversation_emotion(conv_id):
     emotion_split = conv.emotion.rstrip(",").split(",")
     data = Counter(emotion_split)
     conv.emotion = data.most_common(1)[0][0]
+    conv.modified_date_time = datetime.now(KST)
     db.session.commit()
 
 
