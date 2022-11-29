@@ -43,16 +43,16 @@
         app:layout_constraintVertical_bias="0.212" />
 
     <Button
-    android:id="@+id/fcmbutton"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:text="fcmbutton"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintHorizontal_bias="1.0"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent"
-    app:layout_constraintVertical_bias="0.311" />
+        android:id="@+id/fcmbutton"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="fcmbutton"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.317" />
 
     <Button
         android:id="@+id/flaskbutton"
@@ -65,5 +65,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.427" />
+
+    <Button
+        android:id="@+id/capturebutton"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="캡쳐용 화면"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.547" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

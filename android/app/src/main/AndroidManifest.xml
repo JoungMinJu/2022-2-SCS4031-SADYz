@@ -44,6 +44,7 @@
         <activity android:name=".activity.EmergencyActivity"/>
         <activity android:name=".activity.OutingActivity" />
         <activity android:name=".activity.FlaskActivity"/>
+        <activity android:name=".activity.CaptureActivity"/>
 
         <service android:name=".firebase.MyFirebaseMessagingService"
             android:stopWithTask="false"
@@ -58,5 +59,5 @@
     <!-- 인터넷, 오디오 사용 권한 추가 -->
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.RECORD_AUDIO"/>
-
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 </manifest>
