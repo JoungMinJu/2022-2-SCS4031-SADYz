@@ -2,12 +2,13 @@ import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { useState } from 'react';
 import Row from './Row';
-function Main({ emergency }) {
+
+function Main({ emergency, today_unsolved, today_emergency, unsolved }) {
   const selectList = [
     '금일 미해결 응급콜',
     '금일 전체 응급콜',
-    '최근 일주일 전체 응급콜',
-    '최근 일주일 미해결 응급콜',
+    '전체 미해결 응급콜',
+    '전체 응급콜',
   ];
   const [Selected, setSelected] = useState('금일 미해결 응급콜');
   const handleSelect = (e) => {
@@ -49,22 +50,76 @@ function Main({ emergency }) {
           </tr>
         </Thead>
         <Tbody>
-          {emergency.map((emerg, index) => {
-            const client = emerg.client;
+          {Selected === '금일 미해결 응급콜'
+            ? today_unsolved &&
+              today_unsolved.map((emerg, index) => {
+                const client = emerg.client;
 
-            return (
-              <Row
-                key={emerg.id}
-                id={client.id}
-                index={index}
-                name={client.name}
-                address={client.address}
-                birth={client.birth}
-                emergency={emerg.emergencyNow}
-                phonenumber={client.phonenumber}
-              />
-            );
-          })}
+                return (
+                  <Row
+                    key={emerg.id}
+                    id={emerg.id}
+                    index={index}
+                    name={client.name}
+                    address={client.address}
+                    birth={client.birth}
+                    emergency={emerg.emergencyNow}
+                    phonenumber={client.phonenumber}
+                  />
+                );
+              })
+            : Selected === '금일 전체 응급콜'
+            ? today_emergency &&
+              today_emergency.map((emerg, index) => {
+                const client = emerg.client;
+
+                return (
+                  <Row
+                    key={emerg.id}
+                    id={emerg.id}
+                    index={index}
+                    name={client.name}
+                    address={client.address}
+                    birth={client.birth}
+                    emergency={emerg.emergencyNow}
+                    phonenumber={client.phonenumber}
+                  />
+                );
+              })
+            : Selected === '전체 미해결 응급콜'
+            ? unsolved &&
+              unsolved.map((emerg, index) => {
+                const client = emerg.client;
+
+                return (
+                  <Row
+                    key={emerg.id}
+                    id={emerg.id}
+                    index={index}
+                    name={client.name}
+                    address={client.address}
+                    birth={client.birth}
+                    emergency={emerg.emergencyNow}
+                    phonenumber={client.phonenumber}
+                  />
+                );
+              })
+            : emergency.map((emerg, index) => {
+                const client = emerg.client;
+
+                return (
+                  <Row
+                    key={emerg.id}
+                    id={emerg.id}
+                    index={index}
+                    name={client.name}
+                    address={client.address}
+                    birth={client.birth}
+                    emergency={emerg.emergencyNow}
+                    phonenumber={client.phonenumber}
+                  />
+                );
+              })}
         </Tbody>
       </Table>
     </div>

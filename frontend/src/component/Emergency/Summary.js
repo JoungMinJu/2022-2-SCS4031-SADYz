@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 const emergency_img = `${process.env.PUBLIC_URL + '/images/emergency2.png'}`;
 
-function Summary(props) {
+function Summary({ emergency, today_unsolved, today_emergency, unsolved }) {
   return (
     <>
       <SummaryContainer>
@@ -11,17 +11,8 @@ function Summary(props) {
             <Image src={emergency_img}></Image>
           </ImageDiv>
           <Title>
-            <CategoryTitle>최근 일주일 전체 응급콜 수</CategoryTitle>
-            <Number>0</Number>
-          </Title>
-        </Category>
-        <Category>
-          <ImageDiv>
-            <Image src={emergency_img}></Image>
-          </ImageDiv>
-          <Title>
             <CategoryTitle>금일 응급콜 수</CategoryTitle>
-            <Number>0</Number>
+            <Number>{today_emergency.length}</Number>
           </Title>
         </Category>
         <Category>
@@ -29,8 +20,8 @@ function Summary(props) {
             <Image src={emergency_img}></Image>
           </ImageDiv>
           <Title>
-            <CategoryTitle>최근 일주일 해결 응급콜 수</CategoryTitle>
-            <Number>0</Number>
+            <CategoryTitle>금일 미해결 응급콜 수</CategoryTitle>
+            <Number>{today_unsolved.length}</Number>
           </Title>
         </Category>
         <Category>
@@ -38,8 +29,17 @@ function Summary(props) {
             <Image src={emergency_img}></Image>
           </ImageDiv>
           <Title>
-            <CategoryTitle>최근 일주일 미해결 응급콜 수</CategoryTitle>
-            <Number>0</Number>
+            <CategoryTitle>전체 미해결 응급콜 수</CategoryTitle>
+            <Number>{unsolved.length}</Number>
+          </Title>
+        </Category>
+        <Category>
+          <ImageDiv>
+            <Image src={emergency_img}></Image>
+          </ImageDiv>
+          <Title>
+            <CategoryTitle>전체 응급콜 수</CategoryTitle>
+            <Number>{emergency.length}</Number>
           </Title>
         </Category>
       </SummaryContainer>
