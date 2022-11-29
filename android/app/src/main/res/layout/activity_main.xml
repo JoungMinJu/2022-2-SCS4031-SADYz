@@ -5,77 +5,173 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.MainActivity">
-
-    <Button
-        android:id="@+id/sttbutton"
-        android:layout_width="fill_parent"
+    <TextView
+        android:id="@+id/question"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="sttbutton"
+        android:text="식사는 하셨나요?"
+        android:textColor="@color/black"
+        android:textSize="40dp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.023" />
+        app:layout_constraintVertical_bias="0.178" />
 
-    <Button
-        android:id="@+id/ttsbutton"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="ttsbutton"
+    <ImageView
+        android:layout_width="215dp"
+        android:layout_height="220dp"
+        android:src="@drawable/chatbot"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.117" />
+        app:layout_constraintVertical_bias="0.479" />
 
     <Button
-        android:id="@+id/emergencybutton"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="emergencybutton"
+        android:id="@+id/audio"
+        android:layout_width="253dp"
+        android:layout_height="53dp"
+        android:text="응답하기"
+        android:textSize="28dp"
+        android:textColor="#ffffff"
+        android:background="@drawable/button_round"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.524"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.212" />
+        app:layout_constraintVertical_bias="0.767" />
 
     <Button
-        android:id="@+id/fcmbutton"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="fcmbutton"
+        android:id="@+id/emergencyCall"
+        android:layout_width="253dp"
+        android:layout_height="53dp"
+        android:background="@drawable/emergency_button_round"
+        android:text="응급상황"
+        android:textSize="28dp"
+        android:textColor="#ffffff"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.513"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.317" />
+        app:layout_constraintVertical_bias="0.873" />
 
     <Button
-        android:id="@+id/flaskbutton"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="flaskbutton"
+        android:id="@+id/meal"
+        android:layout_width="117dp"
+        android:layout_height="35dp"
+        android:text="식사"
+        android:textColor="#ffffff"
+        android:textSize="13dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.017"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.427" />
+        app:layout_constraintVertical_bias="0.964" />
 
     <Button
-        android:id="@+id/capturebutton"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="캡쳐용 화면"
+        android:id="@+id/bathroom"
+        android:layout_width="117dp"
+        android:layout_height="35dp"
+        android:text="화장실"
+        android:textColor="#ffffff"
+        android:textSize="13dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.547" />
+        app:layout_constraintVertical_bias="0.964" />
+
+    <Button
+        android:id="@+id/emotion"
+        android:layout_width="117dp"
+        android:layout_height="35dp"
+        android:text="일상대화"
+        android:textColor="#ffffff"
+        android:textSize="13dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.989"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.964" />
+    <!--    <Button-->
+<!--        android:id="@+id/sttbutton"-->
+<!--        android:layout_width="fill_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="sttbutton"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.498"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintVertical_bias="0.023" />-->
+
+<!--    <Button-->
+<!--        android:id="@+id/ttsbutton"-->
+<!--        android:layout_width="fill_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="ttsbutton"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.0"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintVertical_bias="0.117" />-->
+
+<!--    <Button-->
+<!--        android:id="@+id/emergencybutton"-->
+<!--        android:layout_width="fill_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="emergencybutton"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.0"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintVertical_bias="0.212" />-->
+
+<!--    <Button-->
+<!--        android:id="@+id/fcmbutton"-->
+<!--        android:layout_width="fill_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="fcmbutton"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.0"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintVertical_bias="0.317" />-->
+
+<!--    <Button-->
+<!--        android:id="@+id/flaskbutton"-->
+<!--        android:layout_width="fill_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="flaskbutton"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.0"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintVertical_bias="0.427" />-->
+
+<!--    <Button-->
+<!--        android:id="@+id/capturebutton"-->
+<!--        android:layout_width="fill_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="캡쳐용 화면"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.0"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintVertical_bias="0.547" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
