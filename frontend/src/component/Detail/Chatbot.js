@@ -8,7 +8,7 @@ import Conversation from './Conversation';
 function Chatbot({ conversations }) {
   const [value, onChange] = useState(new Date());
   return (
-    <>
+    <div>
       <CalendarPart>
         <Calendar
           onChange={onChange}
@@ -38,7 +38,7 @@ function Chatbot({ conversations }) {
             return <Conversation conversation={conversation} />;
           })}
       </ContentsPart>
-    </>
+    </div>
   );
 }
 
@@ -51,6 +51,8 @@ const CalendarPart = styled.div`
 `;
 
 const ContentsPart = styled.div`
+  max-height: 300px;
   padding: 15px;
   margin-left: 40%;
+  overflow: scroll;
 `;
