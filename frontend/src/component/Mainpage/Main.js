@@ -48,7 +48,8 @@ function Main({ clients }) {
         </Thead>
         <Tbody>
           {Selected === '전체'
-            ? clients.map((client, index) => {
+            ? clients &&
+              clients.map((client, index) => {
                 const [lastMovedTime, ElapsedTime, status] = filtermap(client);
 
                 return (
@@ -67,7 +68,8 @@ function Main({ clients }) {
                   />
                 );
               })
-            : clients
+            : clients &&
+              clients
                 .filter((client) => {
                   const [lastMovedTime, ElapsedTime, status] =
                     filtermap(client);
