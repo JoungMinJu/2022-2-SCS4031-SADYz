@@ -6,7 +6,7 @@ public class SpringRetrofit {
 
     private static SpringRetrofit instance = null;
     private static EmergencyRetrofit emergencyRetrofit;
-    private static String baseUrl = "http://172.30.1.35:8080/";
+    private static String baseUrl = "http://10.70.23.228:8080/";
 
     private SpringRetrofit() {
         retrofit2.Retrofit retrofit = new retrofit2.Retrofit.Builder()

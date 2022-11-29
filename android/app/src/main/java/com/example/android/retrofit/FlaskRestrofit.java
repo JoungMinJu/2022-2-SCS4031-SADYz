@@ -6,7 +6,7 @@ public class FlaskRestrofit {
 
     private static FlaskRestrofit instance = null;
     private static ChatbotRetrofit chatbotRetrofit;
-    private static String baseUrl = "http://172.30.1.35:5000";
+    private static String baseUrl = "http://10.70.23.228:5000";
 
     private FlaskRestrofit() {
 
