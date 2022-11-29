@@ -54,9 +54,13 @@ class Conversation(db.Model):
     full_text = db.Column(db.String(2000))
     problem = db.Column(db.String(50))
     client_id = db.Column(db.Integer)
+    created_date_time = db.Column(db.DateTime)
+    modified_date_time = db.Column(db.DateTime)
 
-    def __init__(self, emotion, full_text, problem, client_id):
+    def __init__(self, emotion, full_text, problem, client_id, created_date_time, modified_date_time):
         self.emotion = emotion
         self.full_text = full_text
         self.problem = problem
+        self.created_date_time = created_date_time
+        self.modified_date_time = modified_date_time
         self.client_id = client_id
