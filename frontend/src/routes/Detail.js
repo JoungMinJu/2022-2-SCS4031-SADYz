@@ -35,7 +35,7 @@ function Detail(props) {
           door === 0 ? null : setDoorClosedTIme(res.data.doorClosedTime);
         });
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
   };
   useEffect(() => {
@@ -67,7 +67,7 @@ function Detail(props) {
           </div>
           <div className="item title">챗봇</div>
           <div className="item">
-            <Chatbot />
+            <Chatbot conversations={client.conversations} />
           </div>
           <div className="item title">응급콜</div>
           <div className="item">

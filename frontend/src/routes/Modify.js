@@ -27,10 +27,10 @@ function Modify(props) {
             phonenumber: res.data.phonenumber,
             address: res.data.address,
           });
-          console.log(inputs);
+          //   console.log(inputs);
         });
     } catch (err) {
-      console.log(err);
+      //   console.log(err);
     }
   };
 
@@ -40,7 +40,7 @@ function Modify(props) {
         .put(`http://localhost:8080/api/dashboard/clients/${id}`, inputs)
         .then((res) => {});
     } catch (err) {
-      console.log(err);
+      //   console.log(err);
     }
   };
   useEffect(() => {
@@ -68,7 +68,7 @@ function Modify(props) {
       </style>
       <div className="container">
         <br />
-        <ModifyTitle>노인 가구 수정하기</ModifyTitle>
+        <ModifyTitle>노인 가구 수정 하기</ModifyTitle>
         <br />
         <ModifyContainer>
           <Label>이름</Label>
