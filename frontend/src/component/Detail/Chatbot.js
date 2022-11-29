@@ -4,12 +4,12 @@ import '../../css/calendar.css';
 import moment from 'moment';
 import { useState } from 'react';
 import styled from 'styled-components';
-function Chatbot(props) {
+import Conversation from './Conversation';
+function Chatbot({ conversations }) {
   const [value, onChange] = useState(new Date());
-
   return (
     <>
-      <Calendar_part>
+      <CalendarPart>
         <Calendar
           onChange={onChange}
           locale="en"
@@ -31,20 +31,26 @@ function Chatbot(props) {
           showNeighboringMonth={false}
         />
         {/* {console.log(moment(value).format('YYYY-MM-DD'))} */}
-      </Calendar_part>
-      <Contents_part>d</Contents_part>
+      </CalendarPart>
+      <ContentsPart>
+        {conversations &&
+          conversations.map((conversation) => {
+            return <Conversation conversation={conversation} />;
+          })}
+      </ContentsPart>
     </>
   );
 }
 
 export default Chatbot;
 
-const Calendar_part = styled.div`
+const CalendarPart = styled.div`
   float: left;
   width: 40%;
   padding: 15px;
 `;
 
-const Contents_part = styled.div`
+const ContentsPart = styled.div`
   padding: 15px;
+  margin-left: 40%;
 `;

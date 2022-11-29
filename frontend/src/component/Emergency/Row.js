@@ -23,7 +23,7 @@ function Row({ id, index, name, address, birth, emergency, phonenumber }) {
         )
         .then((res) => console.log(res));
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
   };
   return (
