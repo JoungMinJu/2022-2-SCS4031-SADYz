@@ -41,7 +41,7 @@ public class EmergencyActivity extends AppCompatActivity {
                 String emergencyInfo = gson.toJson(emergencyDto);
                 Log.e("JSON", emergencyInfo);
 
-                Call<EmergencyDto> call = emergencyRetrofit.putEmergency("010-5017-6452", emergencyDto);
+                Call<EmergencyDto> call = emergencyRetrofit.putEmergency("010-1111-1111", emergencyDto);
                 call.clone().enqueue(new Callback<EmergencyDto>() {
 
                     @Override
@@ -54,6 +54,7 @@ public class EmergencyActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(Call<EmergencyDto> call, Throwable t) {
                             Log.e("put", "실패");
+                            t.printStackTrace();
                     }
                 });
             }
