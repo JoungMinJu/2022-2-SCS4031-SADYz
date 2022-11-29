@@ -14,14 +14,17 @@ import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class ConversationService {
     private final ConversationRepository conversationRepository;
     private final ClientRepository clientRepository;
 
+    @Transactional
     public Conversation addConversation(String phoneNumber, ConversationDto conversationDto) {
         Client client = clientRepository.findByPhonenumber(phoneNumber);
         ConversationDto newConversationDto = ConversationDto.builder()
@@ -43,6 +46,7 @@ public class ConversationService {
         return conversationDtos;
     }
 
+    @Transactional
     public void deleteConversation(Long id) {
         Conversation conversation = conversationRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 ID가 없습니다"));
