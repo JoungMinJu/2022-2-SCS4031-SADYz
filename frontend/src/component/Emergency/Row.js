@@ -7,20 +7,16 @@ import { useState } from 'react';
 function Row({ id, index, name, address, birth, emergency, phonenumber }) {
   const navigate = useNavigate();
   const emergency_time = emergency.createdDateTime;
-  const emergencyNow = emergency.emergencyNow;
   const emergencyContent = '응급상황 내용';
   const elapsed_Time = elapsedTime(emergency_time)[1];
 
-  const post_solveEmergency = async (status) => {
+  const put_solveEmergency = async (status) => {
     try {
       const data = {
         emergencyNow: status,
       };
       await axios
-        .put(
-          `http://localhost:8080/api/dashboard/emergency/${phonenumber}`,
-          data,
-        )
+        .put(`http://localhost:8080/api/dashboard/emergency/${id}`, data)
         .then((res) => console.log(res));
     } catch (err) {
       // console.log(err);
@@ -59,9 +55,9 @@ function Row({ id, index, name, address, birth, emergency, phonenumber }) {
         <td>
           <input
             type="checkbox"
-            defaultChecked={!emergencyNow}
+            defaultChecked={!emergency}
             onClick={() => {
-              post_solveEmergency(!emergencyNow);
+              put_solveEmergency(!emergency);
             }}
           />
         </td>

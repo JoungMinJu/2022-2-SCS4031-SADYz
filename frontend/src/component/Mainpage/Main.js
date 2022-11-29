@@ -114,7 +114,7 @@ const Select = styled.select`
 `;
 
 const Table = styled.table`
-  margin-top: 3vmin;
+  margin-top: 2vmin;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
