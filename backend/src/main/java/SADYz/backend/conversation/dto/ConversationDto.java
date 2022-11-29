@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
@@ -18,6 +20,7 @@ public class ConversationDto {
     private String problem;
     private String emotion;
     private Client client;
+    private LocalDateTime modifiedDateTime;
 
 
     public Conversation toEntity() {
@@ -34,6 +37,7 @@ public class ConversationDto {
                 .id(conversation.getId())
                 .problem(conversation.getProblem())
                 .emotion(conversation.getEmotion())
+                .modifiedDateTime(conversation.getModifiedDateTime())
                 .fullText(conversation.getFullText())
                 .client(conversation.getClient())
                 .build();

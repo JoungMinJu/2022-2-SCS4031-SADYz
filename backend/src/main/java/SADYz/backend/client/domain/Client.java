@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.List;
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -46,6 +47,7 @@ public class Client {
     private List<Conversation> conversations;
 
     @OneToMany(mappedBy = "client")
+    @JsonIgnore
     private List<Emergency> emergencies;
 
     @OneToMany(mappedBy = "client")
