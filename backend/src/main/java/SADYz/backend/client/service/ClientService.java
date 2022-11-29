@@ -74,6 +74,7 @@ public class ClientService {
 
     public DoorClosedTime updateDoorClosedTime(String phoneNumber, DoorClosedTimeDto doorClosedTimeDto) {
         Client client = clientRepository.findByPhonenumber(phoneNumber);
+        client.updateStay(!doorClosedTimeDto.isStay());
         DoorClosedTime doorClosedTime = doorClosedTimeRepository.findByClient(client);
         doorClosedTime.updateDoorClosedTime(client, doorClosedTimeDto);
         return doorClosedTimeRepository.save(doorClosedTime);

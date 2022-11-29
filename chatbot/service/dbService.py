@@ -9,6 +9,7 @@ KST = timezone('Asia/Seoul')
 
 
 def is_client_at_home(phone_number):
+    print(phone_number)
     return db.session.query(Client).filter_by(phonenumber=phone_number).first().stay
 
 

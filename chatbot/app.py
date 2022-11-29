@@ -7,7 +7,6 @@ from controller.emotionController import  emotion
 
 app = Flask(__name__)
 
-
 def create_app(test_config = None):
     if test_config is None:
         app.config.from_object(config)

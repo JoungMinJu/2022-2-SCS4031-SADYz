@@ -9,7 +9,8 @@ meal = Blueprint("meal", __name__, url_prefix="/meal")
 
 @meal.post("/start")
 def start_emotion():
-    phone_number = request.values.get("phone_number")
+    json = request.get_json()
+    phone_number = json["phone_number"]
     stay = dbService.is_client_at_home(phone_number)
     client_id = dbService.get_client_id(phone_number)
     if not stay:
@@ -19,9 +20,10 @@ def start_emotion():
 
 @meal.post("/chat")
 def emotion_chat():
-    input = request.values.get("input")
-    phone_number = request.values.get("phone_number")
-    conv_id = request.values.get("conv_id")
+    json = request.get_json()
+    input = json["input"]
+    phone_number = json["phone_number"]
+    conv_id = json["conv_id"]
     input_list = input.split(" ")
     status = responseService.check_eating_status(input_list)
 
