@@ -7,7 +7,8 @@ emotion = Blueprint("emotion", __name__, url_prefix="/emotion")
 
 @emotion.post("/start")
 def start_emotion():
-    phone_number = request.values.get("phone_number")
+    json = request.get_json()
+    phone_number = json["phone_number"]
     stay = dbService.is_client_at_home(phone_number)
     client_id = dbService.get_client_id(phone_number)
     if not stay:
@@ -21,17 +22,18 @@ def start_emotion():
 
 @emotion.post("/chat")
 def chat_emotion():
-    input = request.values.get("input")
+    json = request.get_json()
+    input = json["input"]
     input_split = input.split(" ")
-    phone_number = request.values.get('phone_number')
-    conv_id = request.values.get("conv_id")
+    phone_number = json["phone_number"]
+    conv_id = json["conv_id"]
     quit_answer = responseService.is_quit_answer(input_split)
     dbService.change_response_status(phone_number, True)
     print(quit_answer)
     if quit_answer:
         dbService.update_conversation_emotion(conv_id)
         return return_answer(QUIT, DT_END, conv_id)  # 종료 -> 감정값 전달
-    phone_number = request.values.get("phone_number")
+    phone_number = json["phone_number"]
     # 긍정 부정 판단
     classification = emotion_classification.predict(input)
     print(classification)

@@ -35,13 +35,13 @@ class DoorClosedTime(db.Model):
 
     id = db.Column(db.Integer, primary_key = True, unique=True, autoincrement=True)
     door_closed_time = db.Column(db.DateTime)
-    is_out = db.Column(db.Boolean)
+    stay = db.Column(db.Boolean)
     phonenumber = db.Column(db.String(50))
     client_id = db.Column(db.Integer)
 
-    def __init__(self, door_closed_time, is_out, phonenumber, client_id):
+    def __init__(self, door_closed_time, stay, phonenumber, client_id):
         self.door_closed_time = door_closed_time
-        self.is_out = is_out
+        self.stay = stay
         self.phonenumber = phonenumber
         self.client_id = client_id
 

@@ -7,7 +7,7 @@ bathroom = Blueprint("bathroom", __name__, url_prefix="/bathroom")
 
 @bathroom.post("/start")
 def start_bathroom():
-    phone_number = request.values.get("phone_number")
+    phone_number = request.get_json()["phone_number"]
     client_id = dbService.get_client_id(phone_number)
     stay = dbService.is_client_at_home(phone_number)
     if not stay:
@@ -24,10 +24,11 @@ def start_bathroom():
 
 @bathroom.post("/chat")
 def bathroom_chat():
-    input = request.values.get("input")
-    phone_number = request.values.get("phone_number")
-    conv_id = request.values.get("conv_id")
-    dialog_type = int(request.values.get("dialog_type"))
+    json = request.get_json()
+    input = json["input"]
+    phone_number = json["phone_number"]
+    conv_id = json["conv_id"]
+    dialog_type = int(json["dialog_type"])
     input_list = input.split(" ")
 
     if dialog_type == 3 :
