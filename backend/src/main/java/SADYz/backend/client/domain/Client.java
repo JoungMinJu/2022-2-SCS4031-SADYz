@@ -24,8 +24,6 @@ public class Client {
     @Id
     private Long id;
 
-    private String loginId;
-
     private String name;
 
     private String address;
@@ -60,10 +58,9 @@ public class Client {
     private String imageUrl;
 
     @Builder
-    public Client(String loginId, String name, String address, String birth, String phonenumber,
+    public Client( String name, String address, String birth, String phonenumber,
                   boolean response, boolean stay, Status status, List<Conversation> conversations,
                   List<Emergency> emergencies, List<LastMovedTime> lastMovedTime, DoorClosedTime doorClosedTime, String imageUrl) {
-        this.loginId = loginId;
         this.name = name;
         this.address = address;
         this.birth = birth;
@@ -79,7 +76,6 @@ public class Client {
     }
 
     public void update(ClientDto clientDto) {
-        this.loginId = clientDto.getLoginId();
         this.name = clientDto.getName();
         this.address = clientDto.getAddress();
         this.birth = clientDto.getBirth();
@@ -97,7 +93,6 @@ public class Client {
     public static ClientDto EntitytoDto(Client client) {
         ClientDto clientDto = ClientDto.builder()
                 .id(client.id)
-                .loginId(client.loginId)
                 .name(client.name)
                 .address(client.address)
                 .birth(client.birth)
