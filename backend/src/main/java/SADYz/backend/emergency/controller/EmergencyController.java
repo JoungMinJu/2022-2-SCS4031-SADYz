@@ -26,7 +26,7 @@ public class EmergencyController {
     }
 
     @GetMapping("{phoneNumber}")
-    public EmergencyDto readEmergency(@PathVariable String phoneNumber){
+    public List<EmergencyDto> readEmergency(@PathVariable String phoneNumber){
         return emergencyService.readEmergency(phoneNumber);
     }
 
@@ -35,14 +35,14 @@ public class EmergencyController {
         return emergencyService.readEmergencyAll();
     }
 
-    @PutMapping("{phoneNumber}")
-    public Emergency updateEmergency(@PathVariable String phoneNumber, @RequestBody EmergencyDto emergencyDto){
-        return emergencyService.updateEmergency(phoneNumber,emergencyDto);
+    @PutMapping("{emergencyId}")
+    public Emergency updateEmergency( @PathVariable Long emergencyId, @RequestBody EmergencyDto emergencyDto){
+        return emergencyService.updateEmergency(emergencyId, emergencyDto);
     }
 
-    @DeleteMapping("{phoneNumber}")
-    public void deleteEmergency(@PathVariable String phoneNumber){
-        emergencyService.deleteEmergency(phoneNumber);
+    @DeleteMapping("{emergencyId}")
+    public void deleteEmergency(@PathVariable Long emergencyId){
+        emergencyService.deleteEmergency(emergencyId);
     }
 
 }

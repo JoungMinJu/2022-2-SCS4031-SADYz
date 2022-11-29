@@ -1,6 +1,7 @@
 package SADYz.backend.conversation.domain;
 
 import SADYz.backend.client.domain.Client;
+import SADYz.backend.global.baseEntity.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -12,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @Entity
-public class Conversation {
+public class Conversation extends BaseEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

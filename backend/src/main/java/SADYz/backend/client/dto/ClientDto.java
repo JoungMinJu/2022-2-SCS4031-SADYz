@@ -19,7 +19,6 @@ import lombok.NoArgsConstructor;
 public class ClientDto {
 
   private Long id;
-  private String loginId;
   private String name;
   private String address;
   private String birth;
@@ -40,7 +39,6 @@ public class ClientDto {
 
   public Client toEntity(){
     return Client.builder()
-        .loginId(loginId)
         .name(name)
         .address(address)
         .birth(birth)

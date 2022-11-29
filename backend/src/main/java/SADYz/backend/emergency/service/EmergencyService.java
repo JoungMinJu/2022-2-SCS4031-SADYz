@@ -25,13 +25,17 @@ public class EmergencyService {
             .build();
         return emergencyRepository.save(EmergencyDto.toEntity(newEmergencyDto));
     }
-    public EmergencyDto readEmergency(String phoneNumber){
+    public List<EmergencyDto> readEmergency(String phoneNumber){
         Client client = clientRepository.findByPhonenumber(phoneNumber);
-        Emergency emergency = emergencyRepository.findByClient(client);
-        return EmergencyDto.toDto(emergency);
+        List<Emergency> emergencyList = emergencyRepository.findAllByClient(client);
+        List<EmergencyDto> emergencyDtoList = new ArrayList<>();
+        for (Emergency emergency : emergencyList){
+            emergencyDtoList.add(EmergencyDto.toDto(emergency));
+        }
+        return emergencyDtoList;
     }
     public List<EmergencyDto> readEmergencyAll(){
-        List<Emergency> emergencyList = emergencyRepository.findByEmergencyNow(true);
+        List<Emergency> emergencyList = emergencyRepository.findAll();
         List<EmergencyDto> emergencyDtoList = new ArrayList<>();
         for (Emergency emergency : emergencyList){
             emergencyDtoList.add(EmergencyDto.toDto(emergency));
@@ -39,16 +43,14 @@ public class EmergencyService {
         return emergencyDtoList;
     }
 
-    public Emergency updateEmergency(String phoneNumber, EmergencyDto emergencyDto){
-        Client client = clientRepository.findByPhonenumber(phoneNumber);
-        Emergency emergency = emergencyRepository.findByClient(client);
+    public Emergency updateEmergency(Long emergencyId, EmergencyDto emergencyDto){
+        Emergency emergency = emergencyRepository.findById(emergencyId).get();
         emergency.updateEmergency(emergencyDto);
         return emergencyRepository.save(emergency);
     }
 
-    public void deleteEmergency(String phoneNumber){
-        Client client = clientRepository.findByPhonenumber(phoneNumber);
-        Emergency emergency = emergencyRepository.findByClient(client);
+    public void deleteEmergency(Long emergencyId){
+        Emergency emergency = emergencyRepository.findById(emergencyId).get();
         emergencyRepository.delete(emergency);
     }
 

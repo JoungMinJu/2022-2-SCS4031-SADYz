@@ -3,6 +3,7 @@ package SADYz.backend.emergency.domain;
 import SADYz.backend.client.domain.Client;
 import SADYz.backend.emergency.dto.EmergencyDto;
 import SADYz.backend.global.baseEntity.BaseEntity;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -24,10 +25,11 @@ public class Emergency extends BaseEntity {
 
     private boolean emergencyNow;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "client_id")
-    @JsonIgnore
     private Client client;
+
+    private String content;
 
     public void updateEmergency(EmergencyDto emergencyDto) {
         this.emergencyNow = emergencyDto.isEmergencyNow();

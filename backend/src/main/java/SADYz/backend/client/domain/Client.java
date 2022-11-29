@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.List;
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -23,8 +24,6 @@ public class Client {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;
-
-    private String loginId;
 
     private String name;
 
@@ -48,6 +47,7 @@ public class Client {
     private List<Conversation> conversations;
 
     @OneToMany(mappedBy = "client")
+    @JsonIgnore
     private List<Emergency> emergencies;
 
     @OneToMany(mappedBy = "client")
@@ -60,10 +60,9 @@ public class Client {
     private String imageUrl;
 
     @Builder
-    public Client(String loginId, String name, String address, String birth, String phonenumber,
+    public Client( String name, String address, String birth, String phonenumber,
                   boolean response, boolean stay, Status status, List<Conversation> conversations,
                   List<Emergency> emergencies, List<LastMovedTime> lastMovedTime, DoorClosedTime doorClosedTime, String imageUrl) {
-        this.loginId = loginId;
         this.name = name;
         this.address = address;
         this.birth = birth;
@@ -79,7 +78,6 @@ public class Client {
     }
 
     public void update(ClientDto clientDto) {
-        this.loginId = clientDto.getLoginId();
         this.name = clientDto.getName();
         this.address = clientDto.getAddress();
         this.birth = clientDto.getBirth();
@@ -97,7 +95,6 @@ public class Client {
     public static ClientDto EntitytoDto(Client client) {
         ClientDto clientDto = ClientDto.builder()
                 .id(client.id)
-                .loginId(client.loginId)
                 .name(client.name)
                 .address(client.address)
                 .birth(client.birth)

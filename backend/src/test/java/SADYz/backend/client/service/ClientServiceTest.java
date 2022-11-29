@@ -24,7 +24,6 @@ public class ClientServiceTest {
   void createClientTest() {
     ClientDto clientDto = ClientDto.builder()
         .id(1L)
-        .loginId("abc")
         .name("name")
         .address("address")
         .birth("birth")
