@@ -111,6 +111,11 @@ public class Client {
         return clientDto;
     }
 
+    public Client updateStay(boolean stay){
+        this.stay = stay;
+        return this;
+    }
+
     public Client updateImageUrl(Client client, String imageUrl) {
         this.imageUrl = imageUrl;
         return client;
