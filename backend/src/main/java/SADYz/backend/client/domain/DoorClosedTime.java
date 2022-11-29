@@ -24,7 +24,8 @@ public class DoorClosedTime {
   @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  private String phoneNumber;
+  private String phonenumber;
+
   @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
   private LocalDateTime doorClosedTime;
@@ -37,8 +38,8 @@ public class DoorClosedTime {
   Client client;
 
   @Builder
-  public DoorClosedTime(String phoneNumber, LocalDateTime doorClosedTime, boolean isOut, Client client) {
-    this.phoneNumber = phoneNumber;
+  public DoorClosedTime(String phonenumber, LocalDateTime doorClosedTime, boolean isOut, Client client) {
+    this.phonenumber = phonenumber;
     this.doorClosedTime = doorClosedTime;
     this.isOut = isOut;
     this.client = client;

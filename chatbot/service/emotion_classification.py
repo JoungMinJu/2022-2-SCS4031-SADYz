@@ -123,7 +123,6 @@ def predict(predict_sentence):
         return args_max[0]
         # print(">> 입력하신 내용에서 " + test_eval[0] + " 느껴집니다.")
 
-
 # # 질문 무한반복하기! 0 입력시 종료
 # end = 1
 # while end == 1:

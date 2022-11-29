@@ -6,14 +6,7 @@ import SADYz.backend.emergency.domain.Emergency;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.List;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -41,8 +34,10 @@ public class Client {
 
     private String phonenumber;
 
+    @Column(columnDefinition = "TINYINT", length=1)
     private boolean response;
 
+    @Column(columnDefinition = "TINYINT", length=1)
     private boolean stay;
 
     @Enumerated(EnumType.STRING)
