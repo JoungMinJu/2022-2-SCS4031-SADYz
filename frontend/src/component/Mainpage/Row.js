@@ -55,6 +55,19 @@ function Row({
         <br />
         <section style={{ color: 'white' }}>{name}</section>
         <section style={{ color: 'white' }}>{address}</section>
+        {status2 === '위험' ? (
+          <section style={{ color: 'white' }}>
+            24시간 이상 움직임이 없습니다.
+          </section>
+        ) : status2 === '경보' ? (
+          <section style={{ color: 'white' }}>
+            12시간 이상 움직임이 없습니다.
+          </section>
+        ) : status2 === '주의' ? (
+          <section style={{ color: 'white' }}>
+            8시간 이상 움직임이 없습니다.
+          </section>
+        ) : null}
         <img
           src="images/emergency3.png"
           style={{ position: 'absolute', right: '0', bottom: '0' }}

@@ -68,7 +68,7 @@ function Modify(props) {
       </style>
       <div className="container">
         <br />
-        <ModifyTitle>노인 가구 등록하기</ModifyTitle>
+        <ModifyTitle>노인 가구 수정하기</ModifyTitle>
         <br />
         <ModifyContainer>
           <Label>이름</Label>
@@ -110,7 +110,7 @@ function Modify(props) {
               navigate(`/Detail/${id}`);
             }}
           >
-            등록하기
+            수정하기
           </Button>
         </ModifyContainer>
       </div>
