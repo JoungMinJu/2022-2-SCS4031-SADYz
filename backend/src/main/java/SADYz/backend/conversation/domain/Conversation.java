@@ -23,6 +23,7 @@ public class Conversation {
 
   private String problem;
 
+  @Column(columnDefinition = "MEDIUMTEXT")
   private String emotion;
 
   @ManyToOne
