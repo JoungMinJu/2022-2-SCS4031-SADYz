@@ -53,6 +53,7 @@ const BasicInfoContainer = styled.div`
   position: relative;
   box-sizing: border-box;
   padding: 2vmin 5vmin;
+  min-height: 95%;
 `;
 
 const ProfileImage = styled.img`
