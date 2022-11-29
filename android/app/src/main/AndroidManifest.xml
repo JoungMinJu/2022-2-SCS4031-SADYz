@@ -27,7 +27,7 @@
         tools:targetApi="31"
         tools:ignore="HardcodedDebugMode">
         <activity
-            android:name=".activiy.MainActivity"
+            android:name=".activity.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -39,10 +39,11 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-        <activity android:name=".activiy.SttActivity"/>
-        <activity android:name=".activiy.TtsActivity"/>
-        <activity android:name=".activiy.EmergencyActivity"/>
-        <activity android:name=".activiy.OutingActivity" />
+        <activity android:name=".activity.SttActivity"/>
+        <activity android:name=".activity.TtsActivity"/>
+        <activity android:name=".activity.EmergencyActivity"/>
+        <activity android:name=".activity.OutingActivity" />
+        <activity android:name=".activity.FlaskActivity"/>
 
         <service android:name=".firebase.MyFirebaseMessagingService"
             android:stopWithTask="false"
@@ -51,7 +52,8 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT"/>
             </intent-filter>
         </service>
-
+        
+        <receiver android:name=".receiver.AlramReceiver"/>
     </application>
     <!-- 인터넷, 오디오 사용 권한 추가 -->
     <uses-permission android:name="android.permission.INTERNET"/>

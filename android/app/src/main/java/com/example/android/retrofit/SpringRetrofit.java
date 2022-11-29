@@ -2,13 +2,13 @@ package com.example.android.retrofit;
 
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class Retrofit {
+public class SpringRetrofit {
 
-    private static Retrofit instance = null;
+    private static SpringRetrofit instance = null;
     private static EmergencyRetrofit emergencyRetrofit;
-    private static String baseUrl = "http://10.0.2.2:8080/";
+    private static String baseUrl = "http://172.30.1.35:8080/";
 
-    private Retrofit() {
+    private SpringRetrofit() {
         retrofit2.Retrofit retrofit = new retrofit2.Retrofit.Builder()
                 .baseUrl(baseUrl)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -16,9 +16,9 @@ public class Retrofit {
         emergencyRetrofit = retrofit.create(EmergencyRetrofit.class);
     }
 
-    public static Retrofit getInstance() {
+    public static SpringRetrofit getInstance() {
         if (instance == null) {
-            instance = new Retrofit();
+            instance = new SpringRetrofit();
         }
         return instance;
     }
