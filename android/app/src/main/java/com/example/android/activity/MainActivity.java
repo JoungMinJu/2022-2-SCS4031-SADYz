@@ -16,7 +16,10 @@ import com.example.android.R;
 import com.example.android.firebase.MyFirebaseMessagingService;
 import com.example.android.receiver.AlramReceiver;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -25,6 +28,9 @@ public class MainActivity extends AppCompatActivity {
     Button emergencyButton;
     Button fcmButton;
     Button flaskButton;
+    Button captureButton;
+    private List<int[]> alramtimes = new ArrayList<>(Arrays.asList(new int[]{1, 12, 00}, new int[]{2, 14, 30}, new int[]{3, 20, 00},
+            new int[]{4, 10, 00}, new int[]{5, 15, 00}, new int[]{6, 21, 00}));
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
         emergencyButton = (Button) findViewById(R.id.emergencybutton);
         fcmButton = (Button) findViewById(R.id.fcmbutton);
         flaskButton = (Button) findViewById(R.id.flaskbutton);
+        captureButton = (Button) findViewById(R.id.capturebutton);
 
         sttButton.setOnClickListener((v) -> {
             Intent sttIntent = new Intent(getApplicationContext(), SttActivity.class);
@@ -57,29 +64,36 @@ public class MainActivity extends AppCompatActivity {
             startService(fcm);
         });
 
-        flaskButton.setOnClickListener((v) ->{
+        flaskButton.setOnClickListener((v) -> {
             Intent flask = new Intent(getApplicationContext(), FlaskActivity.class);
             startActivity(flask);
         });
+
+        captureButton.setOnClickListener((v) -> {
+            Intent capture = new Intent(getApplicationContext(), CaptureActivity.class);
+            startActivity(capture);
+        });
+
         //알림 만들기
         AlarmManager alarmManager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
-        if (alarmManager != null) {
-            Intent intent = new Intent(this, AlramReceiver.class);
-            PendingIntent alarmIntent;
-            // 버전체크
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                alarmIntent = PendingIntent.getBroadcast(this, 1, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
-            } else {
-                alarmIntent = PendingIntent.getBroadcast(this, 1, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-            }
+            if (alarmManager != null) {
+                Intent intent = new Intent(this, AlramReceiver.class);
+                PendingIntent alarmIntent;
+                // 버전체크
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    alarmIntent = PendingIntent.getBroadcast(this, 1, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+                } else {
+                    alarmIntent = PendingIntent.getBroadcast(this, 1, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                }
 
                 // 12시로 시간 설정
                 Calendar calendar = Calendar.getInstance();
-            calendar.setTimeInMillis(System.currentTimeMillis());
-            calendar.set(Calendar.HOUR_OF_DAY, 20);
-            calendar.set(Calendar.MINUTE, 00);
-            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, alarmIntent);
-        }
+                calendar.setTimeInMillis(System.currentTimeMillis());
+                calendar.set(Calendar.HOUR_OF_DAY, 17);
+                calendar.set(Calendar.MINUTE, 42);
+                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, alarmIntent);
+            }
+
     }
 
 
