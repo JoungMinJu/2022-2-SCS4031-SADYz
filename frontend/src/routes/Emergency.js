@@ -36,7 +36,7 @@ function Emergency(props) {
   });
 
   const unsolved = emergency.filter((emerg) => {
-    return (emerg.emrgencyNow = true);
+    return emerg.emergencyNow === true;
   });
   const today_emergency = emergency.filter((emerg) => {
     const today = getToday();
