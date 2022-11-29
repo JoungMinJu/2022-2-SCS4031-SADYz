@@ -1,5 +1,8 @@
 package com.example.android.activity;
 
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
@@ -19,6 +22,7 @@ import retrofit2.Response;
 
 public class FlaskActivity extends AppCompatActivity {
     Button flask;
+    ChatbotQuestionlDto result;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +35,7 @@ public class FlaskActivity extends AppCompatActivity {
             FlaskRestrofit retrofit = FlaskRestrofit.getInstance();
             ChatbotRetrofit chatbotRetrofit = FlaskRestrofit.getChatbotRetrofit();
 
-            ChatbotStartDto chatbotStartDto = new ChatbotStartDto("010-5017-6452");
+            ChatbotStartDto chatbotStartDto = new ChatbotStartDto("010-1212-1212");
             Gson gson = new Gson();
             String chatBotStartInfo = gson.toJson(chatbotStartDto);
             Log.e("JSON",chatBotStartInfo);
@@ -43,8 +47,14 @@ public class FlaskActivity extends AppCompatActivity {
                 public void onResponse(Call<ChatbotQuestionlDto> call, Response<ChatbotQuestionlDto> response) {
                     if (response.isSuccessful()){
                         Log.e("post", "성공");
-                        ChatbotQuestionlDto result = response.body();
+                        result = response.body();
+                        Intent intent = new Intent(getApplicationContext(), CaptureActivity.class);
+                        intent.putExtra("answer", result.getAnswer());
+                        intent.putExtra("dialog_type", result.getDialog_type());
+                        intent.putExtra("conv_id", result.getConv_id());
+                        startActivity(intent);
                         Log.e("answer", result.getAnswer());
+
                     }
                 }
 

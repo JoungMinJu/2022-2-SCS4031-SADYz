@@ -1,9 +1,9 @@
 package com.example.android.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -39,14 +39,15 @@ public class TtsActivity extends AppCompatActivity {
                 } else {
                     Log.e("TTS", "Initialization failed.");
                 }
+                Intent ttsIntent = getIntent();
+                if(ttsIntent != null) {
+                    editText.setText(ttsIntent.getStringExtra("answer"));
+                }
+                CharSequence text = editText.getText();
+                tts.setPitch((float)1.0);
+                tts.setSpeechRate((float)1.0);
+                tts.speak(text, TextToSpeech.QUEUE_FLUSH,null,"uid");
             }
-        });
-        button.setOnClickListener((View view) -> {
-            CharSequence text = editText.getText();
-            tts.setPitch((float)1.0);
-            tts.setSpeechRate((float)1.0);
-
-            tts.speak(text, TextToSpeech.QUEUE_FLUSH,null,"uid");
         });
     }
 }
