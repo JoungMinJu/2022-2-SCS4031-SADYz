@@ -103,6 +103,7 @@ def check_health_status(input):
     return "ERROR"
 
 
+
 def get_call_to_say_hi():
     return random.choice(say_hi_question_list)
 

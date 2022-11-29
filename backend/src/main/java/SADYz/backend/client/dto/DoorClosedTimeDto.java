@@ -30,7 +30,7 @@ public class DoorClosedTimeDto {
 
   public static DoorClosedTimeDto toDto(DoorClosedTime doorClosedTime){
     return DoorClosedTimeDto.builder()
-        .phoneNumber(doorClosedTime.getPhoneNumber())
+        .phoneNumber(doorClosedTime.getPhonenumber())
         .doorClosedTime(doorClosedTime.getDoorClosedTime())
         .isOut(doorClosedTime.isOut())
         .client(doorClosedTime.getClient())
@@ -39,7 +39,7 @@ public class DoorClosedTimeDto {
 
   public DoorClosedTime toEntity(){
     return DoorClosedTime.builder()
-        .phoneNumber(phoneNumber)
+        .phonenumber(phoneNumber)
         .doorClosedTime(doorClosedTime)
         .isOut(isOut)
         .client(client)
