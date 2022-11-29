@@ -12,13 +12,13 @@ NORMAL_STATUS = "잘하셨어요! 식사를 잘 챙겨드시는게 가장 중요
 
 # 건강
 TOO_FEW_VISITS_BATHROOM = "화장실 가신 횟수가 매우 작아요. 혹시 변비 증상이 있으신가요?"
-TOO_MUCH_VISITS_BATHROOM =  "화장실을 자주 가신 것을 확인돼요. 혹시 몸이 아프신가요?"
+TOO_MUCH_VISITS_BATHROOM =  "화장실을 자주 가신 것이 확인돼요. 혹시 몸이 아프신가요?"
 STATUS_IS_OK = "괜찮으시다니 다행이에요. 문제가 있으시면 응급콜을 눌러주세요"
 PROBLEM_IN_CONSTIPATION = "문제가 있으시군요. 관련 내용 담당자에게 전달 드릴게요. 건강한 식습관이 우선이니 잘 챙겨드시길 바랄게요"
 PROBLEM_IN_HEALTH = "문제가 있으시군요. 관련 내용 담당자에게 전달 드릴게요. 위급한 상황이면 응급콜을 눌러주세요."
 
 # 안부
-IS_QUIT = "대화를 더 진행하시려면 말씀해주시고, 아니면 종료를 말씀해주세요"
+IS_QUIT = "대화를 더 진행하시려면 계속 말씀해주시고, 아니면 종료를 말씀해주세요"
 QUIT = "종료하셨습니다."
 
 # dialog_type
@@ -30,6 +30,6 @@ DT_BATHROOM = 3
 DT_BATHROOM_HEALTH = 4
 
 
-def return_answer(answer, dialog_type):
-    return {"answer": answer, "dialog_type": dialog_type}
+def return_answer(answer, dialog_type, conv_id):
+    return {"answer": answer, "dialog_type": dialog_type, "conv_id" : conv_id}
 
