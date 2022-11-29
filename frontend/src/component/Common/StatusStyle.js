@@ -5,7 +5,7 @@ function StatusStyle(status) {
   status === '정상'
     ? ((backColor = '#DBF7E6'), (fontColor = '#007D50'))
     : status === '주의'
-    ? ((backColor = '#FFE600'), (fontColor = '#FFAE00'))
+    ? ((backColor = '#FFF9C4'), (fontColor = '#FFAE00'))
     : status === '경보'
     ? ((backColor = '#FFE092'), (fontColor = '#FF6F06'))
     : ((backColor = '#F9B6B6'), (fontColor = '#E13737'));

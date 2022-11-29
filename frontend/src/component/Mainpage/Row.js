@@ -4,7 +4,6 @@ import elapsedTime from '../Common/ElapsedTime';
 import StatusStyle from '../Common/StatusStyle';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-// 불러오기
 import Modal from 'react-modal';
 
 function Row({
@@ -128,7 +127,7 @@ const Border = styled.tr`
   border-top: 1px solid #f2f2f2;
   margin: 0;
   width: 100%;
-  padding: 1.2vmin;
+  padding: 1vmin;
   display: table;
   color: #333333;
   font-size: 1.35vmin;
@@ -136,7 +135,7 @@ const Border = styled.tr`
 
 const Status = styled.div`
   box-sizing: border-box;
-  padding: 1vmin;
+  padding: 0.7vmin;
   border: 1px solid black;
   text-align: center;
   font-family: 'nanum_b';

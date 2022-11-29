@@ -51,16 +51,16 @@ function Main({ emergency }) {
         <Tbody>
           {emergency.map((emerg, index) => {
             const client = emerg.client;
-            const emergency = client.emergency;
+
             return (
               <Row
-                key={client.id}
+                key={emerg.id}
                 id={client.id}
                 index={index}
                 name={client.name}
                 address={client.address}
                 birth={client.birth}
-                emergency={emergency}
+                emergency={emerg.emergencyNow}
                 phonenumber={client.phonenumber}
               />
             );

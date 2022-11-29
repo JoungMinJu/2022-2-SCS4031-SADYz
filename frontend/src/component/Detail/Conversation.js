@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-
+import { useState } from 'react';
 function Conversation({ conversation }) {
   const conversation_list = [conversation.fullText.split(',')];
   const problem_bool =
@@ -9,6 +9,11 @@ function Conversation({ conversation }) {
     conversation.emotion === '긍정' || conversation.emotion === '부정'
       ? true
       : false;
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const closeModal = () => {
+    setModalOpen(false);
+  };
   return (
     <OneConversation>
       <Title>대화 {conversation.id}</Title>
@@ -21,8 +26,15 @@ function Conversation({ conversation }) {
         <section>감정 : {conversation.emotion}</section>
       ) : null}
 
-      <Button>대화 보기</Button>
+      <Button
+        onClick={() => {
+          setModalOpen(true);
+        }}
+      >
+        대화 보기
+      </Button>
       {/* <section>{conversation_list}</section> */}
+      <Modal isOpen={modalOpen} onRequestClose={() => closeModal()}></Modal>
     </OneConversation>
   );
 }
@@ -57,4 +69,12 @@ const Button = styled.button`
   border: none;
   padding: 5px;
   cursor: pointer;
+`;
+
+const Modal = styled.div`
+  background: '#312222';
+  border-radius: '15px';
+  overflow: 'auto';
+  width: '500px';
+  height: '150px';
 `;
