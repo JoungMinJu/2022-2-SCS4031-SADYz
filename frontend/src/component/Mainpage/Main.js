@@ -32,7 +32,7 @@ function Main({ clients }) {
             <th style={{ width: '10%' }}>생년월일</th>
             <th style={{ width: '30%' }}>주소</th>
             <th style={{ width: '10%' }}>금일 응답 여부</th>
-            <th style={{ width: '7%' }}>출입 여부</th>
+            <th style={{ width: '7%' }}>외출 여부</th>
             <th style={{ width: '13%' }}>
               마지막 움직임 시간
               <br />
@@ -130,6 +130,8 @@ const Table = styled.table`
   order: 0;
   flex-grow: 0;
   table-layout: fixed;
+  overflow-y: scroll;
+  max-height: 585px;
 `;
 
 const Thead = styled.thead`

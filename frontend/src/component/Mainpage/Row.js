@@ -92,7 +92,7 @@ function Row({
         <td style={{ width: '10%' }}>{birth}</td>
         <td style={{ width: '30%' }}>{address}</td>
         <td style={{ width: '10%' }}>{response === false ? 'X' : 'O'}</td>
-        <td style={{ width: '7%' }}>{stay === false ? 'X' : 'O'}</td>
+        <td style={{ width: '7%' }}>{stay === false ? 'O' : 'X'}</td>
         <td style={{ width: '13%' }}>
           {lastMovedTime === undefined
             ? '기록없음'
