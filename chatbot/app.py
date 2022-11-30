@@ -20,4 +20,4 @@ if __name__ == '__main__':
     app.register_blueprint(meal)
     app.register_blueprint(bathroom)
     app.register_blueprint(emotion)
-    app.run(host='0.0.0.0', debug = True)
+    app.run(host='0.0.0.0')
