@@ -8,7 +8,8 @@ import java.util.stream.Stream;
 public enum EmergencyType {
     button("응급콜 버튼 누름"),
     no_response("안부 질문에 응답 없음"),
-    no_move("움직임이 장기간 감지되지 않음");
+    no_move_alarm("움직임이 12시간 이상 감지되지 않음"),
+    no_move_danger("움직임이 24시간 이상 감지되지 않음");
 
     private final String content;
 

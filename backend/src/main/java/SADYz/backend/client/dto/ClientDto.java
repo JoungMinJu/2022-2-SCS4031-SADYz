@@ -53,4 +53,8 @@ public class ClientDto {
         .imageUrl(imageUrl)
         .build();
   }
+
+  public void updateStatus(Status status){
+    this.status = status;
+  }
 }
