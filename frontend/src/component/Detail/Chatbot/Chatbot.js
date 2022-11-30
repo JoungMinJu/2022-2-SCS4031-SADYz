@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Calendar from 'react-calendar';
 import '../../../css/calendar.css';
 import moment from 'moment';
@@ -7,6 +7,10 @@ import styled from 'styled-components';
 import Conversation from './Conversation';
 function Chatbot({ conversations }) {
   const [value, onChange] = useState(new Date());
+  const [date, setDate] = useState([]);
+  useEffect(() => {
+    console.log(date);
+  }, [date]);
   return (
     <div>
       <CalendarPart>
@@ -30,13 +34,19 @@ function Chatbot({ conversations }) {
           prev2Label={null}
           showNeighboringMonth={false}
         />
-        {/* {console.log(moment(value).format('YYYY-MM-DD'))} */}
       </CalendarPart>
       <ContentsPart>
         {conversations &&
-          conversations.map((conversation) => {
-            return <Conversation conversation={conversation} />;
-          })}
+          conversations
+            .filter((conversation) => {
+              return (
+                conversation.modifiedDateTime.slice(0, 10) ===
+                moment(value).format('YYYY-MM-DD')
+              );
+            })
+            .map((conversation) => {
+              return <Conversation conversation={conversation} />;
+            })}
       </ContentsPart>
     </div>
   );
