@@ -1,10 +1,8 @@
 package SADYz.backend.emergency.domain;
 
 import SADYz.backend.client.domain.Client;
-import SADYz.backend.emergency.dto.EmergencyDto;
+import SADYz.backend.emergency.dto.EmergencyResponseDto;
 import SADYz.backend.global.baseEntity.BaseEntity;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 
@@ -29,10 +27,11 @@ public class Emergency extends BaseEntity {
     @JoinColumn(name = "client_id")
     private Client client;
 
-    private String content;
+    @Enumerated(EnumType.STRING)
+    private EmergencyType emergencyType;
 
-    public void updateEmergency(EmergencyDto emergencyDto) {
-        this.emergencyNow = emergencyDto.isEmergencyNow();
+    public void updateEmergency(EmergencyResponseDto emergencyResponseDto) {
+        this.emergencyNow = emergencyResponseDto.isEmergencyNow();
     }
 
 }
