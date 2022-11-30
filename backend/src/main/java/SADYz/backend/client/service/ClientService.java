@@ -56,6 +56,10 @@ public class ClientService {
     @Transactional
     public DoorClosedTime addDoorClosedTime(String phoneNumber, DoorClosedTimeDto doorClosedTimeDto) {
         Client client = clientRepository.findByPhonenumber(phoneNumber);
+        DoorClosedTime result = doorClosedTimeRepository.findByClient(client);
+        if(result != null){
+            return updateDoorClosedTime(phoneNumber, doorClosedTimeDto);
+        }
         DoorClosedTimeDto newDoorClosedTimeDto = DoorClosedTimeDto.builder()
                 .doorClosedTime(doorClosedTimeDto.getDoorClosedTime())
                 .client(client)

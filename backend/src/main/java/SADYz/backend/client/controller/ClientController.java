@@ -11,7 +11,9 @@ import SADYz.backend.client.service.ClientService;
 import java.io.IOException;
 import java.util.List;
 
+import SADYz.backend.global.fcm.FirebaseCloudMessageService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,7 +31,11 @@ import org.springframework.web.multipart.MultipartFile;
 @RequiredArgsConstructor
 public class ClientController {
 
+    @Value("${getting.token}")
+    private String token;
+
     private final ClientService clientService;
+    private final FirebaseCloudMessageService firebaseCloudMessageService;
 
     @GetMapping("{id}")
     public ClientDto readClient(@PathVariable Long id) {
@@ -76,8 +82,11 @@ public class ClientController {
     }
 
     @PostMapping("door/{phoneNumber}")
-    public DoorClosedTime addDoorClosedTime(@PathVariable String phoneNumber, @RequestBody
-            DoorClosedTimeDto doorClosedTimeDto) {
+    public DoorClosedTime addDoorClosedTime(@PathVariable String phoneNumber, @RequestBody DoorClosedTimeDto doorClosedTimeDto) throws IOException {
+        firebaseCloudMessageService.sendMessageTo(
+                token,
+                "타이틀",
+                "바디");
         return clientService.addDoorClosedTime(phoneNumber, doorClosedTimeDto);
     }
 
