@@ -7,8 +7,10 @@ import SADYz.backend.client.dto.ClientDto;
 import SADYz.backend.client.dto.DoorClosedTimeDto;
 import SADYz.backend.client.dto.LastMovedTimeDto;
 import SADYz.backend.client.service.ClientService;
+
 import java.io.IOException;
 import java.util.List;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -58,30 +60,30 @@ public class ClientController {
 
     @PostMapping("time/{phoneNumber}")
     public LastMovedTime addLastMovedTime(@PathVariable String phoneNumber, @RequestBody
-    LastMovedTimeDto lastMovedTimeDto) {
+            LastMovedTimeDto lastMovedTimeDto) {
         return clientService.addLastMovedTime(phoneNumber, lastMovedTimeDto);
     }
 
     @GetMapping("time")
-    public List<LastMovedTimeDto> readAllLastMovedTime(){
+    public List<LastMovedTimeDto> readAllLastMovedTime() {
         return clientService.readLastMovedTimeAll();
     }
 
-    @PutMapping("time/{phoneNumber}")
-    public LastMovedTime updateLastMovedTime(@PathVariable String phoneNumber, @RequestBody
-    LastMovedTimeDto lastMovedTimeDto) {
-        return clientService.updateLastMovedTime(phoneNumber, lastMovedTimeDto);
+    @PutMapping("time/{lastMovedTimeId}")
+    public LastMovedTime updateLastMovedTime(@PathVariable Long lastMovedTimeId, @RequestBody
+            LastMovedTimeDto lastMovedTimeDto) {
+        return clientService.updateLastMovedTime(lastMovedTimeId, lastMovedTimeDto);
     }
 
     @PostMapping("door/{phoneNumber}")
     public DoorClosedTime addDoorClosedTime(@PathVariable String phoneNumber, @RequestBody
-    DoorClosedTimeDto doorClosedTimeDto) {
+            DoorClosedTimeDto doorClosedTimeDto) {
         return clientService.addDoorClosedTime(phoneNumber, doorClosedTimeDto);
     }
 
     @PutMapping("door/{phoneNumber}")
     public DoorClosedTime updateDoorClosedTime(@PathVariable String phoneNumber, @RequestBody
-    DoorClosedTimeDto doorClosedTimeDto) {
+            DoorClosedTimeDto doorClosedTimeDto) {
         return clientService.updateDoorClosedTime(phoneNumber, doorClosedTimeDto);
     }
 
@@ -92,7 +94,7 @@ public class ClientController {
 
     @PostMapping(value = "s3/{clientId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public Client saves3Image(@PathVariable Long clientId, @RequestParam(value = "image") MultipartFile image)
-        throws IOException {
+            throws IOException {
         return clientService.uploadS3Image(clientId, image);
     }
 

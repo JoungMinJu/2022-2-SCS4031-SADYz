@@ -46,8 +46,8 @@ public class LastMovedTime {
     this.client= client;
   }
 
-  public void updateLastMovedTime(Client client, LastMovedTimeDto lastMovedTimeDto){
-    this.client=client;
+  public void updateLastMovedTime(LastMovedTimeDto lastMovedTimeDto){
     this.lastMovedTime = lastMovedTimeDto.getLastMovedTime();
+    this.location = lastMovedTimeDto.getLocation();
   }
 }
