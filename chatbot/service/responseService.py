@@ -6,7 +6,7 @@ positive_answer = ["네", "넵", "응", "어", "맞아", "엉", "웅", "옹", "�
 positive_meal_answer = ["먹었어", "먹었습니다"]
 negative_answer = ["아니요", "아니오", "아뇨", "아니", "아닝", "안"]
 negative_meal_answer = ["안먹었어", "안먹었습니다"]
-positive_health_answer = ["괜찮아", "괜찮아요"]
+positive_health_answer = ["괜찮아", "괜찮아요", "없어"]
 say_hi_question_list = ["안녕하세요. 좋은 하루입니다! 기분은 어떠신가요?", "안녕하세요. 오늘 마음은 어떠세요?",
                         "안녕하세요. 기분은 괜찮으신가요?", "안녕하세요. 기분에 대해 말씀해주세요.",
                         "안녕하세요. 오늘 하루는 어떠신가요?"]
