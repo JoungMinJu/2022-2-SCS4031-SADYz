@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useState } from 'react';
-function Conversation({ conversation }) {
+function Conversation({ conversation, index }) {
   const conversation_list = conversation.fullText.split(',');
   const problem_bool =
     conversation.problem === null || conversation.problem === '' ? false : true;
@@ -17,7 +17,7 @@ function Conversation({ conversation }) {
   return (
     <>
       <OneConversation>
-        <Title>대화 {conversation.id}</Title>
+        <Title>대화 {index + 1}</Title>
 
         {!problem_bool && !emotion_bool ? (
           <section>대화 진행중</section>

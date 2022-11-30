@@ -68,6 +68,8 @@ const Table = styled.table`
   margin-left: auto;
   margin-right: auto;
   margin-top: 10px;
+  overflow-y: scroll;
+  max-height: 250px;
 `;
 
 const Thead = styled.thead`
