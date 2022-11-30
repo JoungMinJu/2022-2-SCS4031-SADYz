@@ -45,12 +45,16 @@ public class ClientDto {
         .phonenumber(phonenumber)
         .response(true)
         .stay(true)
-        .status(Status.보통)
+        .status(Status.정상)
         .conversations(conversations)
         .emergencies(emergencies)
         .lastMovedTime(lastMovedTime)
         .doorClosedTime(doorClosedTime)
         .imageUrl(imageUrl)
         .build();
+  }
+
+  public void updateStatus(Status status){
+    this.status = status;
   }
 }

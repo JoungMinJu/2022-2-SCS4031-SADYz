@@ -117,6 +117,11 @@ public class Client {
         return this;
     }
 
+    public Client updateResponse(boolean response){
+        this.response = response;
+        return this;
+    }
+
     public Client updateImageUrl(Client client, String imageUrl) {
         this.imageUrl = imageUrl;
         return client;

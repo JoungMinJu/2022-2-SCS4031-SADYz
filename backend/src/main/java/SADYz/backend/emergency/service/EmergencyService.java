@@ -3,10 +3,13 @@ package SADYz.backend.emergency.service;
 import SADYz.backend.client.domain.Client;
 import SADYz.backend.client.repository.ClientRepository;
 import SADYz.backend.emergency.domain.Emergency;
-import SADYz.backend.emergency.dto.EmergencyDto;
+import SADYz.backend.emergency.dto.EmergencyRequestDto;
+import SADYz.backend.emergency.dto.EmergencyResponseDto;
 import SADYz.backend.emergency.repository.EmergencyRepository;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,43 +23,44 @@ public class EmergencyService {
     private final ClientRepository clientRepository;
 
     @Transactional
-    public Emergency addEmergency(String phoneNumber, EmergencyDto emergencyDto){
+    public Emergency addEmergency(String phoneNumber, EmergencyRequestDto emergencyResponseDto) {
         Client client = clientRepository.findByPhonenumber(phoneNumber);
-        EmergencyDto newEmergencyDto = EmergencyDto.builder()
-            .emergencyNow(emergencyDto.isEmergencyNow())
-            .client(client)
-            .build();
-        return emergencyRepository.save(EmergencyDto.toEntity(newEmergencyDto));
+        EmergencyRequestDto newEmergencyResponseDto = EmergencyRequestDto.builder()
+                .emergencyNow(emergencyResponseDto.isEmergencyNow())
+                .client(client)
+                .emergencyType(emergencyResponseDto.getEmergencyType())
+                .build();
+        return emergencyRepository.save(EmergencyRequestDto.toEntity(newEmergencyResponseDto));
     }
 
-    public List<EmergencyDto> readEmergency(String phoneNumber){
+    public List<EmergencyResponseDto> readEmergency(String phoneNumber) {
         Client client = clientRepository.findByPhonenumber(phoneNumber);
         List<Emergency> emergencyList = emergencyRepository.findAllByClient(client);
-        List<EmergencyDto> emergencyDtoList = new ArrayList<>();
-        for (Emergency emergency : emergencyList){
-            emergencyDtoList.add(EmergencyDto.toDto(emergency));
+        List<EmergencyResponseDto> emergencyResponseDtoList = new ArrayList<>();
+        for (Emergency emergency : emergencyList) {
+            emergencyResponseDtoList.add(EmergencyResponseDto.toDto(emergency));
         }
-        return emergencyDtoList;
+        return emergencyResponseDtoList;
     }
 
-    public List<EmergencyDto> readEmergencyAll(){
+    public List<EmergencyResponseDto> readEmergencyAll() {
         List<Emergency> emergencyList = emergencyRepository.findAll();
-        List<EmergencyDto> emergencyDtoList = new ArrayList<>();
-        for (Emergency emergency : emergencyList){
-            emergencyDtoList.add(EmergencyDto.toDto(emergency));
+        List<EmergencyResponseDto> emergencyResponseDtoList = new ArrayList<>();
+        for (Emergency emergency : emergencyList) {
+            emergencyResponseDtoList.add(EmergencyResponseDto.toDto(emergency));
         }
-        return emergencyDtoList;
+        return emergencyResponseDtoList;
     }
 
     @Transactional
-    public Emergency updateEmergency(Long emergencyId, EmergencyDto emergencyDto){
+    public Emergency updateEmergency(Long emergencyId, EmergencyResponseDto emergencyResponseDto) {
         Emergency emergency = emergencyRepository.findById(emergencyId).get();
-        emergency.updateEmergency(emergencyDto);
+        emergency.updateEmergency(emergencyResponseDto);
         return emergencyRepository.save(emergency);
     }
 
     @Transactional
-    public void deleteEmergency(Long emergencyId){
+    public void deleteEmergency(Long emergencyId) {
         Emergency emergency = emergencyRepository.findById(emergencyId).get();
         emergencyRepository.delete(emergency);
     }

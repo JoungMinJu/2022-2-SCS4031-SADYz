@@ -5,7 +5,7 @@ import SADYz.backend.emergency.domain.Emergency;
 
 import java.time.LocalDateTime;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import SADYz.backend.emergency.domain.EmergencyType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class EmergencyDto {
+public class EmergencyResponseDto {
 
     private Long id;
     private boolean emergencyNow;
@@ -24,19 +24,11 @@ public class EmergencyDto {
 
     private LocalDateTime createdDateTime;
 
-    public static Emergency toEntity(EmergencyDto emergencyDto) {
-        return Emergency.builder()
-                .id(emergencyDto.id)
-                .content(emergencyDto.content)
-                .emergencyNow(emergencyDto.isEmergencyNow())
-                .client(emergencyDto.client)
-                .build();
-    }
 
-    public static EmergencyDto toDto(Emergency emergency) {
-        return EmergencyDto.builder()
+    public static EmergencyResponseDto toDto(Emergency emergency) {
+        return EmergencyResponseDto.builder()
                 .id(emergency.getId())
-                .content(emergency.getContent())
+                .content(emergency.getEmergencyType().getContent())
                 .emergencyNow(emergency.isEmergencyNow())
                 .client(emergency.getClient())
                 .createdDateTime(emergency.getCreatedDateTime())

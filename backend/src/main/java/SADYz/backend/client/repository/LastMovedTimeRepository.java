@@ -7,6 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface LastMovedTimeRepository extends JpaRepository<LastMovedTime,Long> {
 
-  LastMovedTime findByClient(Client client);
-
+  LastMovedTime findFirstByClientIdOrderByLastMovedTimeDesc(Long id);
 }
