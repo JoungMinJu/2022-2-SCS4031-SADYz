@@ -51,6 +51,10 @@ public class DoorClosedTime {
     this.stay = doorClosedTimeDto.isStay();
   }
 
+  public void updateStay(Boolean stay){
+    this.stay = stay;
+  }
+
   public void verifyIsOut(boolean stay){
     this.stay = stay;
   }
