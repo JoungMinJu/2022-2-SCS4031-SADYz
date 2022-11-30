@@ -1,6 +1,6 @@
 import React from 'react';
 import Calendar from 'react-calendar';
-import '../../css/calendar.css';
+import '../../../css/calendar.css';
 import moment from 'moment';
 import { useState } from 'react';
 import styled from 'styled-components';
