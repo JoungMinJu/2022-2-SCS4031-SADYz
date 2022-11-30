@@ -10,7 +10,7 @@ function DetailEmergency({ phonenumber }) {
         .get(`http://localhost:8080/api/dashboard/emergency/${phonenumber}`)
         .then((res) => {
           setEmergency(res.data);
-          console.log(res);
+          // console.log(res);
         });
     } catch (err) {
       console.log(err);

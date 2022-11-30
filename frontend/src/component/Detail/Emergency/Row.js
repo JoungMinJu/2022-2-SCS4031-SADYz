@@ -45,8 +45,9 @@ const Border = styled.tr`
   border-top: 1px solid #f2f2f2;
   margin: 0;
   width: 100%;
-  padding: 1.2vmin;
   display: table;
   color: #333333;
   font-size: 1.35vmin;
+  vertical-align: middle;
+  padding: 0.4vmin;
 `;
