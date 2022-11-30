@@ -4,12 +4,23 @@ import elapsedTime from '../Common/ElapsedTime';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useState } from 'react';
-function Row({ id, index, name, address, birth, emergency, phonenumber }) {
+function Row({
+  id,
+  index,
+  name,
+  clientId,
+  address,
+  birth,
+  emergency,
+  phonenumber,
+  emergency_content,
+  createdDateTime,
+  entireEmergency,
+}) {
   const navigate = useNavigate();
-  const emergency_time = emergency.createdDateTime;
-  const emergencyContent = '응급상황 내용';
+  const emergency_time = entireEmergency.createdDateTime;
+  const emergencyContent = emergency_content;
   const elapsed_Time = elapsedTime(emergency_time)[1];
-
   const put_solveEmergency = async (status) => {
     try {
       const data = {
@@ -36,7 +47,7 @@ function Row({ id, index, name, address, birth, emergency, phonenumber }) {
         <td
           style={{ width: '5%', cursor: 'pointer' }}
           onClick={() => {
-            navigate(`/Detail/${id}`);
+            navigate(`/Detail/${clientId}`);
           }}
         >
           {name}

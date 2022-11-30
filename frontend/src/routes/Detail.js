@@ -82,13 +82,7 @@ function Detail(props) {
               doorClosedTime={
                 doorClosedTime === null ? null : doorClosedTime.doorClosedTime
               }
-              out={
-                doorClosedTime.length === 0
-                  ? '기록없음'
-                  : doorClosedTime.out === false
-                  ? 'x'
-                  : 'O'
-              }
+              out={doorClosedTime.out === false ? 'x' : 'O'}
             />
           </div>
         </Container>

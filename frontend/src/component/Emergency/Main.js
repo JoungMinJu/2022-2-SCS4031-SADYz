@@ -60,11 +60,14 @@ function Main({ emergency, today_unsolved, today_emergency, unsolved }) {
                     key={emerg.id}
                     id={emerg.id}
                     index={index}
+                    clientId={client.id}
                     name={client.name}
                     address={client.address}
                     birth={client.birth}
                     emergency={emerg.emergencyNow}
+                    emergency_content={emerg.content}
                     phonenumber={client.phonenumber}
+                    entireEmergency={emerg}
                   />
                 );
               })
@@ -78,11 +81,14 @@ function Main({ emergency, today_unsolved, today_emergency, unsolved }) {
                     key={emerg.id}
                     id={emerg.id}
                     index={index}
+                    clientId={client.id}
                     name={client.name}
                     address={client.address}
                     birth={client.birth}
                     emergency={emerg.emergencyNow}
                     phonenumber={client.phonenumber}
+                    emergency_content={emerg.content}
+                    entireEmergency={emerg}
                   />
                 );
               })
@@ -96,11 +102,14 @@ function Main({ emergency, today_unsolved, today_emergency, unsolved }) {
                     key={emerg.id}
                     id={emerg.id}
                     index={index}
+                    clientId={client.id}
                     name={client.name}
                     address={client.address}
                     birth={client.birth}
                     emergency={emerg.emergencyNow}
                     phonenumber={client.phonenumber}
+                    emergency_content={emerg.content}
+                    entireEmergency={emerg}
                   />
                 );
               })
@@ -112,11 +121,14 @@ function Main({ emergency, today_unsolved, today_emergency, unsolved }) {
                     key={emerg.id}
                     id={emerg.id}
                     index={index}
+                    clientId={client.id}
                     name={client.name}
                     address={client.address}
                     birth={client.birth}
                     emergency={emerg.emergencyNow}
                     phonenumber={client.phonenumber}
+                    emergency_content={emerg.content}
+                    entireEmergency={emerg}
                   />
                 );
               })}
@@ -154,6 +166,8 @@ const Table = styled.table`
   order: 0;
   flex-grow: 0;
   table-layout: fixed;
+  overflow-y: scroll;
+  max-height: 585px;
 `;
 
 const Thead = styled.thead`

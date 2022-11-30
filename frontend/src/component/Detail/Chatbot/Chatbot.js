@@ -44,8 +44,8 @@ function Chatbot({ conversations }) {
                 moment(value).format('YYYY-MM-DD')
               );
             })
-            .map((conversation) => {
-              return <Conversation conversation={conversation} />;
+            .map((conversation, index) => {
+              return <Conversation conversation={conversation} index={index} />;
             })}
       </ContentsPart>
     </div>
