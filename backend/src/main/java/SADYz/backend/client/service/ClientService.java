@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import lombok.RequiredArgsConstructor;
@@ -73,16 +74,17 @@ public class ClientService {
     }
 
     @Transactional
-    public LastMovedTime updateLastMovedTime(String phoneNumber, LastMovedTimeDto lastMovedTimeDto) {
-        Client client = clientRepository.findByPhonenumber(phoneNumber);
-        LastMovedTime lastMovedTime = lastMovedTimeRepository.findByClient(client);
-        lastMovedTime.updateLastMovedTime(client, lastMovedTimeDto);
+    public LastMovedTime updateLastMovedTime(Long lastMovedTimeId, LastMovedTimeDto lastMovedTimeDto) {
+        LastMovedTime lastMovedTime = lastMovedTimeRepository.findById(lastMovedTimeId).get();
+        lastMovedTime.updateLastMovedTime(lastMovedTimeDto);
         return lastMovedTimeRepository.save(lastMovedTime);
     }
 
     @Transactional
     public DoorClosedTime updateDoorClosedTime(String phoneNumber, DoorClosedTimeDto doorClosedTimeDto) {
         Client client = clientRepository.findByPhonenumber(phoneNumber);
+        client.updateStay(doorClosedTimeDto.isStay());
+        clientRepository.save(client);
         DoorClosedTime doorClosedTime = doorClosedTimeRepository.findByClient(client);
         doorClosedTime.updateDoorClosedTime(client, doorClosedTimeDto);
         return doorClosedTimeRepository.save(doorClosedTime);

@@ -55,6 +55,7 @@ public class Client {
     private List<LastMovedTime> lastMovedTime;
 
     @OneToOne(mappedBy = "client")
+    @JsonIgnore
     private DoorClosedTime doorClosedTime;
 
     private String imageUrl;

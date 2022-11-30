@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -28,6 +29,7 @@ public class DoorClosedTimeDto {
 
     private boolean stay;
 
+    @JsonIgnore
     private Client client;
 
     public static DoorClosedTimeDto toDto(DoorClosedTime doorClosedTime) {
