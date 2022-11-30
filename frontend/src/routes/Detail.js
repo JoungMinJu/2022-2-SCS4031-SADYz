@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import Activity from '../component/Detail/Activity';
 import BasicInfo from '../component/Detail/BasicInfo';
-import Chatbot from '../component/Detail/Chatbot';
-import DetailEmergency from '../component/Detail/Detail_Emergency';
+import Chatbot from '../component/Detail/Chatbot/Chatbot';
+import DetailEmergency from '../component/Detail/Emergency/Detail_Emergency';
 import Navbar from '../component/Navbar';
 import '../css/grid.css';
 import { useParams } from 'react-router-dom';
@@ -71,7 +71,7 @@ function Detail(props) {
           </div>
           <div className="item title">응급콜</div>
           <div className="item">
-            <DetailEmergency />
+            <DetailEmergency phonenumber={client.phonenumber} />
           </div>
           <div className="item title">활동정보</div>
           <div className="item">
