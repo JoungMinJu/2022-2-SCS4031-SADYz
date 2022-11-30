@@ -5,6 +5,7 @@ import SADYz.backend.emergency.domain.Emergency;
 
 import java.time.LocalDateTime;
 
+import SADYz.backend.global.baseEntity.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
