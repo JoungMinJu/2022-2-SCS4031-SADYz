@@ -94,6 +94,15 @@ public class ClientService {
         return doorClosedTimeRepository.save(doorClosedTime);
     }
 
+    @Transactional
+    public void updateDoorClosedTimeStay(String phoneNumber, Boolean stay) {
+        Client client = clientRepository.findByPhonenumber(phoneNumber);
+        client.updateStay(stay);
+        clientRepository.save(client);
+    }
+
+
+
     public ClientDto readClient(Long id) {
         Client client = clientRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("해당 id가 없습니다")
