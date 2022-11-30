@@ -10,6 +10,7 @@ import SADYz.backend.client.service.ClientService;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import SADYz.backend.global.fcm.FirebaseCloudMessageService;
 import lombok.RequiredArgsConstructor;
@@ -88,6 +89,13 @@ public class ClientController {
                 "타이틀",
                 "바디");
         return clientService.addDoorClosedTime(phoneNumber, doorClosedTimeDto);
+    }
+
+    @PutMapping("door/stay/{phoneNumber}")
+    public String updateDoorClosedTimeUpdate(@PathVariable String phoneNumber, @RequestBody Map<String, Boolean> requestData){
+        Boolean stay = requestData.get("stay");
+        clientService.updateDoorClosedTimeStay(phoneNumber, stay);
+        return "OK";
     }
 
     @PutMapping("door/{phoneNumber}")
