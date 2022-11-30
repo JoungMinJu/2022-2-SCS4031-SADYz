@@ -9,7 +9,6 @@ import '../css/grid.css';
 import { useParams } from 'react-router-dom';
 import { useState } from 'react';
 import axios from 'axios';
-const modify_img = `${process.env.PUBLIC_URL + '/images/modify.png'}`;
 
 function Detail(props) {
   const { id } = useParams();
@@ -63,6 +62,7 @@ function Detail(props) {
               lastMovedTime={
                 lastMovedTime === null ? null : lastMovedTime.lastMovedTime
               }
+              imageUrl={client.imageUrl}
             />
           </div>
           <div className="item title">챗봇</div>
