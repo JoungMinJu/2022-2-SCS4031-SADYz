@@ -9,7 +9,7 @@ function Chatbot({ conversations }) {
   const [value, onChange] = useState(new Date());
   const [date, setDate] = useState([]);
   useEffect(() => {
-    console.log(date);
+    // console.log(date);
   }, [date]);
   return (
     <div>
@@ -65,4 +65,5 @@ const ContentsPart = styled.div`
   padding: 15px;
   margin-left: 40%;
   overflow: scroll;
+  min-height: 300px;
 `;
