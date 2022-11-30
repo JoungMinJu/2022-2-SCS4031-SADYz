@@ -1,20 +1,84 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import elapsedTime from '../Common/ElapsedTime';
 import StatusStyle from '../Common/StatusStyle';
+import axios from 'axios';
 const no_profile_img = `${process.env.PUBLIC_URL + '/images/no_profile.png'}`;
 const modify_img = `${process.env.PUBLIC_URL + '/images/modify.png'}`;
-
-function BasicInfo({ id, name, birth, phonenumber, address, lastMovedTime }) {
+const trash_img = `${process.env.PUBLIC_URL + '/images/trash.png'}`;
+const post_picture_img = `${
+  process.env.PUBLIC_URL + '/images/post_picture.png'
+}`;
+function BasicInfo({
+  id,
+  name,
+  birth,
+  phonenumber,
+  address,
+  lastMovedTime,
+  imageUrl,
+}) {
   const ElapsedTime = elapsedTime(lastMovedTime);
   const status = ElapsedTime[0];
   const [backColor, fontColor] = StatusStyle(status);
   const navigate = useNavigate();
+  const addImage = (e) => {
+    const images = e.target.files;
+    post_image(images);
+  };
+  const post_image = async (image) => {
+    let formData = new FormData();
+
+    formData.append('image', image[0]);
+
+    await axios
+      .post(`http://localhost:8080/api/dashboard/clients/s3/${id}`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+      .then(function (res) {})
+      .catch(function (err) {});
+  };
+
+  const delete_image = async () => {
+    await axios
+      .delete(`http://localhost:8080/api/dashboard/clients/s3/${id}`)
+      .then(function (res) {})
+      .catch(function (err) {});
+  };
   return (
     <>
       <BasicInfoContainer>
-        <ProfileImage src={no_profile_img} />
+        {imageUrl === null ? (
+          <PostImage>
+            <label htmlFor="input-file">
+              <img
+                src={post_picture_img}
+                alt="사진 등록하기"
+                style={{ cursor: 'pointer' }}
+              />
+            </label>
+            <input
+              type="file"
+              id="input-file"
+              style={{ display: 'none' }}
+              accept="image/*"
+              onChange={addImage}
+            />
+          </PostImage>
+        ) : (
+          <PostImage>
+            <img
+              src={trash_img}
+              style={{ width: '25px' }}
+              onClick={() => delete_image()}
+            />
+          </PostImage>
+        )}
+
+        <ProfileImage src={imageUrl === null ? no_profile_img : imageUrl} />
         <Category>이름</Category>
         <Content>{name}</Content>
         <Category>생년월일</Category>
@@ -58,9 +122,11 @@ const BasicInfoContainer = styled.div`
 
 const ProfileImage = styled.img`
   width: 28vmin;
+  height: 28vmin;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+  margin-bottom: 0;
 `;
 
 const Content = styled.section`
@@ -86,6 +152,11 @@ const Status = styled.div`
 const Modify = styled.img`
   position: absolute;
   right: 10px;
-  bottom: -15px;
+  bottom: 10px;
   cursor: pointer;
+`;
+
+const PostImage = styled.div`
+  cursor: pointer;
+  display: inline-block;
 `;
