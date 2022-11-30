@@ -89,7 +89,7 @@ const Border = styled.tr`
   font-size: 1.35vmin;
 `;
 
-const Status = styled.div`
+const Status = styled.section`
   box-sizing: border-box;
   padding: 1vmin;
   border: 1px solid black;
