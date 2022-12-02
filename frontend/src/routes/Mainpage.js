@@ -20,8 +20,10 @@ function Mainpage(props) {
   };
 
   useEffect(() => {
-    get_clients();
-  }, [clients]);
+    setInterval(() => {
+      get_clients();
+    }, 1000);
+  }, []);
 
   return (
     <div>

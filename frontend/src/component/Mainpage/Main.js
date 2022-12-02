@@ -10,9 +10,9 @@ function Main({ clients }) {
   const handleSelect = (e) => {
     setSelected(e.target.value);
   };
-  useEffect(() => {
-    // console.log(Selected);
-  }, [Selected]);
+  // useEffect(() => {
+  //   // console.log(Selected);
+  // }, [Selected]);
 
   return (
     <div>
