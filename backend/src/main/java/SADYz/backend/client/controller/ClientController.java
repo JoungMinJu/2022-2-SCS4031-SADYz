@@ -32,11 +32,8 @@ import org.springframework.web.multipart.MultipartFile;
 @RequiredArgsConstructor
 public class ClientController {
 
-    @Value("${getting.token}")
-    private String token;
 
     private final ClientService clientService;
-    private final FirebaseCloudMessageService firebaseCloudMessageService;
 
     @GetMapping("{id}")
     public ClientDto readClient(@PathVariable Long id) {
@@ -83,11 +80,7 @@ public class ClientController {
     }
 
     @PostMapping("door/{phoneNumber}")
-    public DoorClosedTime addDoorClosedTime(@PathVariable String phoneNumber, @RequestBody DoorClosedTimeDto doorClosedTimeDto) throws IOException {
-        firebaseCloudMessageService.sendMessageTo(
-                token,
-                "타이틀",
-                "바디");
+    public DoorClosedTime addDoorClosedTime(@PathVariable String phoneNumber, @RequestBody DoorClosedTimeDto doorClosedTimeDto) throws Exception {
         return clientService.addDoorClosedTime(phoneNumber, doorClosedTimeDto);
     }
 

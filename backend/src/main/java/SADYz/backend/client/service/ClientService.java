@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import SADYz.backend.global.fcm.FirebaseCloudMessageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,6 +33,7 @@ public class ClientService {
     private final ClientRepository clientRepository;
     private final LastMovedTimeRepository lastMovedTimeRepository;
     private final DoorClosedTimeRepository doorClosedTimeRepository;
+    private final FirebaseCloudMessageService firebaseCloudMessageService;
 
     @Autowired
     private s3Uploader s3Uploader;
@@ -54,9 +56,13 @@ public class ClientService {
     }
 
     @Transactional
-    public DoorClosedTime addDoorClosedTime(String phoneNumber, DoorClosedTimeDto doorClosedTimeDto) {
+    public DoorClosedTime addDoorClosedTime(String phoneNumber, DoorClosedTimeDto doorClosedTimeDto) throws Exception{
         Client client = clientRepository.findByPhonenumber(phoneNumber);
         DoorClosedTime result = doorClosedTimeRepository.findByClient(client);
+        firebaseCloudMessageService.sendMessageTo(
+                client.getFcm(),
+                "타이틀",
+                "바디");
         if (result != null) {
             return updateDoorClosedTime(phoneNumber, doorClosedTimeDto);
         }
