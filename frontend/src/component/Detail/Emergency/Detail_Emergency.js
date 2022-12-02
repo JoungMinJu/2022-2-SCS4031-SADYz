@@ -18,8 +18,10 @@ function DetailEmergency({ phonenumber }) {
   };
 
   useEffect(() => {
-    get_emergency();
-  }, [emergency]);
+    setInterval(() => {
+      get_emergency();
+    }, 1000);
+  }, []);
   return (
     <div>
       <Table>

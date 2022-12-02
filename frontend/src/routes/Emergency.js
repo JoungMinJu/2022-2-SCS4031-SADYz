@@ -24,8 +24,10 @@ function Emergency(props) {
     } catch {}
   };
   useEffect(() => {
-    get_emergency();
-  }, [emergency]);
+    setInterval(() => {
+      get_emergency();
+    }, 1000);
+  }, []);
 
   const today_unsolved = emergency.filter((emerg) => {
     const today = getToday();

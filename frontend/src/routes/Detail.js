@@ -38,8 +38,10 @@ function Detail(props) {
     }
   };
   useEffect(() => {
-    get_client_detail();
-  }, [client]);
+    setInterval(() => {
+      get_client_detail();
+    }, 1000);
+  }, []);
 
   return (
     <>
@@ -82,7 +84,7 @@ function Detail(props) {
               doorClosedTime={
                 doorClosedTime === null ? null : doorClosedTime.doorClosedTime
               }
-              out={doorClosedTime.out === false ? 'x' : 'O'}
+              out={doorClosedTime.stay === false ? 'O' : 'X'}
             />
           </div>
         </Container>
