@@ -6,13 +6,12 @@ import SADYz.backend.emergency.domain.Emergency;
 import SADYz.backend.emergency.dto.EmergencyRequestDto;
 import SADYz.backend.emergency.dto.EmergencyResponseDto;
 import SADYz.backend.emergency.repository.EmergencyRepository;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
