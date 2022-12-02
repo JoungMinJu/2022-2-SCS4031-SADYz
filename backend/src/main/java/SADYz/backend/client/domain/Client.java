@@ -33,6 +33,8 @@ public class Client {
 
     private String phonenumber;
 
+    private String fcm;
+
     @Column(columnDefinition = "TINYINT", length=1)
     private boolean response;
 

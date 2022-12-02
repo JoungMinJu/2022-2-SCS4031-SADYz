@@ -57,7 +57,7 @@ public class ClientService {
     public DoorClosedTime addDoorClosedTime(String phoneNumber, DoorClosedTimeDto doorClosedTimeDto) {
         Client client = clientRepository.findByPhonenumber(phoneNumber);
         DoorClosedTime result = doorClosedTimeRepository.findByClient(client);
-        if(result != null){
+        if (result != null) {
             return updateDoorClosedTime(phoneNumber, doorClosedTimeDto);
         }
         DoorClosedTimeDto newDoorClosedTimeDto = DoorClosedTimeDto.builder()
@@ -73,7 +73,21 @@ public class ClientService {
         Client client = clientRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("해당 id가 없습니다")
         );
-        client.update(clientDto);
+        ClientDto build = ClientDto.builder()
+                .name(clientDto.getName())
+                .address(clientDto.getAddress())
+                .birth(clientDto.getBirth())
+                .phonenumber(clientDto.getPhonenumber())
+                .response(client.isResponse())
+                .stay(client.isStay())
+                .status(client.getStatus())
+                .conversations(client.getConversations())
+                .emergencies(client.getEmergencies())
+                .lastMovedTime(client.getLastMovedTime())
+                .doorClosedTime(client.getDoorClosedTime())
+                .imageUrl(client.getImageUrl())
+                .build();
+        client.update(build);
         return clientRepository.save(client);
     }
 
