@@ -46,7 +46,7 @@
 
     eventSource.addEventListener('sse', function (event) {
       const data = JSON.parse(event.data);
-      console.log(event);
+      // console.log(event);
       // alert(data.content);
 
       // 브라우저 알림
@@ -65,7 +65,7 @@
       </head>
       <link rel="stylesheet" href="./public.css" />
 
-      <body onLoad="setTimeout('window.close()',1000);">
+      <body>
         <div class="emergency_popup">
           <h1 class="emergency_popup_h1">응급콜</h1>
           <h3 style="color:white">${data.content.split(':')[0]}</h3>

@@ -38,6 +38,9 @@ function Detail(props) {
     }
   };
   useEffect(() => {
+    get_client_detail();
+  }, []);
+  useEffect(() => {
     setInterval(() => {
       get_client_detail();
     }, 1000);
