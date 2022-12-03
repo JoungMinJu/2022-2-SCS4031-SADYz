@@ -72,7 +72,8 @@ public class NotificationService {
     public void send(String phoneNumber, EmergencyRequestDto emergencyRequestDto) {
         Client client = clientRepository.findByPhonenumber(phoneNumber);
         String content = client.getName() + "님의 응급콜 : " + emergencyRequestDto.getEmergencyType().getContent();
-        Notification notification = notificationRepository.save(new Notification(content, client.getId()));
+        Notification notification = notificationRepository.save(new Notification(content, client.getId(),
+                client.getName(), client.getAddress(), client.getPhonenumber()));
 
         String id = "1";
         String eventId = id + "_" + System.currentTimeMillis();
