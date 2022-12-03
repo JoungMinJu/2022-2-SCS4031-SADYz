@@ -49,7 +49,7 @@ public class EmergencyController {
     }
 
     @DeleteMapping("{emergencyId}")
-    public void deleteEmergency(@PathVariable Long emergencyId){
+    public void deleteEmergency(@PathVariable Long emergencyId) {
         emergencyService.deleteEmergency(emergencyId);
     }
 
