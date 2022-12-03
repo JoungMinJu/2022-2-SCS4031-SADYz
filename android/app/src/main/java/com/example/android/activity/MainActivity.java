@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
     Button emergencyButton;
     final int PERMISSION = 1;
     ChatbotQuestionlDto result;
-    private List<int[]> alramtimes = new ArrayList<>(Arrays.asList(new int[]{1, 12, 00}, new int[]{2, 14, 30}, new int[]{3, 20, 00},
+    private List<int[]> alramtimes = new ArrayList<>(Arrays.asList(new int[]{1, 12, 00}, new int[]{2, 18, 00}, new int[]{3, 20, 00},
             new int[]{4, 10, 00}, new int[]{5, 15, 00}, new int[]{6, 21, 00}));
 
     @Override
@@ -133,23 +133,26 @@ public class MainActivity extends AppCompatActivity {
 
         //알림 만들기
         AlarmManager alarmManager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
-        if (alarmManager != null) {
+        for (int[] time : alramtimes) {
+
             Intent intent = new Intent(this, AlramReceiver.class);
             PendingIntent alarmIntent;
             // 버전체크
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                alarmIntent = PendingIntent.getBroadcast(this, 1, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+                alarmIntent = PendingIntent.getBroadcast(this, time[0], intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
             } else {
-                alarmIntent = PendingIntent.getBroadcast(this, 1, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                alarmIntent = PendingIntent.getBroadcast(this, time[0], intent, PendingIntent.FLAG_UPDATE_CURRENT);
             }
 
             // 12시로 시간 설정
             Calendar calendar = Calendar.getInstance();
             calendar.setTimeInMillis(System.currentTimeMillis());
-            calendar.set(Calendar.HOUR_OF_DAY, 17);
-            calendar.set(Calendar.MINUTE, 42);
-            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, alarmIntent);
+            calendar.set(Calendar.HOUR_OF_DAY, time[1]);
+            calendar.set(Calendar.MINUTE, time[2]);
+            AlarmManager.AlarmClockInfo alarmClockInfo = new AlarmManager.AlarmClockInfo(calendar.getTimeInMillis(), alarmIntent);
+            alarmManager.setAlarmClock(alarmClockInfo, alarmIntent);
         }
+
         meal = (Button) findViewById(R.id.meal);
         bathroom = (Button) findViewById(R.id.bathroom);
         emotion = (Button) findViewById(R.id.emotion);
