@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
@@ -105,6 +106,8 @@ public class MainActivity extends AppCompatActivity {
         Intent outIntent = getIntent();
         String out = outIntent.getStringExtra("외출 여부 파악");
         if (out != null) {
+            Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+            vibrator.vibrate(1500);
             outingActivity = new OutingActivity(this);
             outingActivity.setCancelable(false);
             outingActivity.show();
