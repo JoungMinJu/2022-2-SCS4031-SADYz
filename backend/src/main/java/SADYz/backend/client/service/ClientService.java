@@ -37,7 +37,7 @@ public class ClientService {
     private final DoorClosedTimeRepository doorClosedTimeRepository;
     private final FirebaseCloudMessageService firebaseCloudMessageService;
 
-    @Value("${dnk.api.keyt}")
+    @Value("${dnk.api.key}")
     private String apikey;
     @Value("${dnk.channel}")
     private String channel;

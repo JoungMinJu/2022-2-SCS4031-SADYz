@@ -51,6 +51,7 @@ public class NotificationService {
         try {
             emitter.send(SseEmitter.event()
                     .id(eventId)
+                    .name("sse")
                     .data(data));
         } catch (IOException exception) {
             emitterRepository.deleteById(emitterId);
@@ -73,12 +74,14 @@ public class NotificationService {
         String content = client.getName() + "님의 응급콜 : " + emergencyRequestDto.getEmergencyType().getContent();
         Notification notification = notificationRepository.save(new Notification(content, client.getId()));
 
-        String id = String.valueOf(client.getId());
+        String id = "1";
         String eventId = id + "_" + System.currentTimeMillis();
         Map<String, SseEmitter> emitters = emitterRepository.findAllEmitterStartWithByAccountId(id);
         emitters.forEach(
                 (key, emitter) -> {
                     emitterRepository.saveEventCache(key, notification);
+                    System.out.println("notification = " + notification.getContent());
+                    System.out.println("notification.getUserId() = " + notification.getUserId());
                     sendNotification(emitter, eventId, key, notification);
                 }
         );
