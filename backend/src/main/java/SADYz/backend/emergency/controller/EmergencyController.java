@@ -3,6 +3,7 @@ package SADYz.backend.emergency.controller;
 import SADYz.backend.emergency.domain.Emergency;
 import SADYz.backend.emergency.dto.EmergencyRequestDto;
 import SADYz.backend.emergency.dto.EmergencyResponseDto;
+import SADYz.backend.emergency.repository.EmitterRepository;
 import SADYz.backend.emergency.service.EmergencyService;
 import SADYz.backend.emergency.service.NotificationService;
 import SADYz.backend.emergency.service.SmsService;
