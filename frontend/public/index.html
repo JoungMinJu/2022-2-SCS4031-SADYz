@@ -30,7 +30,6 @@
   </head>
   <body>
     <div id="root"></div>
-    <div id="modal"></div>
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
@@ -54,10 +53,6 @@
       const showNotification = () => {
         // alert(data.content);
 
-        setTimeout(() => {
-          window.close();
-        }, 50);
-
         var wnd = window.open(
           data.url,
           '_blank',
@@ -65,24 +60,28 @@
         );
         wnd.document.write(
           `<html>
-  <head>
-    <title>응급콜</title>
-  </head>
-  <link rel="stylesheet" href="./public.css" />
+      <head>
+        <title>응급콜</title>
+      </head>
+      <link rel="stylesheet" href="./public.css" />
 
-  <body>
-    <div class="emergency_popup">
-      <h1 class="emergency_popup_h1">응급콜</h1>
-      <h3 style="color:white">${data.content.split(':')[0]}</h3>
-      <section>${data.content.split(':')[1]}</section>
-      <section>${data.address}</section>
-      <section>전화번호 : ${data.phoneNumber}</section>
-      <img src="images/emergency3.png" class="emergency_popup_img" />
-    </div>
-  </body>
-</html>
-`,
+      <body onLoad="setTimeout('window.close()',1000);">
+        <div class="emergency_popup">
+          <h1 class="emergency_popup_h1">응급콜</h1>
+          <h3 style="color:white">${data.content.split(':')[0]}</h3>
+          <section>${data.content.split(':')[1]}</section>
+          <section>주소 : ${data.address}</section>
+          <section>전화번호 : ${data.phoneNumber}</section>
+          <img src="images/emergency3.png" class="emergency_popup_img" />
+        </div>
+      </body>
+    </html>
+    `,
         );
+
+        setTimeout(() => {
+          wnd.close();
+        }, 5000);
       };
 
       showNotification();
