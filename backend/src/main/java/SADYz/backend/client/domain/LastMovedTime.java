@@ -50,4 +50,8 @@ public class LastMovedTime {
     this.lastMovedTime = lastMovedTimeDto.getLastMovedTime();
     this.location = lastMovedTimeDto.getLocation();
   }
+
+  public void updateMovetime(LocalDateTime lastMovedTime){
+    this.lastMovedTime = lastMovedTime;
+  }
 }
