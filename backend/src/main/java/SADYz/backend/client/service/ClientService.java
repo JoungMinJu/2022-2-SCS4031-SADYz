@@ -3,27 +3,29 @@ package SADYz.backend.client.service;
 import SADYz.backend.client.domain.Client;
 import SADYz.backend.client.domain.DoorClosedTime;
 import SADYz.backend.client.domain.LastMovedTime;
-import SADYz.backend.client.dto.ClientDto;
-import SADYz.backend.client.dto.DoorClosedTimeDto;
-import SADYz.backend.client.dto.LastMovedTimeDto;
+import SADYz.backend.client.dto.*;
 import SADYz.backend.client.repository.ClientRepository;
 import SADYz.backend.client.repository.DoorClosedTimeRepository;
 import SADYz.backend.client.repository.LastMovedTimeRepository;
 import SADYz.backend.global.S3.s3Uploader.s3Uploader;
-
-import java.io.IOException;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
 import SADYz.backend.global.fcm.FirebaseCloudMessageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.util.UriComponentsBuilder;
+
+import java.io.IOException;
+import java.net.URI;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -34,6 +36,11 @@ public class ClientService {
     private final LastMovedTimeRepository lastMovedTimeRepository;
     private final DoorClosedTimeRepository doorClosedTimeRepository;
     private final FirebaseCloudMessageService firebaseCloudMessageService;
+
+    @Value("${dnk.api.key}")
+    private String apikey;
+    @Value("${dnk.channel}")
+    private String channel;
 
     @Autowired
     private s3Uploader s3Uploader;
@@ -52,8 +59,42 @@ public class ClientService {
                 .location(lastMovedTimeDto.getLocation())
                 .client(client)
                 .build();
+        LastMovedTime result = lastMovedTimeRepository.findFirstByClientIdOrderByLastMovedTimeDesc(client.getId());
+        if (result.getLastMovedTime().isBefore(LocalDateTime.now().with(LocalTime.NOON))){
+            // 오늘 처음 움직임이면
+            post(client.getPhonenumber());
+        }
         return lastMovedTimeRepository.save(newLastMovedTimeDto.toEntity());
     }
+
+    public DnkResponseDto post(String phoneNumber){
+        URI uri = UriComponentsBuilder
+                .fromUriString("https://www.campaignbot.co.kr")
+                .path("/api/camp/camp_auto_start")
+                .build()
+                .toUri();
+
+        System.out.println(uri);
+
+        List<DnkRequestData> req_data = new ArrayList<>();
+        req_data.add(DnkRequestData.builder().phone_num(phoneNumber.replaceAll("-", "")).build());
+
+        DnkRequestDto requestDto = DnkRequestDto.builder()
+                .apikey(apikey)
+                .channel(channel)
+                .req_data(req_data)
+                .build();
+
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<DnkResponseDto> response = restTemplate.postForEntity(uri, requestDto, DnkResponseDto.class);
+
+        System.out.println(response.getStatusCode());
+        System.out.println(response.getHeaders());
+        System.out.println(response.getBody());
+
+        return response.getBody();
+    }
+
 
     @Transactional
     public DoorClosedTime addDoorClosedTime(String phoneNumber, DoorClosedTimeDto doorClosedTimeDto) throws Exception{
