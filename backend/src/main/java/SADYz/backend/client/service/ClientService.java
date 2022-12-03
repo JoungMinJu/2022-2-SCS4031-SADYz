@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import SADYz.backend.global.fcm.FirebaseCloudMessageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,6 +33,7 @@ public class ClientService {
     private final ClientRepository clientRepository;
     private final LastMovedTimeRepository lastMovedTimeRepository;
     private final DoorClosedTimeRepository doorClosedTimeRepository;
+    private final FirebaseCloudMessageService firebaseCloudMessageService;
 
     @Autowired
     private s3Uploader s3Uploader;
@@ -54,10 +56,14 @@ public class ClientService {
     }
 
     @Transactional
-    public DoorClosedTime addDoorClosedTime(String phoneNumber, DoorClosedTimeDto doorClosedTimeDto) {
+    public DoorClosedTime addDoorClosedTime(String phoneNumber, DoorClosedTimeDto doorClosedTimeDto) throws Exception{
         Client client = clientRepository.findByPhonenumber(phoneNumber);
         DoorClosedTime result = doorClosedTimeRepository.findByClient(client);
-        if(result != null){
+        firebaseCloudMessageService.sendMessageTo(
+                client.getFcm(),
+                "타이틀",
+                "바디");
+        if (result != null) {
             return updateDoorClosedTime(phoneNumber, doorClosedTimeDto);
         }
         DoorClosedTimeDto newDoorClosedTimeDto = DoorClosedTimeDto.builder()
@@ -73,7 +79,21 @@ public class ClientService {
         Client client = clientRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("해당 id가 없습니다")
         );
-        client.update(clientDto);
+        ClientDto build = ClientDto.builder()
+                .name(clientDto.getName())
+                .address(clientDto.getAddress())
+                .birth(clientDto.getBirth())
+                .phonenumber(clientDto.getPhonenumber())
+                .response(client.isResponse())
+                .stay(client.isStay())
+                .status(client.getStatus())
+                .conversations(client.getConversations())
+                .emergencies(client.getEmergencies())
+                .lastMovedTime(client.getLastMovedTime())
+                .doorClosedTime(client.getDoorClosedTime())
+                .imageUrl(client.getImageUrl())
+                .build();
+        client.update(build);
         return clientRepository.save(client);
     }
 
