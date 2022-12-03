@@ -39,12 +39,7 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-        <activity android:name=".activity.SttActivity"/>
-        <activity android:name=".activity.TtsActivity"/>
-        <activity android:name=".activity.EmergencyActivity"/>
         <activity android:name=".activity.OutingActivity" />
-        <activity android:name=".activity.FlaskActivity"/>
-        <activity android:name=".activity.CaptureActivity"/>
 
         <service android:name=".firebase.MyFirebaseMessagingService"
             android:stopWithTask="false"
