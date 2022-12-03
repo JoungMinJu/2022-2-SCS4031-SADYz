@@ -4,10 +4,11 @@ import com.example.android.dto.EmergencyDto;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface EmergencyRetrofit {
-    @PUT("api/dashboard/emergency/{phoneNumber}")
+    @POST("api/dashboard/emergency/{phoneNumber}")
     Call<EmergencyDto> putEmergency(@Path("phoneNumber") String phoneNumber, @Body EmergencyDto emergencyDto);
 }
