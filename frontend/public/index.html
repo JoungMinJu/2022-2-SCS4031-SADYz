@@ -29,19 +29,8 @@
     <title>React App</title>
   </head>
   <body>
-    <script>
-      const eventSource = new EventSource(`/subscribe/2`);
-
-      eventSource.onmessage = (event) => {
-        const data = JSON.parse(event.data);
-        console.log(data.message);
-        console.log(event);
-      };
-      eventSource.onerror = (error) => {
-        eventSource.close();
-      };
-    </script>
     <div id="root"></div>
+    <div id="modal"></div>
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
@@ -53,4 +42,50 @@
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
   </body>
+  <script>
+    const eventSource = new EventSource(`http://localhost:8080/subscribe/1`);
+
+    eventSource.addEventListener('sse', function (event) {
+      const data = JSON.parse(event.data);
+      console.log(event);
+      // alert(data.content);
+
+      // 브라우저 알림
+      const showNotification = () => {
+        // alert(data.content);
+
+        setTimeout(() => {
+          window.close();
+        }, 50);
+
+        var wnd = window.open(
+          data.url,
+          '_blank',
+          'top=50, left=10, width=500, height=250, status=no,toolbar=no,status=no,menubar=no,resizable=no, location=no,scrollbars=no,directories=no',
+        );
+        wnd.document.write(
+          `<html>
+  <head>
+    <title>응급콜</title>
+  </head>
+  <link rel="stylesheet" href="./public.css" />
+
+  <body>
+    <div class="emergency_popup">
+      <h1 class="emergency_popup_h1">응급콜</h1>
+      <h3 style="color:white">${data.content.split(':')[0]}</h3>
+      <section>${data.content.split(':')[1]}</section>
+      <section>${data.address}</section>
+      <section>전화번호 : ${data.phoneNumber}</section>
+      <img src="images/emergency3.png" class="emergency_popup_img" />
+    </div>
+  </body>
+</html>
+`,
+        );
+      };
+
+      showNotification();
+    });
+  </script>
 </html>
