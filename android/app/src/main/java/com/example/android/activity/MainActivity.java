@@ -26,10 +26,13 @@ import com.example.android.R;
 import com.example.android.dto.ChatBotAnswerDto;
 import com.example.android.dto.ChatbotQuestionlDto;
 import com.example.android.dto.ChatbotStartDto;
+import com.example.android.dto.EmergencyDto;
 import com.example.android.firebase.MyFirebaseMessagingService;
 import com.example.android.receiver.AlramReceiver;
 import com.example.android.retrofit.ChatbotRetrofit;
+import com.example.android.retrofit.EmergencyRetrofit;
 import com.example.android.retrofit.FlaskRestrofit;
+import com.example.android.retrofit.SpringRetrofit;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -54,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
     Button meal;
     Button bathroom;
     Button emotion;
+    Button emergencyButton;
     final int PERMISSION = 1;
     ChatbotQuestionlDto result;
     private List<int[]> alramtimes = new ArrayList<>(Arrays.asList(new int[]{1, 12, 00}, new int[]{2, 14, 30}, new int[]{3, 20, 00},
@@ -177,6 +181,34 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onFailure(Call<ChatbotQuestionlDto> call, Throwable t) {
                     Log.e("post", "실패");
+                    t.printStackTrace();
+                }
+            });
+        });
+
+        emergencyButton = (Button) findViewById(R.id.emergencyCall);
+        emergencyButton.setOnClickListener((v) ->{
+            SpringRetrofit retrofit = SpringRetrofit.getInstance();
+            EmergencyRetrofit emergencyRetrofit = SpringRetrofit.getEmergencyRetrofit();
+
+            EmergencyDto emergencyDto = new EmergencyDto(true, "button");
+            Gson gson = new Gson();
+            String emergencyInfo = gson.toJson(emergencyDto);
+            Log.e("JSON", emergencyInfo);
+
+            Call<EmergencyDto> call = emergencyRetrofit.putEmergency("010-1111-1111", emergencyDto);
+            call.clone().enqueue(new Callback<EmergencyDto>() {
+
+                @Override
+                public void onResponse(Call<EmergencyDto> call, Response<EmergencyDto> response) {
+                    if (response.isSuccessful()){
+                        Log.e("put", "성공");
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<EmergencyDto> call, Throwable t) {
+                    Log.e("put", "실패");
                     t.printStackTrace();
                 }
             });
