@@ -60,10 +60,10 @@ public class ClientService {
                 .client(client)
                 .build();
         LastMovedTime result = lastMovedTimeRepository.findFirstByClientIdOrderByLastMovedTimeDesc(client.getId());
-        if (result.getLastMovedTime().isBefore(LocalDateTime.now().with(LocalTime.NOON))){
-            // 오늘 처음 움직임이면
-//            post(client.getPhonenumber());
-        }
+//        if (result.getLastMovedTime().isBefore(LocalDateTime.now().with(LocalTime.NOON))){
+//            // 오늘 처음 움직임이면
+////            post(client.getPhonenumber());
+//        }
         return lastMovedTimeRepository.save(newLastMovedTimeDto.toEntity());
     }
 
