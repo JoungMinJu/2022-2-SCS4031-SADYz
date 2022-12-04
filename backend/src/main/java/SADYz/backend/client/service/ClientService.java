@@ -60,10 +60,10 @@ public class ClientService {
                 .client(client)
                 .build();
         LastMovedTime result = lastMovedTimeRepository.findFirstByClientIdOrderByLastMovedTimeDesc(client.getId());
-        if (result.getLastMovedTime().isBefore(LocalDateTime.now().with(LocalTime.NOON))){
-            // 오늘 처음 움직임이면
-//            post(client.getPhonenumber());
-        }
+//        if (result.getLastMovedTime().isBefore(LocalDateTime.now().with(LocalTime.NOON))){
+//            // 오늘 처음 움직임이면
+////            post(client.getPhonenumber());
+//        }
         return lastMovedTimeRepository.save(newLastMovedTimeDto.toEntity());
     }
 
@@ -102,8 +102,8 @@ public class ClientService {
         DoorClosedTime result = doorClosedTimeRepository.findByClient(client);
         firebaseCloudMessageService.sendMessageTo(
                 client.getFcm(),
-                "타이틀",
-                "바디");
+                "문여닫힘이 감지되었습니다.",
+                "");
         if (result != null) {
             return updateDoorClosedTime(phoneNumber, doorClosedTimeDto);
         }
