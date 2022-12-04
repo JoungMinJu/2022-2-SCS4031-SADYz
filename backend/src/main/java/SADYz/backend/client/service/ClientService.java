@@ -102,8 +102,8 @@ public class ClientService {
         DoorClosedTime result = doorClosedTimeRepository.findByClient(client);
         firebaseCloudMessageService.sendMessageTo(
                 client.getFcm(),
-                "타이틀",
-                "바디");
+                "문여닫힘이 감지되었습니다.",
+                "");
         if (result != null) {
             return updateDoorClosedTime(phoneNumber, doorClosedTimeDto);
         }
