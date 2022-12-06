@@ -7,10 +7,12 @@ import SADYz.backend.client.domain.Status;
 import SADYz.backend.client.dto.ClientDto;
 import SADYz.backend.client.repository.ClientRepository;
 import SADYz.backend.client.repository.LastMovedTimeRepository;
+import SADYz.backend.client.service.ClientService;
 import SADYz.backend.emergency.domain.Emergency;
 import SADYz.backend.emergency.domain.EmergencyType;
 import SADYz.backend.emergency.dto.EmergencyRequestDto;
 import SADYz.backend.emergency.repository.EmergencyRepository;
+import SADYz.backend.emergency.service.EmergencyService;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.scheduling.annotation.Async;
@@ -30,11 +32,13 @@ public class Scheduler {
     private final ClientRepository clientRepository;
     private final EmergencyRepository emergencyRepository;
     private final LastMovedTimeRepository lastMovedTimeRepository;
+    private final EmergencyService emergencyService;
 
     @Scheduled(cron = "0 0/30 * * * ?")
     @Transactional
     @Async
     public void createNoResponseEmergency() {
+        System.out.println("Scheduler.createNoResponseEmergency");
         // 1. 응답 없음인 애들 조회
         List<Client> clientsNotResponse = clientRepository.findAllByResponse(false);
         List<ClientDto> clientDtos = clientListToDtoList(clientsNotResponse);
@@ -48,6 +52,7 @@ public class Scheduler {
     @Transactional
     @Async
     public void createNoMoveEmergency() {
+        System.out.println("Scheduler.createNoMoveEmergency");
         // 1. 현재 시간
         LocalDateTime now = LocalDateTime.now();
         // 1. 전체 Client 가져오기
@@ -103,6 +108,6 @@ public class Scheduler {
                 .client(client)
                 .emergencyType(emergencyType)
                 .build();
-        emergencyRepository.save(EmergencyRequestDto.toEntity(emergencyDto));
+        emergencyService.addEmergency(client.getPhonenumber(), emergencyDto);
     }
 }
