@@ -46,6 +46,9 @@ public class SmsService {
     @Value("${naver-cloud-sms.senderPhone}")
     private String phone;
 
+    @Value("${naver-cloud-sms.receiverPhone}")
+    private String receivePhone;
+
 
     private final ClientRepository clientRepository;
 
@@ -108,7 +111,7 @@ public class SmsService {
     public void sendSms(String phoneNumber, EmergencyRequestDto emergencyRequestDto) throws JsonProcessingException, RestClientException, URISyntaxException, InvalidKeyException, NoSuchAlgorithmException, UnsupportedEncodingException {
         Client client = clientRepository.findByPhonenumber(phoneNumber);
         MessageDto messageDto = MessageDto.builder()
-                .to(phone)
+                .to(receivePhone)
                 .content(getMessageContent(client, emergencyRequestDto))
                 .build();
         sendSms(messageDto);

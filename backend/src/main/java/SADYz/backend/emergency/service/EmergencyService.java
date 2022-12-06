@@ -25,14 +25,18 @@ public class EmergencyService {
     private final EmergencyRepository emergencyRepository;
     private final ClientRepository clientRepository;
     private final LastMovedTimeRepository lastMovedTimeRepository;
+    private final SmsService smsService;
+    private final NotificationService notificationService;
 
     @Transactional
-    public Emergency addEmergency(String phoneNumber, EmergencyRequestDto emergencyResponseDto) {
+    public Emergency addEmergency(String phoneNumber, EmergencyRequestDto emergencyRequestDto) {
         Client client = clientRepository.findByPhonenumber(phoneNumber);
+        notificationService.send(phoneNumber, emergencyRequestDto);
+//        smsService.sendSms(phoneNumber, emergencyRequestDto); // -> 응급콜 메세지 필요시 open
         EmergencyRequestDto newEmergencyResponseDto = EmergencyRequestDto.builder()
-                .emergencyNow(emergencyResponseDto.isEmergencyNow())
+                .emergencyNow(emergencyRequestDto.isEmergencyNow())
                 .client(client)
-                .emergencyType(emergencyResponseDto.getEmergencyType())
+                .emergencyType(emergencyRequestDto.getEmergencyType())
                 .build();
         return emergencyRepository.save(EmergencyRequestDto.toEntity(newEmergencyResponseDto));
     }
