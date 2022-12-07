@@ -16,15 +16,15 @@ public enum EmergencyType {
     private static final Map<String, EmergencyType> BY_CONTENT =
             Stream.of(values()).collect(Collectors.toMap(EmergencyType::getContent, Function.identity()));
 
-    EmergencyType(String content){
+    EmergencyType(String content) {
         this.content = content;
     }
 
-    public String getContent(){
+    public String getContent() {
         return this.content;
     }
 
-    public static EmergencyType valueOfContent(String content){
+    public static EmergencyType valueOfContent(String content) {
         return BY_CONTENT.get(content);
     }
 

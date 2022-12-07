@@ -2,6 +2,7 @@ package SADYz.backend.emergency.service;
 
 import SADYz.backend.client.domain.Client;
 import SADYz.backend.client.domain.LastMovedTime;
+import SADYz.backend.client.dto.LastMovedTimeDto;
 import SADYz.backend.client.repository.ClientRepository;
 import SADYz.backend.client.repository.LastMovedTimeRepository;
 import SADYz.backend.emergency.domain.Emergency;
@@ -34,16 +35,13 @@ public class EmergencyService {
     private final NotificationService notificationService;
 
     @Transactional
-    public Emergency addEmergency(String phoneNumber, EmergencyRequestDto emergencyRequestDto) throws UnsupportedEncodingException, URISyntaxException, NoSuchAlgorithmException, InvalidKeyException, JsonProcessingException {
+    public Emergency addEmergency(String phoneNumber, EmergencyRequestDto emergencyRequestDto)
+            throws UnsupportedEncodingException, URISyntaxException, NoSuchAlgorithmException, InvalidKeyException, JsonProcessingException {
         Client client = clientRepository.findByPhonenumber(phoneNumber);
         notificationService.send(phoneNumber, emergencyRequestDto);
 //        smsService.sendSms(phoneNumber, emergencyRequestDto); // -> 응급콜 메세지 필요시 open
-        EmergencyRequestDto newEmergencyResponseDto = EmergencyRequestDto.builder()
-                .emergencyNow(emergencyRequestDto.isEmergencyNow())
-                .client(client)
-                .emergencyType(emergencyRequestDto.getEmergencyType())
-                .build();
-        return emergencyRepository.save(EmergencyRequestDto.toEntity(newEmergencyResponseDto));
+        emergencyRequestDto.updateClient(client);
+        return emergencyRepository.save(EmergencyRequestDto.toEntity(emergencyRequestDto));
     }
 
     public List<EmergencyResponseDto> readEmergency(String phoneNumber) {
@@ -68,21 +66,25 @@ public class EmergencyService {
     @Transactional
     public Emergency updateEmergency(Long emergencyId, EmergencyResponseDto emergencyResponseDto) {
         Emergency emergency = emergencyRepository.findById(emergencyId).get();
-        emergencySolution(emergency, emergencyResponseDto);
+        emergencySolution(emergency);
         emergency.updateEmergency(emergencyResponseDto);
         return emergencyRepository.save(emergency);
     }
 
-    private void emergencySolution(Emergency emergency, EmergencyResponseDto emergencyResponseDto) {
+    private void emergencySolution(Emergency emergency) {
         EmergencyType emergencyType = emergency.getEmergencyType();
         Client client = emergency.getClient();
-        if (emergencyType == EmergencyType.no_response){
+
+        if (emergencyType == EmergencyType.no_response) {
             client.updateResponse(true);
             clientRepository.save(client);
-        }
-        else if (emergencyType == EmergencyType.no_move_alarm || emergencyType == EmergencyType.no_move_danger){
+        } else if (emergencyType == EmergencyType.no_move_alarm || emergencyType == EmergencyType.no_move_danger) {
             LastMovedTime result = lastMovedTimeRepository.findFirstByClientIdOrderByLastMovedTimeDesc(client.getId());
-            result.updateMoveTime(LocalDateTime.now());
+            LastMovedTimeDto buildDto = LastMovedTimeDto.builder()
+                    .location(result.getLocation())
+                    .lastMovedTime(LocalDateTime.now())
+                    .build();
+            result.update(buildDto);
             lastMovedTimeRepository.save(result);
         }
     }
