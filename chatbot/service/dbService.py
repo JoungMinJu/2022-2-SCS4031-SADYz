@@ -67,6 +67,7 @@ def update_conversation_emotion(conv_id):
     emotion_split = conv.emotion.rstrip(",").split(",")
     data = Counter(emotion_split)
     conv.emotion = data.most_common(1)[0][0]
+    print(data.most_common(1)[0][0])
     conv.modified_date_time = datetime.now(KST)
     db.session.commit()
 

@@ -24,7 +24,7 @@ public class EmergencyController {
 
 
     @PostMapping("{phoneNumber}")
-    public Emergency addEmergency(@PathVariable String phoneNumber, @RequestBody EmergencyRequestDto emergencyRequestDto) {
+    public Emergency addEmergency(@PathVariable String phoneNumber, @RequestBody EmergencyRequestDto emergencyRequestDto) throws UnsupportedEncodingException, URISyntaxException, NoSuchAlgorithmException, InvalidKeyException, JsonProcessingException {
         return emergencyService.addEmergency(phoneNumber, emergencyRequestDto);
     }
 

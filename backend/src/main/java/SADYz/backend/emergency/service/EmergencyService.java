@@ -9,10 +9,15 @@ import SADYz.backend.emergency.domain.EmergencyType;
 import SADYz.backend.emergency.dto.EmergencyRequestDto;
 import SADYz.backend.emergency.dto.EmergencyResponseDto;
 import SADYz.backend.emergency.repository.EmergencyRepository;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URISyntaxException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +34,7 @@ public class EmergencyService {
     private final NotificationService notificationService;
 
     @Transactional
-    public Emergency addEmergency(String phoneNumber, EmergencyRequestDto emergencyRequestDto) {
+    public Emergency addEmergency(String phoneNumber, EmergencyRequestDto emergencyRequestDto) throws UnsupportedEncodingException, URISyntaxException, NoSuchAlgorithmException, InvalidKeyException, JsonProcessingException {
         Client client = clientRepository.findByPhonenumber(phoneNumber);
         notificationService.send(phoneNumber, emergencyRequestDto);
 //        smsService.sendSms(phoneNumber, emergencyRequestDto); // -> 응급콜 메세지 필요시 open
