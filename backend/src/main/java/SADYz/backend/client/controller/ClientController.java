@@ -87,8 +87,7 @@ public class ClientController {
     @PutMapping("door/stay/{phoneNumber}")
     public String updateDoorClosedTimeUpdate(@PathVariable String phoneNumber, @RequestBody Map<String, Boolean> requestData){
         Boolean stay = requestData.get("stay");
-        clientService.updateDoorClosedTimeStay(phoneNumber, stay);
-        return "OK";
+        return clientService.updateDoorClosedTimeStay(phoneNumber, stay);
     }
 
     @PutMapping("door/{phoneNumber}")
@@ -112,5 +111,11 @@ public class ClientController {
     public String deleteS3Image(@PathVariable Long clientId) {
         clientService.deleteS3Image(clientId);
         return "IMAGE DELETED";
+    }
+
+    @PutMapping(value = "token/{phoneNumber}")
+    public String updateFcmToken(@PathVariable String phoneNumber,  @RequestBody Map<String, String> requestData){
+        String token = requestData.get("token");
+        return clientService.updateToken(phoneNumber, token);
     }
 }

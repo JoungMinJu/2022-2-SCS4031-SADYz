@@ -8,12 +8,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.List;
 import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
 
 @Getter
 @Entity
@@ -132,5 +130,10 @@ public class Client {
     public Client deleteImageUrl(Client client) {
         this.imageUrl = null;
         return client;
+    }
+
+    public Client updateToken(String fcm){
+        this.fcm = fcm;
+        return this;
     }
 }

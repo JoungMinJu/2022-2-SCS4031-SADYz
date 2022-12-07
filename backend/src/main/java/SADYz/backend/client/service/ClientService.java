@@ -156,13 +156,14 @@ public class ClientService {
     }
 
     @Transactional
-    public void updateDoorClosedTimeStay(String phoneNumber, Boolean stay) {
+    public String updateDoorClosedTimeStay(String phoneNumber, Boolean stay) {
         Client client = clientRepository.findByPhonenumber(phoneNumber);
         DoorClosedTime doorClosedTime = doorClosedTimeRepository.findByClient(client);
         doorClosedTime.updateStay(stay);
         doorClosedTimeRepository.save(doorClosedTime);
         client.updateStay(stay);
         clientRepository.save(client);
+        return "Ok";
     }
 
     public ClientDto readClient(Long id) {
@@ -224,5 +225,13 @@ public class ClientService {
         );
         client.deleteImageUrl(client);
         return clientRepository.save(client);
+    }
+
+    @Transactional
+    public String updateToken(String phoneNumber, String fcm){
+        Client client = clientRepository.findByPhonenumber(phoneNumber);
+        client.updateToken(fcm);
+        clientRepository.save(client);
+        return "Ok";
     }
 }
