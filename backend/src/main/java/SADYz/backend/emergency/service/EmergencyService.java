@@ -82,7 +82,7 @@ public class EmergencyService {
         }
         else if (emergencyType == EmergencyType.no_move_alarm || emergencyType == EmergencyType.no_move_danger){
             LastMovedTime result = lastMovedTimeRepository.findFirstByClientIdOrderByLastMovedTimeDesc(client.getId());
-            result.updateMovetime(LocalDateTime.now());
+            result.updateMoveTime(LocalDateTime.now());
             lastMovedTimeRepository.save(result);
         }
     }

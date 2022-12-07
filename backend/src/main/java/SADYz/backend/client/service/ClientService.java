@@ -69,8 +69,10 @@ public class ClientService {
             post(client.getPhonenumber());
         }
          */
+        // 응급콜 로직
         List<Emergency> result = emergencyRepository.findAllByClientAndEmergencyNow(client, true);
         emergencyRepository.deleteAll(result);
+        // client 상태 로직
         client.updateStatus(Status.정상);
         clientRepository.save(client);
         return lastMovedTimeRepository.save(newLastMovedTimeDto.toEntity());
@@ -85,13 +87,13 @@ public class ClientService {
 
         System.out.println(uri);
 
-        List<DnkRequestData> req_data = new ArrayList<>();
-        req_data.add(DnkRequestData.builder().phone_num(phoneNumber.replaceAll("-", "")).build());
+        List<DnkRequestBody> requestBodies = new ArrayList<>();
+        requestBodies.add(DnkRequestBody.builder().phone_num(phoneNumber.replaceAll("-", "")).build());
 
         DnkRequestDto requestDto = DnkRequestDto.builder()
                 .apikey(apikey)
                 .channel(channel)
-                .req_data(req_data)
+                .requestBodies(requestBodies)
                 .build();
 
         RestTemplate restTemplate = new RestTemplate();
@@ -116,12 +118,8 @@ public class ClientService {
         if (result != null) {
             return updateDoorClosedTime(phoneNumber, doorClosedTimeDto);
         }
-        DoorClosedTimeDto newDoorClosedTimeDto = DoorClosedTimeDto.builder()
-                .doorClosedTime(doorClosedTimeDto.getDoorClosedTime())
-                .client(client)
-                .stay(doorClosedTimeDto.isStay())
-                .build();
-        return doorClosedTimeRepository.save(newDoorClosedTimeDto.toEntity());
+        doorClosedTimeDto.updateClient(client);
+        return doorClosedTimeRepository.save(doorClosedTimeDto.toEntity());
     }
 
     @Transactional
@@ -149,8 +147,14 @@ public class ClientService {
 
     @Transactional
     public LastMovedTime updateLastMovedTime(Long lastMovedTimeId, LastMovedTimeDto lastMovedTimeDto) {
-        LastMovedTime lastMovedTime = lastMovedTimeRepository.findById(lastMovedTimeId).get();
-        lastMovedTime.updateLastMovedTime(lastMovedTimeDto);
+        LastMovedTime lastMovedTime = lastMovedTimeRepository.findById(lastMovedTimeId).orElseThrow(
+                () -> new IllegalArgumentException("해당 id가 없습니다")
+        );
+        LastMovedTimeDto build = LastMovedTimeDto.builder()
+                .location(lastMovedTimeDto.getLocation())
+                .lastMovedTime(lastMovedTimeDto.getLastMovedTime())
+                .build();
+        lastMovedTime.update(build);
         return lastMovedTimeRepository.save(lastMovedTime);
     }
 
@@ -179,8 +183,7 @@ public class ClientService {
         Client client = clientRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("해당 id가 없습니다")
         );
-        ClientDto clientDto = Client.EntitytoDto(client);
-        return clientDto;
+        return Client.EntitytoDto(client);
     }
 
     public List<ClientDto> readAllClient() {
@@ -201,10 +204,9 @@ public class ClientService {
 
     public List<LastMovedTimeDto> readLastMovedTimeAll() {
         List<LastMovedTime> lastMovedTimeList = lastMovedTimeRepository.findAll();
-        List<LastMovedTimeDto> lastMovedTimeDtoList = lastMovedTimeList.stream()
+        return lastMovedTimeList.stream()
                 .map(lastMovedTime -> LastMovedTimeDto.toDto(lastMovedTime))
                 .collect(Collectors.toList());
-        return lastMovedTimeDtoList;
     }
 
     @Transactional

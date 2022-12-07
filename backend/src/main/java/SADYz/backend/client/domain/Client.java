@@ -94,7 +94,7 @@ public class Client {
     }
 
     public static ClientDto EntitytoDto(Client client) {
-        ClientDto clientDto = ClientDto.builder()
+        return ClientDto.builder()
                 .id(client.id)
                 .name(client.name)
                 .address(client.address)
@@ -109,7 +109,6 @@ public class Client {
                 .doorClosedTime(client.doorClosedTime)
                 .imageUrl(client.imageUrl)
                 .build();
-        return clientDto;
     }
 
     public Client updateStay(boolean stay){

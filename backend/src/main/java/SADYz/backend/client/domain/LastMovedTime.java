@@ -1,23 +1,15 @@
 package SADYz.backend.client.domain;
 
-import SADYz.backend.client.domain.Client;
 import SADYz.backend.client.dto.LastMovedTimeDto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import java.time.LocalDateTime;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
+
+import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @NoArgsConstructor
@@ -46,12 +38,9 @@ public class LastMovedTime {
     this.client= client;
   }
 
-  public void updateLastMovedTime(LastMovedTimeDto lastMovedTimeDto){
+  public void update(LastMovedTimeDto lastMovedTimeDto){
     this.lastMovedTime = lastMovedTimeDto.getLastMovedTime();
     this.location = lastMovedTimeDto.getLocation();
   }
 
-  public void updateMovetime(LocalDateTime lastMovedTime){
-    this.lastMovedTime = lastMovedTime;
-  }
 }
