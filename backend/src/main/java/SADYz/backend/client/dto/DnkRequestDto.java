@@ -14,6 +14,6 @@ import java.util.List;
 public class DnkRequestDto {
     private String apikey;
     private String channel;
-    private List<DnkRequestData> req_data;
+    private List<DnkRequestBody> requestBodies;
 
 }

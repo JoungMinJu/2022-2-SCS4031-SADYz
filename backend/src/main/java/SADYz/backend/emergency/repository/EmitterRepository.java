@@ -13,12 +13,12 @@ public class EmitterRepository {
     private final Map<String, Object> eventCache = new ConcurrentHashMap<>();
 
 
-    public Map<String, SseEmitter> findAll(){
-        return  emitters.entrySet().stream()
+    public Map<String, SseEmitter> findAll() {
+        return emitters.entrySet().stream()
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
-    public Map<String , Object> findAllEvent(){
+    public Map<String, Object> findAllEvent() {
         return eventCache.entrySet().stream()
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
@@ -60,7 +60,6 @@ public class EmitterRepository {
                 }
         );
     }
-
 
 
     public void deleteAllEventCacheStartWithId(String accountId) {

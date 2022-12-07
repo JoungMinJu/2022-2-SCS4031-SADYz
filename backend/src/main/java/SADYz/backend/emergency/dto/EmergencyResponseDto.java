@@ -2,14 +2,12 @@ package SADYz.backend.emergency.dto;
 
 import SADYz.backend.client.domain.Client;
 import SADYz.backend.emergency.domain.Emergency;
-
-import java.time.LocalDateTime;
-
-import SADYz.backend.emergency.domain.EmergencyType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor

@@ -3,13 +3,12 @@ package SADYz.backend.emergency.domain;
 import SADYz.backend.client.domain.Client;
 import SADYz.backend.emergency.dto.EmergencyResponseDto;
 import SADYz.backend.global.baseEntity.BaseEntity;
-
-import javax.persistence.*;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
 
 @Entity
 @NoArgsConstructor

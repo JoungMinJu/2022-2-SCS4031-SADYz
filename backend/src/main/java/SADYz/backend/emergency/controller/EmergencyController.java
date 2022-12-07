@@ -4,8 +4,6 @@ import SADYz.backend.emergency.domain.Emergency;
 import SADYz.backend.emergency.dto.EmergencyRequestDto;
 import SADYz.backend.emergency.dto.EmergencyResponseDto;
 import SADYz.backend.emergency.service.EmergencyService;
-import SADYz.backend.emergency.service.NotificationService;
-import SADYz.backend.emergency.service.SmsService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +22,8 @@ public class EmergencyController {
 
 
     @PostMapping("{phoneNumber}")
-    public Emergency addEmergency(@PathVariable String phoneNumber, @RequestBody EmergencyRequestDto emergencyRequestDto) {
+    public Emergency addEmergency(@PathVariable String phoneNumber, @RequestBody EmergencyRequestDto emergencyRequestDto)
+            throws UnsupportedEncodingException, URISyntaxException, NoSuchAlgorithmException, InvalidKeyException, JsonProcessingException {
         return emergencyService.addEmergency(phoneNumber, emergencyRequestDto);
     }
 

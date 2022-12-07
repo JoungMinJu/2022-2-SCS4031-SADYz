@@ -8,12 +8,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.List;
 import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
 
 @Getter
 @Entity
@@ -96,7 +94,7 @@ public class Client {
     }
 
     public static ClientDto EntitytoDto(Client client) {
-        ClientDto clientDto = ClientDto.builder()
+        return ClientDto.builder()
                 .id(client.id)
                 .name(client.name)
                 .address(client.address)
@@ -111,11 +109,15 @@ public class Client {
                 .doorClosedTime(client.doorClosedTime)
                 .imageUrl(client.imageUrl)
                 .build();
-        return clientDto;
     }
 
     public Client updateStay(boolean stay){
         this.stay = stay;
+        return this;
+    }
+
+    public Client updateStatus(Status status){
+        this.status = status;
         return this;
     }
 
@@ -132,5 +134,10 @@ public class Client {
     public Client deleteImageUrl(Client client) {
         this.imageUrl = null;
         return client;
+    }
+
+    public Client updateToken(String fcm){
+        this.fcm = fcm;
+        return this;
     }
 }

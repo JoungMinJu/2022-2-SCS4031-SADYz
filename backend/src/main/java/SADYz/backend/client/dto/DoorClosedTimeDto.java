@@ -51,4 +51,8 @@ public class DoorClosedTimeDto {
                 .build();
     }
 
+    public void updateClient(Client client){
+        this.client = client;
+    }
+
 }

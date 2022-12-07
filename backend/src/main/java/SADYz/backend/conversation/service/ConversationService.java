@@ -1,20 +1,17 @@
 package SADYz.backend.conversation.service;
 
 import SADYz.backend.client.domain.Client;
-import SADYz.backend.client.dto.ClientDto;
 import SADYz.backend.client.repository.ClientRepository;
 import SADYz.backend.conversation.domain.Conversation;
 import SADYz.backend.conversation.dto.ConversationDto;
 import SADYz.backend.conversation.repository.ConversationRepository;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 @Service

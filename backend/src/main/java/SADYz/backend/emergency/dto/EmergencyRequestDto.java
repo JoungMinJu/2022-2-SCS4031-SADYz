@@ -32,6 +32,9 @@ public class EmergencyRequestDto {
                 .build();
     }
 
+    public void updateClient(Client client){
+        this.client = client;
+    }
 
 
 }

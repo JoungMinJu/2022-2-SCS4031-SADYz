@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @Getter
-public class DnkRequestData {
+public class DnkRequestBody {
     private String phone_num;
 }
