@@ -1,5 +1,6 @@
 package SADYz.backend.client.service;
 
+import SADYz.backend.client.controller.HttpClientConfig;
 import SADYz.backend.client.domain.Client;
 import SADYz.backend.client.domain.DoorClosedTime;
 import SADYz.backend.client.domain.LastMovedTime;
@@ -15,6 +16,7 @@ import SADYz.backend.global.fcm.FirebaseCloudMessageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,6 +26,11 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
 import java.net.URI;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -43,6 +50,8 @@ public class ClientService {
     private String apikey;
     @Value("${dnk.channel}")
     private String channel;
+    @Value("${rest.ignore_ssl}")
+    private Boolean IGNORE_SSL;
 
     @Autowired
     private s3Uploader s3Uploader;
@@ -54,7 +63,7 @@ public class ClientService {
     }
 
     @Transactional
-    public LastMovedTime addLastMovedTime(String phoneNumber, LastMovedTimeDto lastMovedTimeDto) {
+    public LastMovedTime addLastMovedTime(String phoneNumber, LastMovedTimeDto lastMovedTimeDto) throws NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
         Client client = clientRepository.findByPhonenumber(phoneNumber);
         LastMovedTimeDto newLastMovedTimeDto = LastMovedTimeDto.builder()
                 .lastMovedTime(lastMovedTimeDto.getLastMovedTime())
@@ -62,23 +71,21 @@ public class ClientService {
                 .client(client)
                 .build();
         // DnK 로직
-        /*
-            LastMovedTime result = lastMovedTimeRepository.findFirstByClientIdOrderByLastMovedTimeDesc(client.getId());
+        LastMovedTime result = lastMovedTimeRepository.findFirstByClientIdOrderByLastMovedTimeDesc(client.getId());
             if (result.getLastMovedTime().isBefore(LocalDateTime.now().with(LocalTime.NOON))){
              //오늘 처음 움직임이면
             post(client.getPhonenumber());
         }
-         */
         // 응급콜 로직
-        List<Emergency> result = emergencyRepository.findAllByClientAndEmergencyNow(client, true);
-        emergencyRepository.deleteAll(result);
+        List<Emergency> findEmergencies = emergencyRepository.findAllByClientAndEmergencyNow(client, true);
+        emergencyRepository.deleteAll(findEmergencies);
         // client 상태 로직
         client.updateStatus(Status.정상);
         clientRepository.save(client);
         return lastMovedTimeRepository.save(newLastMovedTimeDto.toEntity());
     }
 
-    public DnkResponseDto post(String phoneNumber){
+    public DnkResponseDto post(String phoneNumber) throws NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
         URI uri = UriComponentsBuilder
                 .fromUriString("https://www.campaignbot.co.kr")
                 .path("/api/camp/camp_auto_start")
@@ -87,17 +94,20 @@ public class ClientService {
 
         System.out.println(uri);
 
-        List<DnkRequestBody> requestBodies = new ArrayList<>();
-        requestBodies.add(DnkRequestBody.builder().phone_num(phoneNumber.replaceAll("-", "")).build());
+        List<DnkRequestBody> req_data = new ArrayList<>();
+        req_data.add(DnkRequestBody.builder().phone_num(phoneNumber.replaceAll("-", "")).build());
 
         DnkRequestDto requestDto = DnkRequestDto.builder()
                 .apikey(apikey)
                 .channel(channel)
-                .requestBodies(requestBodies)
+                .req_data(req_data)
                 .build();
-
-        RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<DnkResponseDto> response = restTemplate.postForEntity(uri, requestDto, DnkResponseDto.class);
+        ResponseEntity<DnkResponseDto> response = null;
+        if(IGNORE_SSL){
+            response = new RestTemplate(HttpClientConfig.trustRequestFactory()).postForEntity(uri, requestDto, DnkResponseDto.class);
+        } else {
+            response = new RestTemplate().postForEntity(uri, requestDto, DnkResponseDto.class);
+        }
 
         System.out.println(response.getStatusCode());
         System.out.println(response.getHeaders());
