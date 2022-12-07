@@ -3,10 +3,13 @@ package SADYz.backend.client.service;
 import SADYz.backend.client.domain.Client;
 import SADYz.backend.client.domain.DoorClosedTime;
 import SADYz.backend.client.domain.LastMovedTime;
+import SADYz.backend.client.domain.Status;
 import SADYz.backend.client.dto.*;
 import SADYz.backend.client.repository.ClientRepository;
 import SADYz.backend.client.repository.DoorClosedTimeRepository;
 import SADYz.backend.client.repository.LastMovedTimeRepository;
+import SADYz.backend.emergency.domain.Emergency;
+import SADYz.backend.emergency.repository.EmergencyRepository;
 import SADYz.backend.global.S3.s3Uploader.s3Uploader;
 import SADYz.backend.global.fcm.FirebaseCloudMessageService;
 import lombok.RequiredArgsConstructor;
@@ -21,8 +24,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
 import java.net.URI;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -35,6 +36,7 @@ public class ClientService {
     private final ClientRepository clientRepository;
     private final LastMovedTimeRepository lastMovedTimeRepository;
     private final DoorClosedTimeRepository doorClosedTimeRepository;
+    private final EmergencyRepository emergencyRepository;
     private final FirebaseCloudMessageService firebaseCloudMessageService;
 
     @Value("${dnk.api.key}")
@@ -59,11 +61,18 @@ public class ClientService {
                 .location(lastMovedTimeDto.getLocation())
                 .client(client)
                 .build();
-        LastMovedTime result = lastMovedTimeRepository.findFirstByClientIdOrderByLastMovedTimeDesc(client.getId());
-//        if (result.getLastMovedTime().isBefore(LocalDateTime.now().with(LocalTime.NOON))){
-//            // 오늘 처음 움직임이면
-////            post(client.getPhonenumber());
-//        }
+        // DnK 로직
+        /*
+            LastMovedTime result = lastMovedTimeRepository.findFirstByClientIdOrderByLastMovedTimeDesc(client.getId());
+            if (result.getLastMovedTime().isBefore(LocalDateTime.now().with(LocalTime.NOON))){
+             //오늘 처음 움직임이면
+            post(client.getPhonenumber());
+        }
+         */
+        List<Emergency> result = emergencyRepository.findAllByClientAndEmergencyNow(client, true);
+        emergencyRepository.deleteAll(result);
+        client.updateStatus(Status.정상);
+        clientRepository.save(client);
         return lastMovedTimeRepository.save(newLastMovedTimeDto.toEntity());
     }
 

@@ -117,6 +117,11 @@ public class Client {
         return this;
     }
 
+    public Client updateStatus(Status status){
+        this.status = status;
+        return this;
+    }
+
     public Client updateResponse(boolean response){
         this.response = response;
         return this;
