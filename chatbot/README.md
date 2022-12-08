@@ -4,7 +4,17 @@
 
 __안드로이드__ 와 API로 통신하고, 그 결과를 DB에 저장합니다.
 
-<br><br>
+
+<br>
+
+---
+
+### app.py
+- 플라스크 실행 
+
+### config.py
+- ORM 설정 파일
+
 ## checkpoint
 ### chatbot_kogpt2.ckpt
 - KoGPT2 학습 모델
@@ -19,17 +29,17 @@ __안드로이드__ 와 API로 통신하고, 그 결과를 DB에 저장합니다
 
 ## controller
 
-### dbController
+### dbController.py
 - ORM을 위한 컨트롤러
 
-### bathroomController
+### bathroomController.py
 - 대화를 시작하기 위한 로직 __start_bathroom__
   - client의 화장실 빈도수를 체크하고 그에 맞는 질문을 return
 - 대화 진행에 사용되는 로직 __bathroom_chat__
   - client의 답변에 따라 DB에 저장하는 로직
   - (변비 증상 호소)와 같은 특이사항이 있을 경우 같이 저장합니다.
   
-### emotionController
+### emotionController.py
 - 대화를 시작하기 위한 로직 __start_emotion__
   - 랜덤으로 안부 질문을 선택해서 return
 - 대화 진행에 사용되는 로직 __chat_emotion__
@@ -40,7 +50,7 @@ __안드로이드__ 와 API로 통신하고, 그 결과를 DB에 저장합니다
       - 긍정이면 답변 생성 모델 KoGPT2 활용하여 답변 생성
       - 부정이면 답변 카테고리 기반 추출 모델 KoELECTRA 활용하여 답변 생성
       
-### mealController
+### mealController.py
 - 대화를 시작하기 위한 로직 __start_meal__
   - 식사 질문 return
 - 대화 진행에 사용되는 로직 __meal_chat__
@@ -57,34 +67,34 @@ __안드로이드__ 와 API로 통신하고, 그 결과를 DB에 저장합니다
 
 ## model
 
-### client
+### client.py
 - ORM 모델
 
-### koelectra
+### koelectra.py
 - KoELECTRA 모델
 
 <br><br>
 
 ## service
-### dbService
+### dbService.py
 - db 조작과 관련된 서비스 로직
 
-### emotion_classification
+### emotion_classification.py
 - 사용자 답변 감정 (긍/부정) 추출 위한 KoBERT 로직
 
-### koelectra_qa
+### koelectra_qa.py
 - KoELECTRA 기반 답변 추출 로직
 
-### kogptchat
+### kogptchat.py
 - KoGPT2 기반 답변 추출 로직
 
-### responseService
+### responseService.py
 - 답변 판별을 위한 서비스 로직
 
 <br><br>
 
 ## util
 
-### response
+### response.py
 - 답변 상수 모음
 - JSON 변환 로직
