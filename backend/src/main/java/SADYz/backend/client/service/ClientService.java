@@ -72,10 +72,9 @@ public class ClientService {
                 .build();
         // DnK 로직
         LastMovedTime result = lastMovedTimeRepository.findFirstByClientIdOrderByLastMovedTimeDesc(client.getId());
-            if (result.getLastMovedTime().isBefore(LocalDateTime.now().with(LocalTime.NOON))){
-             //오늘 처음 움직임이면
-            post(client.getPhonenumber());
-        }
+            if (result == null || result.getLastMovedTime().isBefore(LocalDateTime.now().with(LocalTime.NOON))) {
+                post(client.getPhonenumber());
+            }
         // 응급콜 로직
         List<Emergency> findEmergencies = emergencyRepository.findAllByClientAndEmergencyNow(client, true);
         emergencyRepository.deleteAll(findEmergencies);
