@@ -15,6 +15,8 @@ __안드로이드__ 와 API로 통신하고, 그 결과를 DB에 저장합니다
 ### config.py
 - ORM 설정 파일
 
+<br><br>
+
 ## checkpoint
 ### chatbot_kogpt2.ckpt
 - KoGPT2 학습 모델
