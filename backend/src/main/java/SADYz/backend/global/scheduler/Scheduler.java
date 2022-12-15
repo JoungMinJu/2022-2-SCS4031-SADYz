@@ -7,12 +7,11 @@ import SADYz.backend.client.domain.Status;
 import SADYz.backend.client.dto.ClientDto;
 import SADYz.backend.client.repository.ClientRepository;
 import SADYz.backend.client.repository.LastMovedTimeRepository;
-import SADYz.backend.client.service.ClientService;
-import SADYz.backend.emergency.domain.Emergency;
 import SADYz.backend.emergency.domain.EmergencyType;
 import SADYz.backend.emergency.dto.EmergencyRequestDto;
 import SADYz.backend.emergency.repository.EmergencyRepository;
 import SADYz.backend.emergency.service.EmergencyService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.scheduling.annotation.Async;
@@ -20,6 +19,10 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URISyntaxException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -37,7 +40,7 @@ public class Scheduler {
     @Scheduled(cron = "0 0/30 * * * ?")
     @Transactional
     @Async
-    public void createNoResponseEmergency() {
+    public void createNoResponseEmergency() throws UnsupportedEncodingException, URISyntaxException, NoSuchAlgorithmException, InvalidKeyException, JsonProcessingException {
         System.out.println("Scheduler.createNoResponseEmergency");
         // 1. 응답 없음인 애들 조회
         List<Client> clientsNotResponse = clientRepository.findAllByResponse(false);
@@ -51,7 +54,7 @@ public class Scheduler {
     @Scheduled(cron = "0 0/30 * * * ?")
     @Transactional
     @Async
-    public void createNoMoveEmergency() {
+    public void createNoMoveEmergency() throws UnsupportedEncodingException, URISyntaxException, NoSuchAlgorithmException, InvalidKeyException, JsonProcessingException {
         System.out.println("Scheduler.createNoMoveEmergency");
         // 1. 현재 시간
         LocalDateTime now = LocalDateTime.now();
@@ -59,18 +62,16 @@ public class Scheduler {
         List<ClientDto> clientDtos = readAllClientDtos();
         for (ClientDto clientDto : clientDtos) {
             LastMovedTime findResult = lastMovedTimeRepository.findFirstByClientIdOrderByLastMovedTimeDesc(clientDto.getId());
-            if(findResult != null){
+            if (findResult != null) {
                 LocalDateTime findLastMovedTime = findResult.getLastMovedTime();
                 long between = ChronoUnit.HOURS.between(findLastMovedTime, now);
-                if(between >= 24){
+                if (between >= 24) {
                     clientDto.updateStatus(Status.위험);
                     createEmergency(clientDto, EmergencyType.no_move_danger);
-                }
-                else if(between >= 12){
+                } else if (between >= 12) {
                     clientDto.updateStatus(Status.경보);
                     createEmergency(clientDto, EmergencyType.no_move_alarm);
-                }
-                else if(between >= 8){
+                } else if (between >= 8) {
                     clientDto.updateStatus(Status.주의);
                 }
                 updateClient(clientDto); // 저장
@@ -101,7 +102,7 @@ public class Scheduler {
         return clientRepository.save(client);
     }
 
-    public void createEmergency(ClientDto clientDto, EmergencyType emergencyType){
+    public void createEmergency(ClientDto clientDto, EmergencyType emergencyType) throws UnsupportedEncodingException, URISyntaxException, NoSuchAlgorithmException, InvalidKeyException, JsonProcessingException {
         Client client = clientRepository.findById(clientDto.getId()).get();
         EmergencyRequestDto emergencyDto = EmergencyRequestDto.builder()
                 .emergencyNow(true)

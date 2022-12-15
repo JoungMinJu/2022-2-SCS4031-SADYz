@@ -39,7 +39,7 @@ public class EmergencyService {
             throws UnsupportedEncodingException, URISyntaxException, NoSuchAlgorithmException, InvalidKeyException, JsonProcessingException {
         Client client = clientRepository.findByPhonenumber(phoneNumber);
         notificationService.send(phoneNumber, emergencyRequestDto);
-//        smsService.sendSms(phoneNumber, emergencyRequestDto); // -> 응급콜 메세지 필요시 open
+        smsService.sendSms(phoneNumber, emergencyRequestDto); // -> 응급콜 메세지 필요시 open
         emergencyRequestDto.updateClient(client);
         return emergencyRepository.save(EmergencyRequestDto.toEntity(emergencyRequestDto));
     }

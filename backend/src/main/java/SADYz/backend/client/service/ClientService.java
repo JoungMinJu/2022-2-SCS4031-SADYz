@@ -108,10 +108,6 @@ public class ClientService {
             response = new RestTemplate().postForEntity(uri, requestDto, DnkResponseDto.class);
         }
 
-        System.out.println(response.getStatusCode());
-        System.out.println(response.getHeaders());
-        System.out.println(response.getBody());
-
         return response.getBody();
     }
 
